@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload update</title>
+</head>
+<body>
+   
+ 
+ <!--  SINGLE FILE -->
+Upload Web Server Update:
+<form action="/uploadupdate" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="myFile" /><br><br>
+   <input type="submit" value="Upload ZIP file"/>
+</form> 
+<br><br>
+Upload Metrics Update:
+<form action="/uploadmetrics" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="metrics" /><br><br>
+   <input type="submit" value="Upload CSV file"/>
+</form>
+<br><br>
+Upload QA Update:
+<form action="/uploadQA" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="qa" /><br><br>
+   <input type="submit" value="Upload CSV file"/>
+</form>
+<br><br>
+Upload Dashboard Update:
+<form action="/uploaddashboard" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="dashboard" /><br><br>
+   <input type="submit" value="Upload CSV file"/>
+</form> 
+<br><br>
+Upload Handling:
+<form action="/uploadhandling" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="handling" /><br><br>
+   <input type="submit" value="Upload CSV file"/>
+</form>
+</body>
+</html>

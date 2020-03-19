@@ -1,0 +1,59 @@
+Quick Links
+<div class="row">
+    <div id="quicklinks">
+        <a href="#" class="newAnimateStandard" onclick="loadTxt('standard');loadData(currentRecord);displayPhonetics('name','namephonetics');displayPhonetics('email','emailphonetics');$('#counter').val(currentRecord);$('.callflow_expertname').html(localStorage.getItem('expertName'))">Standard</a>
+        <a href="#" onclick="loadExternal('/partials/templates/chat','chatScript');">Chat <b class="newAnimate" style="display:inline;color:#16c4b6">NEW</b></a>
+        <a href="#" onclick="loadExternal('compare','loadCompareScript');">Compare </a>
+        <a href="#" onclick="loadExternal('references-subscription','loadref-subscriptionscript');">New Service Plans </a>
+        <a href="#" onclick="loadExternal('references-RATLS','loadref-ratlsscript');">RATLS <b class="newAnimate" style="display:inline;color:#16c4b6">NEW</b></a>
+        <a href="#" id="modal_btn_questions" onclick="$('#modal_question').css('display','block');">Enter Subscription Question </a>
+        <div style="position:absolute;bottom:70px;font-size:10px;font-family:Verdana">
+            <div class="hiddenDiv">
+            <div>Warehouse Holiday Schedule/Cut-off:</div><br>
+            <div style="color:#5ec4ff">Tracelogix (US):</div>
+            <div>12/24/19 2PM CST</div>
+            <div style="color:#ff7373">12/25/19 CLOSED</div>
+            <div>12/26/19 2PM CST</div>
+            <div style="color:#ff7373">01/01/20 CLOSED</div>
+            <div style="color:#ff7373">01/02/20 CLOSED</div>
+            <br>
+            <div style="color:#5ec4ff">Ingram (UK):</div>
+            <div style="color:#ff7373">12/25/19 CLOSED</div>
+            <div style="color:#ff7373">12/26/20 CLOSED</div>
+            <div style="color:#ff7373">01/01/20 CLOSED</div>
+            <br>
+            <div style="color:#5ec4ff">Brightstar (Aus):</div>
+            12/24/19<br>
+             -Cutoff: 12PM ET<br>
+             -Closed: 3PM ET<br>
+            <div style="color:#ff7373">12/25/19 CLOSED</div>
+            <div style="color:#ff7373">12/26/19 CLOSED</div>
+            12/31/19<br>
+             -Cutoff: 12PM ET<br>
+             -Closed: 3PM ET<br>
+            <div style="color:#ff7373">01/01/20 CLOSED</div>
+            <br>
+            <div style="color:#5ec4ff">Brightstar (NZ):</div>
+            12/24/19<br>
+             -Cutoff: 12PM NZST<br>
+             -Closed: 3PM NZST<br>
+            <div style="color:#ff7373">12/25/19 CLOSED</div>
+            <div style="color:#ff7373">12/26/19 CLOSED</div>
+            12/31/19<br>
+             -Cutoff: 12PM NZST<br>
+             -Closed: 3PM NZST<br>
+            <div style="color:#ff7373">01/01/20 CLOSED</div>
+            </div>
+            <hr>
+            <div href="#" id="ecomTimeEST"></div>
+            <div href="#" id="ecomTimeCST"></div>
+            <div href="#" id="ecomTimePST"></div>
+            <div href="#" id="ecomStatus"></div>
+            <br>
+            ECOM #<br> 18667037170
+            <br><br>
+            CCT #<br> 18338986988
+            <br>
+        </div>
+    </div>
+</div>

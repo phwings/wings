@@ -1,0 +1,65 @@
+<html>
+<head>
+<script src="/assets/js/pako.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/logfilereader.js"></script>
+<style>
+tr{
+	text-align:center;
+}
+
+.hiddenDiv{
+	display:none;
+}
+
+#arlobird{
+	display:none;
+}
+</style>
+</head>
+<body>
+	
+	<!-- ui -->
+	<h3>Base Station Log Reader v1.01b</h3>
+    <input id="inputTarFileToLoad" type="file" onchange="$('.hiddenDiv').css('display','none');$('#arlobird').css('display','block');inputTarFileToLoad_Change(event);"/>
+    <br><br />
+	<div id="arlobird" style="text-align:center;width:100%;color:#009846;font-family:Verdana;"><img width="100px" src="/assets/img/arlobird.gif"><br><b>Please wait, fetching details...</b></div>
+	<span class="lastLog hiddenDiv"><b>Last Log Entry Date/Time : </b></span> <span class="hiddenDiv" id="lastLogDate"> </span>
+	<div class="BS_details hiddenDiv">
+	<h4>Base station details:<h4>
+	<!--<select id="VMBtype">
+		<option value="3010">VMB3010</option>
+		<option value="3500">VMB3500</option>
+		<option value="4000">VMB4000</option>
+		<option value="4500">VMB4500</option>
+	</select>-->
+	<table>
+		<tr>
+			<th style="text-align:right">Type : </th><td style="text-align:left"><span id="VMBtypename"></span></td>
+		</tr>
+		<tr>
+			<th style="text-align:right">Serial Number : </th><td style="text-align:left"><span id="VMBserial"></span></td>
+		</tr>
+		<tr>
+			<th style="text-align:right">FW Version : </th><td style="text-align:left"><span id="VMBfw"></span></td>
+		</tr>
+		<tr>
+			<th style="text-align:right">Channel : </th><td style="text-align:left"><span id="VMBchannel"></span></td>
+		</tr>
+	</table>
+	</div>
+	<div style="display:none">Search string must be greater than two characters.</div>
+	<div class="search_string hiddenDiv">
+		Search string:<input id="searchString" type="text"></input><button onclick="$('#searchResults').val(searchString($('#searchString').val()));">Search</button><br>
+		Results:<br>
+		<textarea id="searchResults" wrap="soft" cols="100" rows="10" style="white-space: nowrap;  overflow: auto;"></textarea>
+	</div>
+	<div class="other_devices hiddenDiv">
+	<!--<h4>Other wifi devices detected:<h4>-->
+	<div id="wifi_SSID"></div>
+	<div id="vdb_details"></div>
+	</div>
+	
+
+</body>
+</html>

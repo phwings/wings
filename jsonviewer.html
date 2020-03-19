@@ -1,0 +1,41 @@
+<html>
+<head>
+
+    <title>JSON Viewer</title>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/json-viewer/jquery.json-viewer.js"></script> 
+    <link href="/assets/js/json-viewer/jquery.json-viewer.css" type="text/css" rel="stylesheet">
+
+    <script>
+        function showJSON(api){
+            $.get(api ,function(data){
+                $('#json-renderer').jsonViewer(data); 
+            });
+        }
+    </script>
+    <style>
+        pre span{
+            max-width:100%;
+            white-space: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <select id="api" onchange="showJSON($(this).val());">
+        <option value="" selected disabled>Select Data</option>
+        <option value="/api/userslogged/">Users logged in</option>
+        <option value="/api/questions/">Questions</option>
+        <option value="/api/comments/">Comments</option>
+        <option value="/api/templates/get/*">Templates</option>
+        <option value="/api/helpdesk/get/">Help Desk</option>
+        <option value="/api/escalations/get">Escalations</option>
+    </select>
+
+    <pre id="json-renderer" style="max-width:100%;"></pre>
+
+
+
+</body>
+
+</html>

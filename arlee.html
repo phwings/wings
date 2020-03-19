@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>Arlee Bird</title>
+        <link rel="stylesheet" href="assets/css/arleebird.css">
+        <script src="assets/js/jquery-3.4.1.min.js"></script>
+        <script src="assets/js/ndgmr.Collision.js"></script>
+        <script src="assets/js/createjs-2013.09.25.min.js"></script>
+        <script src="assets/js/arleebird.js"></script>
+        <script>
+            $(function(){
+                arleeopen=true;
+                init();
+                $('#testCanvas').css('display','none');
+            })
+            
+        </script>
+    </head>
+    <body style="overflow: hidden;">
+        <div id ="user_name_div" style="font-family:Lucida Console;text-align:center"></div>
+        <div style="text-align:center"><img src="assets/img/arlee/header.png" style="height:14.38%"></div>
+		<div style="text-align:center">
+			<canvas alt="Loading.. please wait." id="testCanvas" width="768" height="1024" style=" padding: 0;margin: auto; display: block; height:80%; ">Loading.. please wait.</canvas>
+        </div>
+        <div id="user_CES_div" style="font-family:Lucida Console;text-align:center">Enter CES: <input maxlength="6" size="6" id="user_CES" style="font-family:Lucida Console;text-align:center"><button onclick="getName($('#user_CES').val())" style="font-family:Lucida Console;text-align:center">OK</button></div>
+        
+        <div id ="user_CES_error" style="font-family:Lucida Console;display:none;color:red;text-align:center">No user found for CES ID</div>
+        <div id ="user_CES_invalid" style="font-family:Lucida Console;display:none;color:red;text-align:center">Arlee Bird is not permitted on this station.</div>
+    </body>
+    <script>
+        //window.moveTo(580,240);
+        window.resizeTo(400,645);        
+        var user_CES;
+        var user_CN;
+        //localStorage.setItem('valid','true');
+        function getName(ces){
+            user_CES=ces;
+            if(ces=='trstme'){
+                localStorage.setItem('valid','true');
+            }
+            if(ces=='ntrstm'){
+                localStorage.setItem('valid','false');
+            }
+            var test=localStorage.getItem('valid');
+            if(test=='true'){
+                $.get('/api/users/CES/'+ces+'/&',function(userdata){
+                    
+                    if(userdata.data.length>0){
+                        user_CN=userdata.data[0].users_CN;
+                        $('#user_name_div').html('Now playing as ' + userdata.data[0].users_CN + ' <button onclick="location.reload()">Change User</button>');
+                        $('#user_CES_div').css('display','none');
+                        $('#testCanvas').css('display','block');
+                    }else{
+                        $('#user_CES_error').css('display','block');
+                        setTimeout(function(){
+                            $('#user_CES_error').css('display','none');
+                        },5000)
+                    }
+                })
+            }else{
+                $('#user_CES_invalid').css('display','block');
+                setTimeout(function(){
+                    $('#user_CES_invalid').css('display','none');
+                },5000)
+            }
+        }
+
+        
+    
+    </script>
+</html>

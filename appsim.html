@@ -1,0 +1,516 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Arlo App Simulator</title>
+	
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<script src="/assets/js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+	<div class="row">
+	<div class="column" style="float:left;">
+	<div class="container">
+		<div class="phone_container">
+			<img class="phone_img" src="/assets/img/appsim/samsung_galaxy_s8_black_v.png" alt=""/> 
+		</div>
+
+	</div>
+	</div>
+	<div class="column" style="width:70%;position:absolute;left:375px;">
+
+	</div>
+	</div>
+	
+	<div class="hidden_div" id="intro_load">
+			<div class="app_display" id="intro_display">
+				<img class="intro_img" src="/assets/img/appsim/intro.jpg" width="100%" alt=""/> 
+			</div>
+		
+	</div>
+	
+	
+	<div class="hidden_div" id="init_load">
+		<a href="#" title="" id="settings_button" style="position: absolute; left: 296px; top: 65px; width: 30px; height: 30px; z-index: 4;" onClick="$('#settings_popup').css('visibility', 'visible').css('display', 'block');$('#settings_popup_container').css('visibility', 'visible').css('display', 'block');"></a>
+			<a href="#" title="" id="security_button" style="position: absolute; left: 263px; top: 65px; width: 30px; height: 30px; z-index: 4;" onClick="loadScreen('security','????');"></a>
+			<div class="app_display" id="app_display">
+				<div id="main_nav_display">
+					<img id="img_app_display" src="/assets/img/appsim/main_view_head.jpg" alt=""/>
+					<a href="#" title="" style="position: absolute; left: 0.09%; top: 9.68%; width: 33.24%; height: 5.45%; z-index: 2;" onClick="loadScreen('main_mode_view','main_app_display');loadScreen('main_mode_view_head','main_nav_display');$('#security_button').css('visibility', 'hidden').css('display', 'none');"></a>
+					<a href="#" title="" style="position: absolute; left: 66.67%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="loadScreen('main_library_view','main_app_display');loadScreen('main_library_view_head','main_nav_display');$('#security_button').css('visibility', 'hidden').css('display', 'none');"></a>				
+				</div>
+				<div class="scroller">
+				<div id="main_app_display">
+					<img id="img_app_display" src="/assets/img/appsim/main_view.jpg" alt=""/>
+				</div>
+				</div>
+				<div id="main_nav_phone">
+					<img id="img_app_display" src="/assets/img/appsim/navbar.jpg" alt=""/>
+				</div>
+			</div>
+
+	</div>
+	<!---- mode device navigations-->
+	<div class="hidden_div" id="main_mode_view">
+		<img id="img_app_display_mode_devices" src="/assets/img/appsim/main_mode_view.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 22.8%; width: 100%; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_disarmed','main_app_display');"></a>
+	</div>
+	<!---- mode device modes armed -->
+	<div class="hidden_div" id="mode_display_modes_armed">
+		<img id="img_mode_display_modes" src="/assets/img/appsim/mode_display_modes_armed.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 28.38%; width: 100%; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_disarmed','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 36.08%; width: 275px; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_schedule','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 43.87%; width: 275px; height: 7.7%;  z-index: 2;" onClick="loadScreen('mode_display_modes_geofencing','mode_selection');"></a>
+	</div>
+	
+	<!---- mode device modes edit armed -->
+	<div class="hidden_div" id="edit_armed">
+		<img id="img_edit_armed" src="/assets/img/appsim/edit_armed.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="loadScreen('mode_display_modes_disarmed','main_app_display');"></a>
+
+		<a href="#" title="" style="position: absolute; left: 276px; top: 235.125px; width: 40px; height: 49px; z-index: 2;" onClick="$('.scroller').css('height','480px');loadScreen('edit_armed_cam1_head','main_nav_display');loadScreen('edit_armed_cam1','main_app_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 276px; top: 285.125px; width: 40px; height: 49px; z-index: 2;" onClick="loadScreen('edit_armed_cam1_head','main_nav_display');loadScreen('edit_armed_cam1','main_app_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 276px; top: 335.125px; width: 40px; height: 49px; z-index: 2;" onClick="loadScreen('edit_armed_cam1_head','main_nav_display');loadScreen('edit_armed_cam1','main_app_display');"></a>
+	</div>
+	
+	<div class="hidden_div" id="edit_armed_cam1_head">
+		<img id="img_edit_armed_cam1_head" src="/assets/img/appsim/edit_armed_cam1_head.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 33.33%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_view','main_app_display');loadScreen('main_view_head','main_nav_display');$('#security_button').css('visibility', 'visible').css('display', 'block');"></a>
+		<a href="#" title="" style="position: absolute; left: 66.67%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_library_view','main_app_display');loadScreen('main_library_view_head','main_nav_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('edit_armed','main_app_display');loadScreen('main_mode_view_head','main_nav_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 266px; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_mode_view_head','main_nav_display');loadScreen('edit_armed','main_app_display');"></a>
+	</div>
+	
+	<!---- mode device modes edit armed cam1-->
+	<div class="hidden_div" id="edit_armed_cam1" style="font-size:0px;">
+		<div style="width: 315.94px;height:30.7px;overflow: hidden;">
+			<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width: 100%;">
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width: 100%;margin-top:-30.7px;">
+		</div>
+		<div style="width: 315.94px;height:51px;overflow: hidden;border:0;">
+			<div style="width: 280px;height:51px;overflow: hidden;border:0;">
+				<a id="link_edit_armed_cam1_motion" href="#" title="" style="z-index: 5;" onClick="$('#img_edit_armed_cam1_motion').attr('src',$('#img_edit_armed_cam1_motion').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_motion_edit').attr('src',$('#img_edit_armed_cam1_motion_edit').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#link_edit_armed_cam1_motion_edit').css('pointer-events',$('#img_edit_armed_cam1_motion').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'auto':'none');">
+				<img id="img_edit_armed_cam1_motion" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="width:315.94px;margin-top:-79.2px">
+				</a>
+			</div>
+			<a id="link_edit_armed_cam1_motion_edit" href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_mode_view_head','main_nav_display');loadScreen('edit_armed_cam1_motionsettings','main_app_display');">
+			<img id="img_edit_armed_cam1_motion_edit" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="float:right;width:315.94px;margin-top:-130.2px;margin-left:-300px;">
+			</a>
+		</div>
+		<div style="width: 315.94px;height:51px;overflow: hidden;border:0;">
+			<div style="width: 280px;height:51px;overflow: hidden;border:0;">
+				<a href="#" title="" style="z-index: 5;" onClick="$('#img_edit_armed_cam1_audio').attr('src',$('#img_edit_armed_cam1_audio').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_audio_edit').attr('src',$('#img_edit_armed_cam1_audio_edit').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#link_edit_armed_cam1_audio_edit').css('pointer-events',$('#img_edit_armed_cam1_audio').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'auto':'none');">
+				<img id="img_edit_armed_cam1_audio" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="width:315.94px;margin-top:-130.2px">
+				</a>
+			</div>
+			<a id="link_edit_armed_cam1_audio_edit" href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_mode_view_head','main_nav_display');loadScreen('edit_armed_cam1_audiosettings','main_app_display');">
+			<img id="img_edit_armed_cam1_audio_edit" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="float:right;width:315.94px;margin-top:-181.2px;margin-left:-300px;">
+			</a>
+		</div>
+		<div style="width: 315.94px;height:30.7px;overflow: hidden;">
+			<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width: 100%;margin-top:-181.9px;">
+		</div>
+		<div style="width: 315.94px;height:51px;overflow: hidden;border:0;">
+			<div style="width: 280px;height:51px;overflow: hidden;border:0;">
+				<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width:315.94px;margin-top:-211.9px">
+			</div>
+			<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="float:right;width:315.94px;margin-top:-262.9px;margin-left:-300px;">
+		</div>
+		<div style="width: 315.94px;height:51px;overflow: hidden;border:0;">
+				<a href="#" title="" style="z-index: 5;" onClick="$('#img_edit_armed_cam1_record').attr('src',$('#img_edit_armed_cam1_record').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_record_edit').attr('src',$('#img_edit_armed_cam1_record_edit').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_donothing').attr('src',$('#img_edit_armed_cam1_donothing').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#link_edit_armed_cam1_record_edit').css('pointer-events','none');$('#link_edit_armed_cam1_record').css('pointer-events','auto');$('#link_edit_armed_cam1_donothing').css('pointer-events','none');">
+				<img id="img_edit_armed_cam1_donothing" src="/assets/img/appsim/edit_armed_cam1_off.jpg" alt=""/ style="width:315.94px;margin-top:-262.9px">
+				</a>
+
+		</div>
+		<div style="width: 315.94px;height:50px;overflow: hidden;border:0;">
+			<div style="width: 280px;height:50px;overflow: hidden;border:0;">
+				<a id="link_edit_armed_cam1_record" href="#" title="" style="z-index: 5;pointer-events:none;" onClick="$('#img_edit_armed_cam1_record').attr('src',$('#img_edit_armed_cam1_record').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_record_edit').attr('src',$('#img_edit_armed_cam1_record_edit').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_donothing').attr('src',$('#img_edit_armed_cam1_donothing').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#link_edit_armed_cam1_record_edit').css('pointer-events','auto');$('#link_edit_armed_cam1_record').css('pointer-events','none');$('#link_edit_armed_cam1_donothing').css('pointer-events','auto');">
+				<img id="img_edit_armed_cam1_record" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="width:315.94px;margin-top:-311.9px">
+				</a>
+			</div>
+			<a id="link_edit_armed_cam1_record_edit" href="#" title="" style="z-index: 5;" onClick="loadScreen('main_mode_view_head','main_nav_display');loadScreen('edit_armed_cam1_recordsettings','main_app_display');$('.scroller').css('height','516.8px');">
+			<img id="img_edit_armed_cam1_record_edit" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="float:right;width:315.94px;margin-top:-361.9px;margin-left:-300px;">
+			</a>
+		</div>
+		<div style="width: 315.94px;height:33.7px;overflow: hidden;">
+			<img id="img_edit_armed_cam1_record_edit" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width: 100%;margin-top:-360.8px;">
+		</div>
+		<div style="width: 315.94px;height:51px;overflow: hidden;border:0;">
+
+				<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width:315.94px;margin-top:-394.5px">
+
+		</div>
+		<div style="width: 315.94px;height:33.7px;overflow: hidden;">
+			<img id="img_edit_armed_cam1" src="/assets/img/appsim/edit_armed_cam1.jpg" alt=""/ style="width: 100%;margin-top:-446.5px;">
+		</div>
+		<div style="width: 315.94px;height:51px;overflow: hidden;border:0;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('#img_edit_armed_cam1_push').attr('src',$('#img_edit_armed_cam1_push').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');">
+			<img id="img_edit_armed_cam1_push" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="width:315.94px;margin-top:-480.2px">
+		</div>
+		<div style="width: 315.94px;height:45px;overflow: hidden;border:0;">
+			<div style="width: 280px;height:50px;overflow: hidden;border:0;">
+				<a href="#" title="" style="z-index: 5;" onClick="$('#img_edit_armed_cam1_email').attr('src',$('#img_edit_armed_cam1_email').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#img_edit_armed_cam1_email_edit').attr('src',$('#img_edit_armed_cam1_email_edit').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'/assets/img/appsim/edit_armed_cam1_off.jpg':'/assets/img/appsim/edit_armed_cam1_on.jpg');$('#link_edit_armed_cam1_email_edit').css('pointer-events',$('#img_edit_armed_cam1_email').attr('src')=='/assets/img/appsim/edit_armed_cam1_on.jpg'?'auto':'none');">
+				<img id="img_edit_armed_cam1_email" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="width:315.94px;margin-top:-531.2px">
+				</a>
+			</div>
+			<a id="link_edit_armed_cam1_email_edit" href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','516.8px');loadScreen('edit_armed_cam1_emailsettings','main_app_display');loadScreen('main_mode_view_head','main_nav_display');">
+			<img id="img_edit_armed_cam1_email_edit" src="/assets/img/appsim/edit_armed_cam1_on.jpg" alt=""/ style="float:right;width:315.94px;margin-top:-581.2px;margin-left:-300px;">
+			</a>
+		</div>
+	</div>
+	
+	<!---- mode device modes edit armed cam1 motion settings-->
+	<div class="hidden_div" id="edit_armed_cam1_motionsettings">
+		<img id="img_edit_armed_cam1_motionsettings" src="/assets/img/appsim/edit_armed_cam1_motionsettings.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0px; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');$('.scroller').css('height','480px');"></a>
+		
+		<div id="motionsettings_slider_value" style="position:absolute;width:100%;top:185px;left:0px;text-align:center;color:#13985a;font-family:sans-serif;font-weight:bold;">80%</div>
+		<div class="edit_armed_cam1_motionsettings_slider" style="position:absolute;left:55px;top:202px;width:205px;">
+			<input type="range" min="0%" max="100%" value="80" class="slider" id="motionslider" oninput = "$('#motionsettings_slider_value').html($('#motionslider').val() + '%');">
+		</div>
+
+	</div>
+	
+
+	
+	<!---- mode device modes edit armed cam1 audio settings-->
+	<div class="hidden_div" id="edit_armed_cam1_audiosettings">
+		<img id="img_edit_armed_cam1_audiosettings" src="/assets/img/appsim/edit_armed_cam1_audiosettings.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0px; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');$('.scroller').css('height','480px');"></a>
+		
+		<div id="audiosettings_slider_value" style="position:absolute;width:100%;top:185px;left:0px;text-align:center;color:#13985a;font-family:sans-serif;font-weight:bold;">3</div>
+		<div class="audiosettings_slider_value" style="position:absolute;left:55px;top:202px;width:205px;">
+			<input type="range" min="1" max="5" value="3" class="slider" id="audioslider" oninput = "$('#audiosettings_slider_value').html($('#audioslider').val());">
+		</div>
+	</div>
+	
+	<!---- mode device modes edit armed cam1 record settings-->
+	<div class="hidden_div" id="edit_armed_cam1_recordsettings">
+		<img id="img_edit_armed_cam1_recordsettings" src="/assets/img/appsim/edit_armed_cam1_recordsettings_motionstop.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0px; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','480px');loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 266px; top: 100px; width: 50px; height: 35px; z-index: 2;" onclick="$('.scroller').css('height','480px');loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 164px; width: 100%; height: 35px; z-index: 2;pointer-events:none;" onclick="loadScreen('mode_display_modes_disarmed','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 200px; width: 100%; height: 35px; z-index: 2;" onclick="loadScreen('edit_armed_cam1_recordsettings_fixedlength','main_app_display');"></a>
+		<div id="recordsettings_slider_value" style="position:absolute;width:309px;top:209px;left:0px;text-align:right;color:#e0e0e0;font-family:sans-serif;font-size:11px;">10 s</div>
+	</div>
+	
+	<!---- mode device modes edit armed cam1 record settings fixedlength-->
+	<div class="hidden_div" id="edit_armed_cam1_recordsettings_fixedlength">
+		<img id="img_edit_armed_cam1_recordsettings" src="/assets/img/appsim/edit_armed_cam1_recordsettings_fixedlength.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0px; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','480px');loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 266px; top: 100px; width: 50px; height: 35px; z-index: 2;" onclick="$('.scroller').css('height','480px');loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 164px; width: 100%; height: 35px; z-index: 2;" onclick="loadScreen('edit_armed_cam1_recordsettings','main_app_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 200px; width: 100%; height: 35px; z-index: 2;pointer-events:none;" onclick="loadScreen('mode_display_modes_disarmed','mode_selection');"></a>
+		
+		<div id="recordsettings_slider_value" style="position:absolute;width:309px;top:209px;left:0px;text-align:right;color:#e0e0e0;font-family:sans-serif;font-size:11px;">10 s</div>
+		<div class="recordsettings_slider_value" style="position:absolute;left:32px;top:235px;width:239px;">
+			<input type="range" min="10" max="120" value="10" class="slider" id="recordslider" oninput = "$('#recordsettings_slider_value').html($('#recordslider').val() + ' s');">
+		</div>
+	</div>
+	
+	<!---- mode device modes edit armed cam1 email settings-->
+	<div class="hidden_div" id="edit_armed_cam1_emailsettings">
+		<img id="img_edit_armed_cam1_emailsettings" src="/assets/img/appsim/edit_armed_cam1_emailsettings.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0px; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','480px');loadScreen('edit_armed_cam1','main_app_display');loadScreen('edit_armed_cam1_head','main_nav_display');"></a>
+		
+	</div>
+	
+	
+	<!---- mode device modes disarmed -->
+	
+	<div class="hidden_div" id="mode_display_modes_disarmed">
+		<a href="#" title="" style="position: absolute; left: 276px; top: 20.99%; width: 40px; height: 7.7%; z-index: 2;" onClick="loadScreen('edit_armed','main_app_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 276px; top: 36.08%; width: 40px; height: 7.7%; z-index: 2;" onClick="loadScreen('edit_schedule','main_app_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 276px; top: 43.87%; width: 40px; height: 7.7%;  z-index: 2;" onClick="loadScreen('edit_geofencing','main_app_display');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 100px; width: 50px; height: 35px; z-index: 2;" onClick="loadScreen('main_mode_view','main_app_display');"></a>
+		<div id='mode_selection'>
+			<img id="img_mode_display_modes" src="/assets/img/appsim/mode_display_modes_disarmed.jpg" alt=""/>
+			<a href="#" title="" style="position: absolute; left: 0%; top: 20.99%; width: 275px; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_armed','mode_selection');"></a>
+			<a href="#" title="" style="position: absolute; left: 0%; top: 36.08%; width: 275px; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_schedule','mode_selection');"></a>
+			<a href="#" title="" style="position: absolute; left: 0%; top: 43.87%; width: 275px; height: 7.7%;  z-index: 2;" onClick="loadScreen('mode_display_modes_geofencing','mode_selection');"></a>
+		</div>
+	</div>
+	
+	<div class="hidden_div" id="mode_display_modes_schedule">
+		<img id="img_mode_display_modes" src="/assets/img/appsim/mode_display_modes_schedule.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 20.99%; width: 275px; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_armed','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 28.38%; width: 100%; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_disarmed','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 43.87%; width: 275px; height: 7.7%;  z-index: 2;" onClick="loadScreen('mode_display_modes_geofencing','mode_selection');"></a>
+	</div>
+	
+	<div class="hidden_div" id="mode_display_modes_geofencing">
+		<img id="img_mode_display_modes" src="/assets/img/appsim/mode_display_modes_geofencing.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 20.99%; width: 275px; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_armed','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 28.38%; width: 100%; height: 7.66%; z-index: 2;" onClick="loadScreen('mode_display_modes_disarmed','mode_selection');"></a>
+		<a href="#" title="" style="position: absolute; left: 0%; top: 36.08%; width: 275px; height: 7.7%; z-index: 2;" onClick="loadScreen('mode_display_modes_schedule','mode_selection');"></a>
+	</div>
+	
+	
+	
+	<!---- main screen navigations-->
+	<div class="hidden_div" id="main_view">
+		<img id="img_app_display" src="/assets/img/appsim/main_view.jpg" alt=""/>
+	</div>
+	
+	<div class="hidden_div" id="main_library_view">
+		<img id="img_app_display" src="/assets/img/appsim/main_library_view.jpg" alt=""/>
+	</div>
+
+	<div class="hidden_div" id="main_mode_view_head">
+		<img id="img_app_display" src="/assets/img/appsim/main_mode_view_head.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 33.33%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_view','main_app_display');loadScreen('main_view_head','main_nav_display');$('#security_button').css('visibility', 'visible').css('display', 'block');"></a>
+		<a href="#" title="" style="position: absolute; left: 66.67%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_library_view','main_app_display');loadScreen('main_library_view_head','main_nav_display');"></a>
+	</div>
+	
+	<div class="hidden_div" id="main_view_head">
+		<img id="img_app_display" src="/assets/img/appsim/main_view_head.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0.09%; top: 9.68%; width: 33.24%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_mode_view','main_app_display');loadScreen('main_mode_view_head','main_nav_display');$('#security_button').css('visibility', 'hidden').css('display', 'none');"></a>
+		<a href="#" title="" style="position: absolute; left: 66.67%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_library_view','main_app_display');loadScreen('main_library_view_head','main_nav_display');$('#security_button').css('visibility', 'hidden').css('display', 'none');"></a>
+	</div>
+	
+	<div class="hidden_div" id="main_library_view_head">
+		<img id="img_app_display" src="/assets/img/appsim/main_library_view_head.jpg" alt=""/>
+		<a href="#" title="" style="position: absolute; left: 0.09%; top: 9.68%; width: 33.24%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_mode_view','main_app_display');loadScreen('main_mode_view_head','main_nav_display');$('#security_button').css('visibility', 'visible').css('display', 'block');"></a>
+		<a href="#" title="" style="position: absolute; left: 33.33%; top: 9.68%; width: 33.33%; height: 5.45%; z-index: 2;" onClick="$('.scroller').css('height','516.8px');loadScreen('main_view','main_app_display');loadScreen('main_view_head','main_nav_display');"></a>
+	</div>
+
+
+	<!---- popups-->
+	<div class="hidden_div" id="settings_popup_container">
+		<div class="hidden_div" id="settings_popup">
+			<img id="img_settings_popup" src="/assets/img/appsim/settings.jpg" alt=""/>
+			<a href="#" title="" style="position: absolute; left: 0px; top: 0px; width: 150px; height: 37.2px; z-index: 5;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');$('#settings_popup').css('visibility', 'hidden').css('display', 'none');$('#settings_popup_container').css('visibility', 'hidden').css('display', 'none');$('#settings_button').css('visibility', 'hidden').css('display', 'none');$('#security_button').css('visibility', 'hidden').css('display', 'none');"></a>
+		</div>
+		<a href="#" title="" style="position: absolute; left: 0px; top: 0px; width: 315.9px; height: 651.7px; z-index: 3;" onClick="$('#settings_popup').css('visibility', 'hidden').css('display', 'none');$('#settings_popup_container').css('visibility', 'hidden').css('display', 'none');"></a>
+	</div>
+	
+	<div class="hidden_div" id="mutenotifications_popup_container">
+		<div class="hidden_div" id="mutenotifications_popup">
+			<img id="img_mutenotifications_popup" src="/assets/img/appsim/mutenotifications_popup.jpg" alt=""/>
+			<a href="#" title="" style="position:absolute;left: 0px; top: 0px; width: 315.88px; height: 422.37px; z-index: 5;" onClick="$('#mutenotifications_popup').css('visibility', 'hidden').css('display', 'none');$('#mutenotifications_popup_container').css('visibility', 'hidden').css('display', 'none');"></a>
+			<a href="#" title="" style="position:absolute;left: 0px; top: 459.37px; width: 315.88px; height: 40px; z-index: 5;" onClick="$('#mutenotifications_popup').css('visibility', 'hidden').css('display', 'none');$('#mutenotifications_popup_container').css('visibility', 'hidden').css('display', 'none');$('#img_settings_main_device_settings_mute').attr('src','/assets/img/appsim/settings_main_mute_30.jpg');"></a>
+			<a href="#" title="" style="position:absolute;left: 0px; top: 499.37px; width: 315.88px; height: 40px; z-index: 5;" onClick="$('#mutenotifications_popup').css('visibility', 'hidden').css('display', 'none');$('#mutenotifications_popup_container').css('visibility', 'hidden').css('display', 'none');$('#img_settings_main_device_settings_mute').attr('src','/assets/img/appsim/settings_main_mute_30.jpg');"></a>
+			<a href="#" title="" style="position:absolute;left: 0px; top: 539.37px; width: 315.88px; height: 40px; z-index: 5;" onClick="$('#mutenotifications_popup').css('visibility', 'hidden').css('display', 'none');$('#mutenotifications_popup_container').css('visibility', 'hidden').css('display', 'none');$('#img_settings_main_device_settings_mute').attr('src','/assets/img/appsim/settings_main_mute_30.jpg');"></a>
+			<a href="#" title="" style="position:absolute;left: 0px; top: 579.37px; width: 315.88px; height: 40px; z-index: 5;" onClick="$('#mutenotifications_popup').css('visibility', 'hidden').css('display', 'none');$('#mutenotifications_popup_container').css('visibility', 'hidden').css('display', 'none');$('#img_settings_main_device_settings_mute').attr('src','/assets/img/appsim/settings_main_mute_30.jpg');"></a>
+		</div>
+	</div>
+
+
+
+
+	<!---- settings-->
+	<div class="hidden_div" id="settings_main_head">
+		<img id="img_settings_main_head" src="/assets/img/appsim/settings_main_head.jpg" alt=""/>
+		<a href="#" title="" id="settings_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="loadScreen('main_view_head','main_nav_display');loadScreen('main_view','main_app_display');$('#settings_button').css('visibility', 'visible').css('display', 'block');$('#security_button').css('visibility', 'visible').css('display', 'block');$('.scroller').css('height','516.8px')"></a>
+	</div>
+	
+	
+	<div class="hidden_div" id="settings_main" style="height:auto;">
+		<div style="width: 315.94px;height:30.7px;overflow: hidden;">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;">
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','579px');loadScreen('settings_mydevices_main_head','main_nav_display');loadScreen('settings_mydevices_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-30.7px;">
+			</a>
+		</div>
+		<div style="width: 315.94px;height:30.7px;overflow: hidden;">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-79.2px;">
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('#mutenotifications_popup').css('visibility', 'visible').css('display', 'block');$('#mutenotifications_popup_container').css('visibility', 'visible').css('display', 'block');">
+			<img id="img_settings_main_device_settings_mute" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-109.9px;">
+			</a>
+		</div>
+		<div style="width: 315.94px;height:30.7px;overflow: hidden;">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-158.4px;">
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="">
+			<img id="img_settings_main_device_settings_subscription" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width:100%;margin-top:-189.1px;" onClick="loadScreen('settings_subscription_main_head','main_nav_display');loadScreen('settings_subscription_main','main_app_display');$('.scroller').css('height','533.15px');">
+			</a>
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-237.6px;">
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','551.125px');loadScreen('settings_profile_main_head','main_nav_display');loadScreen('settings_profile_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-286.1px;">
+			</a>
+			
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_grantaccess_main_head','main_nav_display');loadScreen('settings_grantaccess_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-334.6px;">
+			</a>
+			
+		</div>
+		<div style="width: 315.94px;height:30.7px;overflow: hidden;">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-383.1px;">
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_deviceorder_main_head','main_nav_display');loadScreen('settings_deviceorder_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-413.8px;">
+			</a>
+			
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_managecamerastatus_main_head','main_nav_display');loadScreen('settings_managecamerastatus_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-462.3px;">
+			</a>
+			
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_notifications_main_head','main_nav_display');loadScreen('settings_notifications_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-510.8px;">
+			</a>
+			
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_help_main_head','main_nav_display');loadScreen('settings_help_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-559.3px;">
+			</a>
+			
+		</div>
+		<div style="width: 315.94px;height:48.5px;overflow: hidden;">
+			<a href="#" title="" style="z-index: 5;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_about_main_head','main_nav_display');loadScreen('settings_about_main','main_app_display');">
+			<img id="img_settings_main_device_settings" src="/assets/img/appsim/settings_main.jpg" alt=""/ style="width: 100%;margin-top:-607.8px;">
+			</a>
+			
+		</div>
+	</div>
+	
+	<!--- settings - about--->
+	<div class="hidden_div" id="settings_about_main" style="height:auto;">
+		<img id="img_settings_about_main" src="/assets/img/appsim/settings_about_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_about_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_about_main_head" style="height:auto;">
+		<img id="img_settings_about_main_head" src="/assets/img/appsim/settings_about_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!--- settings - help--->
+	<div class="hidden_div" id="settings_help_main" style="height:auto;">
+		<img id="img_settings_help_main" src="/assets/img/appsim/settings_help_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_help_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_help_main_head" style="height:auto;">
+		<img id="img_settings_help_main_head" src="/assets/img/appsim/settings_help_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!--- settings - notifications--->
+	<div class="hidden_div" id="settings_notifications_main" style="height:auto;">
+		<img id="img_settings_notifications_main" src="/assets/img/appsim/settings_notifications_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_deviceorder_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_notifications_main_head" style="height:auto;">
+		<img id="img_settings_notifications_main_head" src="/assets/img/appsim/settings_notifications_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!--- settings - managecamerastatus--->
+	<div class="hidden_div" id="settings_managecamerastatus_main" style="height:auto;">
+		<img id="img_settings_managecamerastatus_main" src="/assets/img/appsim/settings_managecamerastatus_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_deviceorder_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+			
+	</div>
+	<div class="hidden_div" id="settings_managecamerastatus_main_head" style="height:auto;">
+		<img id="img_settings_managecamerastatus_main_head" src="/assets/img/appsim/settings_managecamerastatus_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	
+	
+	<!--- settings - deviceorder--->
+	<div class="hidden_div" id="settings_deviceorder_main" style="height:auto;">
+		<img id="img_settings_deviceorder_main" src="/assets/img/appsim/settings_deviceorder_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_deviceorder_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+			<a href="#" title="" id="settings_deviceorder_save" style="position: absolute; left: 281px; top: 22px; width: 30px; height: 30px; z-index: 2;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_deviceorder_main_head" style="height:auto;">
+		<img id="img_settings_deviceorder_main_head" src="/assets/img/appsim/settings_deviceorder_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!--- settings - grantaccess - add friend--->
+	<div class="hidden_div" id="settings_grantaccess_addfriend_main" style="height:auto;">
+		<img id="img_settings_grantaccess_addfriend_main" src="/assets/img/appsim/settings_grantaccess_addfriend_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_grantaccess_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_grantaccess_main_head','main_nav_display');loadScreen('settings_grantaccess_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_grantaccess_addfriend_main_head" style="height:auto;">
+		<img id="img_settings_grantaccess_addfriend_main_head" src="/assets/img/appsim/settings_grantaccess_addfriend_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!--- settings - grantaccess--->
+	<div class="hidden_div" id="settings_grantaccess_main" style="height:auto;">
+		<img id="img_settings_grantaccess_main" src="/assets/img/appsim/settings_grantaccess_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_grantaccess_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+			<a href="#" title="" id="settings_grantaccess_addfriend" style="position: absolute; left: 281px; top: 22px; width: 30px; height: 30px; z-index: 2;" onClick="$('.scroller').css('height','559.759px');loadScreen('settings_grantaccess_addfriend_main_head','main_nav_display');loadScreen('settings_grantaccess_addfriend_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_grantaccess_main_head" style="height:auto;">
+		<img id="img_settings_grantaccess_main_head" src="/assets/img/appsim/settings_grantaccess_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!-- settings - profile -->
+	
+	<div class="hidden_div" id="settings_profile_main" style="height:auto;">
+		<img id="img_settings_profile_main" src="/assets/img/appsim/settings_profile_main.jpg" alt=""/ style="width:315.94px;">
+		
+		<a href="#" title="" id="settings_profile_back" style="position: absolute; left: 12px; top: 563px; width: 292px; height: 38px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+		<a href="#" title="" id="settings_deviceorder_back" style="position: absolute; left: 0px; top: 23px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_profile_main_head" style="height:auto;">
+		<img id="img_settings_profile_main_head" src="/assets/img/appsim/settings_profile_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!-- settings - subscription -->
+	
+	<div class="hidden_div" id="settings_subscription_main" style="height:auto;">
+		<img id="img_settings_subscription_main" src="/assets/img/appsim/settings_subscription_main.jpg" alt=""/ style="width:315.94px;">
+		
+		<a href="#" title="" id="settings_mydevices_back" style="position: absolute; left: 240px; top: 30px; width: 70px; height: 45px; z-index: 2;" onClick="$('.scroller').css('height','558.3px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_subscription_main_head" style="height:auto;">
+		<img id="img_settings_subscription_main_head" src="/assets/img/appsim/settings_subscription_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	<!--- settings - my devices --->
+	<div class="hidden_div" id="settings_mydevices_main" style="height:auto;">
+		<img id="img_settings_mydevices_main" src="/assets/img/appsim/settings_mydevices_main.jpg" alt=""/ style="width: 100%;">
+			<a href="#" title="" id="settings_mydevices_back" style="position: absolute; left: 0%; top: 19px; width: 50px; height: 35px; z-index: 2;" onClick="$('.scroller').css('height','579px');loadScreen('settings_main_head','main_nav_display');loadScreen('settings_main','main_app_display');"></a>
+	</div>
+	<div class="hidden_div" id="settings_mydevices_main_head" style="height:auto;">
+		<img id="img_settings_mydevices_main_head" src="/assets/img/appsim/settings_mydevices_main_head.jpg" alt=""/ style="width: 100%;">
+	</div>
+	
+	
+	<script>
+		
+		function loadScreen(next,div){
+			$('#'+div+'').html('');
+			$('#'+div+'').append($('#'+next+'').html());
+		}
+		
+		$( document ).ready(function() {
+			splashScreen();
+		});
+		
+		function showSplash(){
+			$($('#init_load').html()).hide().appendTo($('.phone_container')).fadeIn(3000);
+		}
+		
+		function splashScreen(){
+			$($('#intro_load').html()).hide().appendTo($('.phone_container')).fadeIn(3000);
+			$('#intro_display').fadeOut(3000);
+			setTimeout(function(){$('#intro_display').remove();}, 6000);
+			setTimeout(showSplash, 3000);
+		}
+		
+		//setTimeout(myFunction, 3000)
+	</script>
+</body>
+</html>
+
+
+
+

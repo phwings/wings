@@ -1,0 +1,243 @@
+
+<html>
+<head>
+
+<link rel="stylesheet" href="assets/css/carousel.css">
+<link rel="stylesheet" href="assets/css/index.css">
+<link rel="stylesheet" href="assets/font/css/all.css">
+<link rel="stylesheet" href="assets/font/css/fontawesome.css">
+<link rel="stylesheet" href="assets/font/css/solid.css">
+<link rel="stylesheet" href="assets/js/jqueryui/jquery-ui.css">
+<link rel="stylesheet" href="assets/css/dropdown.css">
+<link rel="stylesheet" href="assets/css/arleebird.css">
+<link rel="stylesheet" href="assets/css/chat.css">
+
+<script src="assets/js/jquery-3.4.1.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/socket/socket.io.js"></script>
+<!--<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>-->
+<script>
+
+</script>
+
+</head>
+<body onload="if((localStorage.getItem('expertName')==null)||(localStorage.getItem('expertName')=='')){getName();}else{expertName=localStorage.getItem('expertName');recordUser(localStorage.getItem('expertName'));};loadExternal('metrics','loadMetricsscript');/*loadExternal('L2_tracker','loadL2trackerscript');*/ecommerceCalc();">
+<div id="background"></div>
+<div id="quicklinks_panel" class="sidebar" style="color:white;" onmouseover="toggleQuicklinks($(this));" onmouseout="toggleQuicklinks($(this));">
+	Quick Links
+	<div class="row">
+		<div id="quicklinks">
+			<a href="#" class="newAnimateStandard" onclick="loadTxt('standard');loadData(currentRecord);displayPhonetics('name','namephonetics');displayPhonetics('email','emailphonetics');$('#counter').val(currentRecord);$('.callflow_expertname').html(localStorage.getItem('expertName'))">Standard</a>
+			<a href="#" onclick="loadExternal('compare','loadCompareScript');">Compare </a>
+			<a href="#" onclick="loadExternal('references-subscription','loadref-subscriptionscript');">New Service Plans </a>
+			<a href="#" onclick="loadExternal('references-RATLS','loadref-ratlsscript');">RATLS <b class="newAnimate" style="display:inline;color:#16c4b6">NEW</b></a>
+			<a href="#" id="modal_btn_questions" onclick="$('#modal_question').css('display','block');">Enter Subscription Question </a>
+			<div style="position:absolute;bottom:70px;font-size:10px;font-family:Verdana">
+				<div class="hiddenDiv">
+				<div>Warehouse Holiday Schedule/Cut-off:</div><br>
+				<div style="color:#5ec4ff">Tracelogix (US):</div>
+				<div>12/24/19 2PM CST</div>
+				<div style="color:#ff7373">12/25/19 CLOSED</div>
+				<div>12/26/19 2PM CST</div>
+				<div style="color:#ff7373">01/01/20 CLOSED</div>
+				<div style="color:#ff7373">01/02/20 CLOSED</div>
+				<br>
+				<div style="color:#5ec4ff">Ingram (UK):</div>
+				<div style="color:#ff7373">12/25/19 CLOSED</div>
+				<div style="color:#ff7373">12/26/20 CLOSED</div>
+				<div style="color:#ff7373">01/01/20 CLOSED</div>
+				<br>
+				<div style="color:#5ec4ff">Brightstar (Aus):</div>
+				12/24/19<br>
+				 -Cutoff: 12PM ET<br>
+				 -Closed: 3PM ET<br>
+				<div style="color:#ff7373">12/25/19 CLOSED</div>
+				<div style="color:#ff7373">12/26/19 CLOSED</div>
+				12/31/19<br>
+				 -Cutoff: 12PM ET<br>
+				 -Closed: 3PM ET<br>
+				<div style="color:#ff7373">01/01/20 CLOSED</div>
+				<br>
+				<div style="color:#5ec4ff">Brightstar (NZ):</div>
+				12/24/19<br>
+				 -Cutoff: 12PM NZST<br>
+				 -Closed: 3PM NZST<br>
+				<div style="color:#ff7373">12/25/19 CLOSED</div>
+				<div style="color:#ff7373">12/26/19 CLOSED</div>
+				12/31/19<br>
+				 -Cutoff: 12PM NZST<br>
+				 -Closed: 3PM NZST<br>
+				<div style="color:#ff7373">01/01/20 CLOSED</div>
+				</div>
+				<hr>
+				<div href="#" id="ecomTimeEST"></div>
+				<div href="#" id="ecomTimeCST"></div>
+				<div href="#" id="ecomTimePST"></div>
+				<div href="#" id="ecomStatus"></div>
+				<br>
+				ECOM #<br> 18667037170
+				<br><br>
+				CCT #<br> 18338986988
+				<br>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="navbar">
+	
+	<a href="#" id="modal_btn_comment" style="float:right" onclick="$('#modal_comment').css('display','block');">Comment</a>
+	
+	<a href="#" id="btn_updates" style="float:right" onclick="getUpdates(function(html){$('#modal_update_list_table').html(html);$('#modal_update_list').css('display','block');updateCounter=0;$('#updateBadge').addClass('hiddenDiv');});">Updates<span class="updatebadge hiddenDiv" id="updateBadge">0</span></a>
+	
+
+	<div class="footer">
+		<span class="secretLinks" id='resetName'><a href="#" >ver8.92b</a>
+		</span>
+		<span class="secretLinks" id="localip" style="vertical-align:top!important;float:left;color:white!important;font-size:14px!important;"></span>
+		<span class="secretLinks" id='installvdbtemp'><!--<a href="#" onclick="$('#content').load('videodoorbell/install-videodoorbell-beta.html','',function(){showSlides(79,0)});">vdb</a>-->
+		</span>
+		<img src="img/arlowings_logo.png" height="100%" style="font-size:14pt;color:#ff0000" alt="IMPROPER INSTALLATION DETECTED. FOLLOW THE INSTRUCTIONS ON HOW TO INSTALL ARLO WINGS. PLEASE CHECK YOUR EMAIL FOR PROPER INSTALLATION. THIS INSTANCE OF ARLO WINGS MIGHT MALFUNCTION, AND SOME FEATURES MAY NOT BE AVAILABLE." onclick="//arleeopen=true;$('#modal_arlee').css('display','block');if(!arleeloaded){init();$('#testCanvas').css('display','none');$('#arleeloading').css('display','block');}">
+		<span class="secretLinks" style="color:#aaaaaa;float:right;padding:auto;"><a href="#" style="padding:0px;" onclick="loadTxt('infiniti')">&#x221e; </a>&nbsp;&nbsp;
+			<span onclick="$('#modal_name').css('display','block');">eric colmenares</span></span>
+	</div>
+
+	<div id="modal_comment" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="$('#modal_comment').css('display','none');">&times;</span>
+			<p>Enter your message:</p>
+			<textarea id="submit_comment" cols="100" rows="10" style="width:100%"></textarea><br><br>
+			<button onclick="saveComment($('#submit_comment').val());$('#submit_comment').val('');document.getElementById('modal_comment').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_comment').val('');">Clear</button>
+		</div>
+	</div>
+	
+	<div id="modal_question" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="$('#modal_question').css('display','none');">&times;</span>
+			<p>Enter your question:</p>
+			<textarea id="submit_question" cols="100" rows="10" style="width:100%"></textarea><br><br>
+			<button onclick="saveQuestion($('#submit_question').val());$('#submit_question').val('');document.getElementById('modal_question').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_question').val('');">Clear</button>
+		</div>
+	</div>
+	
+	<div id="modal_name" class="modal">
+		<div class="modal-content" style="text-align:center;border: 2px solid red; border-radius:25px;">
+			<h1 style="color:red">IMPORTANT!</h1>
+			<h3>Please enter your expert name. <br><br>This will be used for automating the EMAIL TEMPLATES and CHAT.</h3>
+			<h3>Failure to do so will result in NULL values.</h3><br><br>
+			Name: <input id="name_expert" type="text">
+			<button onclick="document.getElementById('modal_name').style.display = 'none';localStorage.setItem('expertName',$('#name_expert').val().trim());console.log(localStorage.getItem('expertName'));expertName=$('#name_expert').val().trim();recordUser($('#name_expert').val().trim());showMessage('Diane','<br><br>Legacy Cameras are those cameras that can still do cloud recording even without a Subscription. These would be the Wire-free, Pro, Pro2, Q, Q+, Baby, Go, and Baby. The term Legacy is for our own internal use.',17);showMessage('Brad','<br><br>Kindly inquire from your SME/TM regarding the Holiday Treat from Arlo. As per GC, there will be releasing at 2AM 12/24/2019.',19);">Submit</button>
+			<br><br>
+		</div>
+	</div>
+	
+	<div id="modal_vdb_video" class="modal">
+		<div id="modal_vdb_video_content" class="modal-content">
+			
+			<video id="vdb_video" width="100%" height="auto" autoplay controls>
+				<source id="vdb_video_src" src="" type="video/mp4">
+				Your browser does not support the video tag.
+			</video><br><br>
+		</div>
+	</div>
+	
+	<div id="modal_message" class="modal">
+		<div id="modal_message_content" class="modal-content" style="font-size:12px!important;">
+			<span class="close" onclick="$('#modal_message').css('display','none');">&times;</span>
+			Hi <span id="modal_message_name"></span>! Thank you so much for your comment.<br>
+			<span id="modal_message_reply"></span>
+			<br><br><br>
+			<span style="float:right;">Eric</span>
+		</div>
+	</div>
+	
+	<div id="modal_arlee" class="modal">
+		<div id="modal_arlee_content" class="modal-content" style="font-size:12px!important;width:auto;height:auto;max-height:600px;max-width:450px;">
+			<div id="arleeloading" style="text-align:center;">Loading.. please wait.<br><img src="img/arlobird.gif" width="100px"/></div>
+			<canvas alt="Loading.. please wait." id="testCanvas" width="768" height="1024" style="width:auto;height:auto;max-height:600px;max-width:100%;">Loading.. please wait.</canvas>
+		</div>
+	</div>
+
+	<div id="modal_update" class="modal" style="overflow:hidden">
+		<div class="modal-content" style="height:75%;min-height:600px">
+			<span class="close" onclick="$('#modal_update').css('display','none');">&times;</span>
+			<br><br>
+			Update Title: <input type="text" id="update_title" style="width:75%"><br><br>
+			Update Text:<br>
+			<textarea id="submit_update" cols="100" style="width:100%;height:85%"></textarea><br><br>
+			<button onclick="saveUpdate($('#update_title').val(),$('#submit_update').val());saveUpdate2($('#update_title').val(),$('#submit_update').val());$('#submit_update').val('');$('#update_title').val('');document.getElementById('modal_update').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_update').val('');$('#update_title').val('');">Clear</button>
+		</div>
+	</div>
+
+	<div id="modal_update_list" class="modal" >
+		<div class="modal-content" style="margin-left:50px;margin-right:50px;width:auto!important;max-height:600px;">
+			<span class="close" onclick="$('#modal_update_list').css('display','none');">&times;</span>
+			<br><br>
+			<h3>Recent Updates</h3>
+			<input type="search" id="update_filter" placeholder="Search" title="Type in anything" style="width:20%" oninput="filter('modal_update_list_table','update_filter')">
+			<div style="overflow:scroll;overflow-x: hidden;max-height:40%;">
+				<table id="modal_update_list_table" style="font-size:10px;width:100%;border-collapse:collapse;">
+				</table><br><br>
+			</div>
+			<br>
+			<button onclick="document.getElementById('modal_update_list').style.display = 'none';">Close</button>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="main">
+<div class="snowflakes" aria-hidden="true">
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+</div>
+
+
+<script src="assets/js/dropdown.js"></script>
+<script src="assets/js/jquery.mark.min.js"></script>
+<script src="assets/js/jqueryui/jquery-ui.js"></script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtvTP2iB2UPrK27kMlIbPck6GiHNQgeOI&libraries=places&callback=initAutocomplete"
+        async defer></script>
+<script src="assets/js/createjs-2013.09.25.min.js"></script>
+<script src="assets/js/ndgmr.Collision.js"></script>
+<script src="assets/js/arleebird.js"></script>
+</body>
+</html>
