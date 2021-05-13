@@ -1,0 +1,17 @@
+Nm5nqvn1iw###1592427424894###41741804###
+Hi, 
+
+I need your assistance on this case number  41741804.
+
+Concern:  Geofencing shows unavailable on the cx phone.
+Here's what we have done so far:
+1.Enable GPS or location services so that Arlo can locate his device.
+2.Check all permissions on your phone settings
+3.Suggest to  add the other mobile devices using grant access and check if it shows enabled on Geofencing
+4. Delete your account on grant access and re-setup
+5. Renamed affected device
+6.Cx also tried to uninstalling/reinstalling the application - no success
+- cleared application cache - no success
+- cleared application memory - no success
+
+#%#1592427481834###INFIESTO, NINA JAN OCANA###Did you restart the phone(s) after changing the name?#%#1592427620702###SAYSON, CHERRY ANNE ASAYAS###Yes.#%#1592427671041###INFIESTO, NINA JAN OCANA###Have you tried swapping log ins with the grant access account?#%#1592427695142###INFIESTO, NINA JAN OCANA###So that the main account is logged in on the grant access phone and vice versa?#%#1592427738976###SAYSON, CHERRY ANNE ASAYAS###Yes, I informed the cx however her wife's phone is currently not in the same location.#%#1592427751798###Disconnected:###INFIESTO, NINA JAN OCANA has been disconnected. Chat consult terminated.#%#.

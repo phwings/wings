@@ -1,0 +1,62 @@
+<div class="hiddenDiv" id="ccteosScript">
+    getCCTEOS();
+    outFunc();
+</div>
+<h4>CCT End of Shift Report</h4>
+<br>
+
+<div class="row" style="width:100%">
+    <input id="CCTEOS_index" type="text" style="width:100%" hidden>
+    <div class="column" style="width:15%">
+        <pre>Case Number</pre>
+        <input id="CCTEOS_casenum" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:20%">
+        <pre>Skills</pre>
+        <select id="CCTEOS_skills" style="width:100%">
+            <option value="CNX CCT Consult">CNX CCT Consult</option>
+            <option value="CCT ARLO Callback">CCT ARLO Callback</option>
+            <option value="iOpex CCT Consult">iOpex CCT Consult</option>
+            <option value="L2 - CCT Consult">L2 - CCT Consult</option>
+            <option value="Outbound Arlo CCT">Outbound Arlo CCT</option>
+            <option value="TCM CCT Consult">TCM CCT Consult</option>
+        </select>
+    </div>
+    <div class="column" style="width:10%">
+        <pre>AHT</pre>
+        <input id="CCTEOS_AHT" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:10%">
+        <pre>Status</pre>
+        <select id="CCTEOS_status" style="width:100%;text-align-last:center;">
+            <option value="Closed">Closed</option>
+            <option value="Open">Open</option>
+        </select>
+    </div>
+    <div class="column" style="width:30%">
+        <pre>Remarks</pre>
+        <input id="CCTEOS_remarks" type="text" style="width:100%">
+    </div>
+
+</div>
+
+<br>
+
+<button onclick="loadExternal('/partials/templates/standard','standardScript');" ><< Standard</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="addCCTEOSEntry" onclick="saveCCTEOS($('#CCTEOS_casenum').val(),$('#CCTEOS_skills').val(),$('#CCTEOS_AHT').val(),$('#CCTEOS_status').val(),$('#CCTEOS_remarks').val());getCCTEOS();">Add Case</button>
+<button id="updateCCTEOSEntry" class="hiddenDiv" onclick="updateCCTEOS($('#CCTEOS_index').val(),$('#CCTEOS_casenum').val(),$('#CCTEOS_skills').val(),$('#CCTEOS_AHT').val(),$('#CCTEOS_status').val(),$('#CCTEOS_remarks').val());getCCTEOS();" style="border: 2px solid #ad4500;">Update Entry</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="resetCCTEOS();">Reset</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br>
+<div class="tooltip">
+    <button onclick="selectElementContents( document.getElementById('CCTEOS_table') );" onmouseout="outFunc();">
+        <span class="tooltiptext" id="myTooltip"></span>
+        Copy Report
+    </button>
+</div>
+<br><br><br>
+<div id="displayCCTEOS" width="70%">
+
+</div>
+</div>

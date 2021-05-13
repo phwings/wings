@@ -1,0 +1,33 @@
+<h4>Productivity Calculator</h4>
+<br>
+<div class="row">
+    <div class="column" style="text-align:right;font-size:19.5px;padding-right:5px;">
+        Available Time:<br>
+        Inbound Time:<br>
+        Outbound Time:<br>     
+        Total:<br>
+        Deficit:<br><br>
+        <button onclick="calcProductivity('avail','in','out','total','deficit')">Calculate</button>&nbsp;&nbsp;&nbsp;<button>Reset</button>
+    </div>
+    <div class="column">
+        <b>
+        <input class="prodNum" size="2" type="number" min="0" max="24" id="availHour" value=00>:<input class="prodNum" size="2" type="number" min="0" max="59" id="availMin" value=00>:<input class="prodNum" size="2" type="number" min="0" max="59" id="availSec" value=00><br>
+        <input class="prodNum" size="2" type="number" min="0" max="24" id="inHour" value=00>:<input class="prodNum" size="2" type="number" min="0" max="59" id="inMin" value=00>:<input class="prodNum" size="2" type="number" min="0" max="59" id="inSec" value=00><br>
+        <input class="prodNum" size="2" type="number" min="0" max="24" id="outHour" value=00>:<input class="prodNum" size="2" type="number" min="0" max="59" id="outMin" value=00>:<input class="prodNum" size="2" type="number" min="0" max="59" id="outSec" value=00><br>
+        <input class="prodNum" size="2" type="number" min="0" max="24" id="totalHour" value=00 disabled>:<input class="prodNum" size="2" type="number" min="0" max="59" id="totalMin" value=00 disabled>:<input class="prodNum" size="2" type="number" min="0" max="59" id="totalSec" value=00 disabled><br>
+        <input style="color:red" class="prodNum" size="2" type="number" min="0" max="24" id="deficitHour" value=07 disabled>:<input style="color:red" class="prodNum" size="2" type="number" min="0" max="59" id="deficitMin" value=30 disabled>:<input style="color:red" class="prodNum" size="2" type="number" min="0" max="59" id="deficitSec" value=00 disabled><br>
+        <br>
+        
+        </b>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<br><br>

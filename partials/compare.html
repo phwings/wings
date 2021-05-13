@@ -1,0 +1,467 @@
+<div class="hiddenDiv" id="loadCompareScript">compareColumns=0;$('.compare').css('width','16%');$('.compare').addClass('compare-hidden');$('.compare-tbody').addClass('compare-hidden');</div>
+
+<h4 class="pro3">Camera Comparison</h4>
+<br>
+<table>
+	<tr >
+		<td style="border:none;vertical-align:top">
+			<select id="compare-selector" oninput="compareShow($('#compare-selector').val());$('#compare-selector').val(0);">
+				<option value="0" class="selectheader" selected disabled>Select Cameras to View</option>
+				<option class="compare-option" id="wf-option" value="wf">Wire-free</option>
+				<option class="compare-option" id="essential-option" value="essential">Essential</option>
+				<option class="compare-option" id="pro-option" value="pro">Pro</option>
+				<option class="compare-option" id="pro2-option" value="pro2">Pro 2</option>
+				<option class="compare-option" id="pro3-option" value="pro3">Pro 3</option>
+				<option class="compare-option" id="ultra-option" value="ultra">Ultra</option>
+			</select>
+		</td>
+		<td style="border:none;">
+			<div class="multiselect">
+				<div class="selectBox" onclick="showCheckboxes()">
+				  <select>
+					<option>Select Filter</option>
+				  </select>
+				  <div class="overSelect"></div>
+				</div>
+				<div id="checkboxes">
+					<div class="compare-filter compare-filtered" id="filter-video" onclick="compareFilter('video')">
+						Video
+					</div>
+					<div class="compare-filter compare-filtered" id="filter-connectivity" onclick="compareFilter('connectivity')">
+						Connectivity
+					</div>
+					<div class="compare-filter compare-filtered" id="filter-detection" onclick="compareFilter('detection')">
+						Motion and Audio
+					</div>
+					<div class="compare-filter compare-filtered" id="filter-nightvision" onclick="compareFilter('nightvision')">
+						Night Vision and Lighting
+					</div>
+					<div class="compare-filter compare-filtered" id="filter-power" onclick="compareFilter('power')">
+						Power, Battery, and Connector
+					</div>
+					<div class="compare-filter compare-filtered" id="filter-compatibility" onclick="compareFilter('compatibility')">
+						Compatibility
+					</div>
+					<div class="compare-filter compare-filtered" id="filter-features" onclick="compareFilter('features')">
+						Features
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
+
+
+<table class="compare-table" align="center">
+	<tr>
+		<th class="compare-header" rowspan="2" style="width:20%;">Cameras:</th>
+		<th class="compare compare-camera-header wfcompare"><span class="compare-hide-camera hide-wf" onclick="compareHide('wf');"></span></th>
+		<th class="compare compare-camera-header essentialcompare"><span class="compare-hide-camera hide-essential" onclick="compareHide('essential');"></span></th>
+		<th class="compare compare-camera-header procompare"><span class="compare-hide-camera hide-pro" onclick="compareHide('pro');"></span></th>
+		<th class="compare compare-camera-header pro2compare"><span class="compare-hide-camera hide-pro2" onclick="compareHide('pro2');"></span></th>
+		<th class="compare compare-camera-header pro3compare"><span class="compare-hide-camera hide-pro3" onclick="compareHide('pro3');"></span></th>
+		<th class="compare compare-camera-header ultracompare"><span class="compare-hide-camera hide-ultra" onclick="compareHide('ultra');"></span></th>
+		<th class="selectcompare" rowspan="34" style="vertical-align:top">No Cameras to Compare</th>
+	</tr>
+	<tr>
+		<th class="compare compare-camera wfcompare">Wire-free</th>
+		<th class="compare compare-camera essentialcompare">Essential</td>
+		<th class="compare compare-camera procompare">Pro</td>
+		<th class="compare compare-camera pro2compare">Pro 2</th>
+		<th class="compare compare-camera pro3compare">Pro 3</th>
+		<th class="compare compare-camera ultracompare">Ultra</th>
+		
+	</tr>
+	<tbody class="compare-tbody compare-video-tbody">
+		<th class="compare-section" colspan="7">Video Details</th>
+		<tr>
+			<th align="right">Resolution</th>
+			<td class="compare wfcompare" align="center">HD (HD - 720p)</td>
+			<td class="compare essentialcompare" align="center">FHD (Full HD - 1080p)</td>
+			<td class="compare procompare" align="center">HD (HD - 720p)</td>
+			<td class="compare pro2compare" align="center">FHD (Full HD - 1080p)</td>
+			<td class="compare pro3compare" align="center">2K QHD (Quad HD)</td>
+			<td class="compare ultracompare" align="center">4K UHD (Ultra HD)</td>
+		</tr>
+		<tr>
+			<th align="right">High Dynamic Range</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Video Compression</th>
+			<td class="compare wfcompare" align="center">H.264</td>
+			<td class="compare essentialcompare" align="center">H.264</td>
+			<td class="compare procompare" align="center">H.264</td>
+			<td class="compare pro2compare" align="center">H.264</td>
+			<td class="compare pro3compare" align="center">H.264 & H.265<br>(HEVC)</td>
+			<td class="compare ultracompare" align="center">H.264 & H.265<br>(HEVC)</td>
+		</tr>
+		<tr>
+			<th align="right">FPS</th>
+			<td class="compare wfcompare" align="center">24 fps</td>
+			<td class="compare essentialcompare" align="center">24 fps*</td>
+			<td class="compare procompare" align="center">24 fps</td>
+			<td class="compare pro2compare" align="center">24 fps</td>
+			<td class="compare pro3compare" align="center">24 fps</td>
+			<td class="compare ultracompare" align="center">24 fps</td>
+		</tr>
+		<tr>
+			<th align="right">Digital Zoom</th>
+			<td class="compare wfcompare" align="center"></td>
+			<td class="compare essentialcompare" align="center">12x</td>
+			<td class="compare procompare" align="center">8x</td>
+			<td class="compare pro2compare" align="center">8x</td>
+			<td class="compare pro3compare" align="center">12x</td>
+			<td class="compare ultracompare" align="center">12x</td>
+		</tr>
+	</tbody>
+	<tbody class="compare-tbody compare-connectivity-tbody">
+		<th class="compare-section" colspan="7">Connectivity</th>
+		<tr>
+			<th align="right">Wireless</th>
+			<td class="compare wfcompare" align="center">2.4GHz 802.11b/g/n</td>
+			<td class="compare essentialcompare" align="center">2.4GHz 802.11b/g/n*</td>
+			<td class="compare procompare" align="center">2.4GHz 802.11b/g/n</td>
+			<td class="compare pro2compare" align="center">2.4GHz 802.11b/g/n</td>
+			<td class="compare pro3compare" align="center">2.4GHz 802.11b/g/n</td>
+			<td class="compare ultracompare" align="center">2.4GHz and 5GHz 802.11 b/g/n/ac</td>
+		</tr>
+		<tr>
+			<th align="right">Direct to AP (AP Mode)</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" />*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Wireless Speed</th>
+			<td class="compare wfcompare" align="center">72Mbps @20MHz<br>150Mbps @40MHz</td>
+			<td class="compare essentialcompare" align="center">74Mbps @20MHz<br>150Mbps @40MHz*</td>
+			<td class="compare procompare" align="center">74Mbps @20MHz<br>150Mbps @40MHz</td>
+			<td class="compare pro2compare" align="center">74Mbps @20MHz<br>150Mbps @40MHz</td>
+			<td class="compare pro3compare" align="center">74Mbps @20MHz<br>150Mbps @40MHz</td>
+			<td class="compare ultracompare" align="center"></td>
+		</tr>
+		<tr>
+			<th align="right">Upload Speed Requirement<br>(per Camera)</th>
+			<td class="compare wfcompare" align="center">1 MBps</td>
+			<td class="compare essentialcompare" align="center">1 MBps*</td>
+			<td class="compare procompare" align="center">1 MBps</td>
+			<td class="compare pro2compare" align="center">1 MBps</td>
+			<td class="compare pro3compare" align="center">2 MBps<br>4 MBps @ 2K</td>
+			<td class="compare ultracompare" align="center">3 MBps<br>4 MBps @ 4K</td>
+		</tr>
+		<tr>
+			<th align="right">Zwave</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" />*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Zigbee</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" />*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">ArloRF&trade;</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" />*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+	</tbody>
+	<tbody class="compare-tbody compare-detection-tbody">
+		<th class="compare-section" colspan="7">Motion and Audio</th>
+		<tr>
+			<th align="right">Motion Detection</th>
+			<td class="compare wfcompare" align="center">PIR</td>
+			<td class="compare essentialcompare" align="center">PIR</td>
+			<td class="compare procompare" align="center">PIR</td>
+			<td class="compare pro2compare" align="center">PIR<br>Video-based</td>
+			<td class="compare pro3compare" align="center">PIR<br>Video-based</td>
+			<td class="compare ultracompare" align="center">PIR<br>Video-based</td>
+		</tr>
+		<tr>
+			<th align="right">Motion Detection Range</th>
+			<td class="compare wfcompare" align="center">1 PIR: 15 feet</td>
+			<td class="compare essentialcompare" align="center">1 PIR: 23 ft</td>
+			<td class="compare procompare" align="center">1 PIR: 23 ft</td>
+			<td class="compare pro2compare" align="center">1 PIR: 23 ft</td>
+			<td class="compare pro3compare" align="center">PIR<br>Video-based: 50 ft</td>
+			<td class="compare ultracompare" align="center">2 Quad PIR: 25 ft<br>Video-based: 50 ft</td>
+		</tr>
+		<tr>
+			<th align="right">Field of View</th>
+			<td class="compare wfcompare" align="center">110&deg;</td>
+			<td class="compare essentialcompare" align="center">130&deg;</td>
+			<td class="compare procompare" align="center">110&deg;</td>
+			<td class="compare pro2compare" align="center">130&deg;</td>
+			<td class="compare pro3compare" align="center">160&deg;</td>
+			<td class="compare ultracompare" align="center">180&deg;</td>
+		</tr>
+		<tr>
+			<th align="right">Audio</td>
+			<td class="compare wfcompare" align="center">N/A</th>
+			<td class="compare essentialcompare" align="center">Full Duplex</td>
+			<td class="compare procompare" align="center">Half Duplex</td>
+			<td class="compare pro2compare" align="center">Half Duplex</td>
+			<td class="compare pro3compare" align="center">Full Duplex</td>
+			<td class="compare ultracompare" align="center">Full Duplex</td>
+		</tr>
+		<tr>
+			<th align="right">Microphones</td>
+			<td class="compare wfcompare" align="center">N/A</th>
+			<td class="compare essentialcompare" align="center">1</td>
+			<td class="compare procompare" align="center">1</td>
+			<td class="compare pro2compare" align="center">1</td>
+			<td class="compare pro3compare" align="center">1</td>
+			<td class="compare ultracompare" align="center">2</td>
+		</tr>
+		<tr>
+			<th align="right">Audio Processing</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" />*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center">Echo Cancellation</td>
+			<td class="compare ultracompare" align="center">Wind Reduction and Echo Cancellation</td>
+		</tr>
+		<tr>
+			<th align="right">Audio Detection</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Smart Siren in Camera</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center">Built in Smart Siren</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center">Built in Smart Siren</td>
+			<td class="compare ultracompare" align="center">Built in Smart Siren</td>
+		</tr>
+		<tr>
+			<th align="right">Smart Siren Loudness</th>
+			<td class="compare wfcompare" align="center">N/A</td>
+			<td class="compare essentialcompare" align="center">Not specified</td>
+			<td class="compare procompare" align="center">N/A</td>
+			<td class="compare pro2compare" align="center">N/A</td>
+			<td class="compare pro3compare" align="center">80 db</td>
+			<td class="compare ultracompare" align="center"></td>
+		</tr>
+		<tr>
+			<th align="right">Smart Siren Range</th>
+			<td class="compare wfcompare" align="center">N/A</td>
+			<td class="compare essentialcompare" align="center">Not specified</td>
+			<td class="compare procompare" align="center">N/A</td>
+			<td class="compare pro2compare" align="center">N/A</td>
+			<td class="compare pro3compare" align="center">25 ft</td>
+			<td class="compare ultracompare" align="center"></td>
+		</tr>
+	</tbody>
+	
+	<tbody class="compare-tbody compare-nightvision-tbody">
+		<th class="compare-section" colspan="7">Night Vision and Lighting</th>
+		<tr>
+			<th align="right">Spotlight</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Spotlight Illumination Range</th>
+			<td class="compare wfcompare" align="center">N/A</td>
+			<td class="compare essentialcompare" align="center">Not specified</td>
+			<td class="compare procompare" align="center">N/A</td>
+			<td class="compare pro2compare" align="center">N/A</td>
+			<td class="compare pro3compare" align="center">25 ft</td>
+			<td class="compare ultracompare" align="center">25 ft</td>
+		</tr>
+		<tr>
+			<th align="right">Spotlight Brightness</th>
+			<td class="compare wfcompare" align="center">N/A</td>
+			<td class="compare essentialcompare" align="center">Not specified</td>
+			<td class="compare procompare" align="center">N/A</td>
+			<td class="compare pro2compare" align="center">N/A</td>
+			<td class="compare pro3compare" align="center">40 lux @ 1 m</td>
+			<td class="compare ultracompare" align="center"></td>
+		</tr>
+		<tr>
+			<th align="right">Night Vision</th>
+			<td class="compare wfcompare" align="center">12 850nm LEDs</td>
+			<td class="compare essentialcompare" align="center">2 850nm LEDs</td>
+			<td class="compare procompare" align="center">8 850nm LEDs</td>
+			<td class="compare pro2compare" align="center">8 850nm LEDs</td>
+			<td class="compare pro3compare" align="center">2 850nm LEDs</td>
+			<td class="compare ultracompare" align="center">2 850nm LEDs</td>
+		</tr>
+		<tr>
+			<th align="right">Night Vision Field of View</th>
+			<td class="compare wfcompare" align="center">80&deg;</td>
+			<td class="compare essentialcompare" align="center">Not specified</td>
+			<td class="compare procompare" align="center">110&deg;</td>
+			<td class="compare pro2compare" align="center">130&deg;</td>
+			<td class="compare pro3compare" align="center">160&deg;</td>
+			<td class="compare ultracompare" align="center">180&deg;</td>
+		</tr>
+		<tr>
+			<th align="right">Illumination Range</th>
+			<td class="compare wfcompare" align="center">25 ft</td>
+			<td class="compare essentialcompare" align="center">Not specified</td>
+			<td class="compare procompare" align="center">25 ft</td>
+			<td class="compare pro2compare" align="center">25 ft</td>
+			<td class="compare pro3compare" align="center">25 ft</td>
+			<td class="compare ultracompare" align="center">25 ft</td>
+		</tr>
+		<tr>
+			<th align="right">Color Night Vision</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center">Yes, 15 ft*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center">Yes, 15 ft</td>
+			<td class="compare ultracompare" align="center">Yes, 15 ft</td>
+		</tr>
+	</tbody>
+	<tbody class="compare-tbody compare-power-tbody">
+		<th class="compare-section" colspan="7">Power, Battery, and Connector</th>
+		<tr>
+			<th align="right">Battery</th>
+			<td class="compare wfcompare" align="center">CR123A (4 pcs)</td>
+			<td class="compare essentialcompare" align="center">Non-removeable, rechargeable</td>
+			<td class="compare procompare" align="center">2440mAh</td>
+			<td class="compare pro2compare" align="center">2440mAh</td>
+			<td class="compare pro3compare" align="center">4800mAh</td>
+			<td class="compare ultracompare" align="center">4800mAh</td>
+		</tr>
+		<tr>
+			<th align="right">Battery Life</th>
+			<td class="compare wfcompare" align="center">3-6 mos</td>
+			<td class="compare essentialcompare" align="center">6-12 mos*</td>
+			<td class="compare procompare" align="center">4-6 mos</td>
+			<td class="compare pro2compare" align="center">4-6 mos</td>
+			<td class="compare pro3compare" align="center">3-6 mos</td>
+			<td class="compare ultracompare" align="center">3-6 mos</td>
+		</tr>
+		<tr>
+			<th align="right">Weatherproof Connector</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Lock Mount Connector</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" />*</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Outdoor Charging</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /><br>Solar Panel Only</td>
+			<td class="compare procompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+	</tbody>
+	<tbody class="compare-tbody compare-compatibility-tbody">
+		<th class="compare-section" colspan="7">Compatibility</th>
+		<tr>
+			<th align="right">Extended Battery Compatibility</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Solar Panel Compatibility</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Base Station Compatibility</th>
+			<td class="compare wfcompare" align="center">VMB3000<br>VMB3500<br>VMB4000<br>VMB4500<br>VMB4540<br>VMB5000</td>
+			<td class="compare essentialcompare" align="center">VMB4000<br>VMB4500<br>VMB4540<br>VMB5000</td>
+			<td class="compare procompare" align="center">VMB3000<br>VMB3500<br>VMB4000<br>VMB4500<br>VMB4540<br>VMB5000</td>
+			<td class="compare pro2compare" align="center">VMB3000<br>VMB3500<br>VMB4000<br>VMB4500<br>VMB4540<br>VMB5000</td>
+			<td class="compare pro3compare" align="center">VMB4000<br>VMB4500<br>VMB4540<br>VMB5000</td>
+			<td class="compare ultracompare" align="center">VMB4540<br>VMB5000</td>
+		</tr>
+	</tbody>
+	<tbody class="compare-tbody compare-features-tbody">
+		<th class="compare-section" colspan="7">Features</th>
+		<tr>
+			<th align="right">Auto Zoom & Tracking</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">CVR</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Foresight</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+		<tr>
+			<th align="right">Local Livestreaming</th>
+			<td class="compare wfcompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare essentialcompare" align="center"><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare procompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro2compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare pro3compare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+			<td class="compare ultracompare" align="center"><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain" /></td>
+		</tr>
+	</tbody>
+</table>
+<br><br><b>

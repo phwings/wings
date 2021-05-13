@@ -1,0 +1,215 @@
+<div id="modal_comment" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="$('#modal_comment').css('display','none');">&times;</span>
+        <p>Enter your message:</p>
+        <textarea id="submit_comment" cols="100" rows="10" style="width:100%"></textarea><br><br>
+        <button onclick="saveComment($('#submit_comment').val());$('#submit_comment').val('');document.getElementById('modal_comment').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_comment').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_loyalty" class="modal">
+    <div class="modal-content" style="border-radius: 10px;padding:10px;">
+        <span class="close" onclick="$('#modal_loyalty').css('display','none');">&times;</span>
+        <br>
+        <h5>Customer Loyalty Discount Program</h5>
+        <br>
+        <b>Note: All fields are required.</b><br><br>
+        <div class="row">
+            <div class="column" style="text-align:right;width:20%">Case Number:&nbsp;</div>
+            <div class="column"><input id="loyalty_cn" style="width:100%" type="text"></div>
+            <div class="column" style="text-align:right;width:20%"">Asset:&nbsp;</div>
+            <div class="column">
+                <select id="loyalty_asset" style="width:100%">
+                    <option value='' class="selectheader" selected disabled>Select asset</option>
+                </select>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="column" style="text-align:right;width:20%"">Email Address:&nbsp;</div>
+            <div class="column"><input id="loyalty_email" style="width:100%" type="text"></div>
+            <div class="column" style="text-align:right;width:20%"">Serial Number:&nbsp;</div>
+            <div class="column"><input id="loyalty_serial" style="width:100%" type="text"></div>
+        </div><br>
+        <div class="row">
+            <div class="column" style="text-align:right;width:20%"">Warranty:&nbsp;</div>
+            <div class="column">
+                <select id="loyalty_warranty" style="width:100%" >
+                    <option value='' class="selectheader" selected disabled>Select warranty type</option>
+                    <option value=0>Out of Warranty</option>
+                    <option value=1>In Warranty</option>
+                </select>
+            </div>
+            <div class="column" style="text-align:right;width:20%"">Symptom:&nbsp;</div>
+            <div class="column"><input id="loyalty_symptom" style="width:100%" type="text"></div>
+        </div>
+        <p>Notes:</p>
+        <textarea id="loyalty_notes" cols="100" rows="10" style="width:100%"></textarea><br><br>
+        <button id="generate_loyalty" onclick="checkLoyaltyDuplicate($('#loyalty_email').val(),$('#loyalty_warranty').val())">Generate Code</button>
+        &nbsp;&nbsp;&nbsp;<button id="clear_loyalty" onclick="$('#loyalty_cn').val('');$('#loyalty_email').val('');$('#loyalty_notes').val('');$('#loyalty_warranty').val('');$('#loyalty_code').val('');$('#loyalty_asset').val('');$('#loyalty_serial').val('');$('#loyalty_symptom').val('');$('#generate_loyalty').prop('disabled',false);">Clear</button>
+        <p>Loyalty Promo Code: <input id="loyalty_code" type="text" size=30 disabled></p>
+        <span id="loyalty_error_duplicate" class="hiddenDiv"><span>Email address was already provided with </span><span id="loyalty_prev"></span><span>. <br>Do you want to provide another?<br><br>
+        <button onclick="getLoyalty($('#loyalty_cn').val(),$('#loyalty_email').val(),$('#loyalty_notes').val(),$('#loyalty_asset').val(),$('#loyalty_serial').val(),$('#loyalty_symptom').val(),$('#loyalty_warranty').val());$('#loyalty_error_duplicate').addClass('hiddenDiv');">Yes</button>
+        <button onclick="$('#generate_loyalty').prop('disabled',false);$('#clearloyalty').prop('disabled',false);$('#loyalty_error_duplicate').addClass('hiddenDiv');">No</button></span></span>
+        <span id="loyalty_error_maxexceptions" class="hiddenDiv"><span>Email address already provided with </span><span id="loyalty_prev1"></span> and <span id="loyalty_prev2"></span><span>. <br>Maximum exceptions has been reached.</span></span>
+        
+    </div>
+</div>
+
+<div id="modal_question" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="$('#modal_question').css('display','none');">&times;</span>
+        <p>Enter your question:</p>
+        <textarea id="submit_question" cols="100" rows="10" style="width:100%"></textarea><br><br>
+        <button onclick="saveQuestion($('#submit_question').val());$('#submit_question').val('');document.getElementById('modal_question').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_question').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_name" class="modal">
+    <div class="modal-content" style="text-align:center;border: 2px solid red; border-radius:25px;">
+        <h1 style="color:red">IMPORTANT!</h1>
+        <h3>Please enter your expert name. <br><br>This will be used for automating the EMAIL TEMPLATES and CHAT.</h3>
+        <h3>Failure to do so will result in NULL values.</h3><br><br>
+        Name: <input id="name_expert" type="text">
+        <button onclick="document.getElementById('modal_name').style.display = 'none';localStorage.setItem('expertName',$('#name_expert').val().trim());console.log(localStorage.getItem('expertName'));expertName=$('#name_expert').val().trim();recordUser($('#name_expert').val().trim());showMessage('Diane','<br><br>Legacy Cameras are those cameras that can still do cloud recording even without a Subscription. These would be the Wire-free, Pro, Pro2, Q, Q+, Baby, Go, and Baby. The term Legacy is for our own internal use.',17);showMessage('Brad','<br><br>Kindly inquire from your SME/TM regarding the Holiday Treat from Arlo. As per GC, there will be releasing at 2AM 12/24/2019.',19);">Submit</button>
+        <br><br>
+    </div>
+</div>
+
+<div id="modal_vdb_video" class="modal" >
+    <div id="modal_vdb_video_content" class="modal-content" style="margin-top:10px;text-align:center">
+        <video id="vdb_video_full" height="80%" width="auto" autoplay controls style="text-align:center">
+            <source id="vdb_video_src" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video><br><br>
+    </div>
+</div>
+
+<div id="modal_message" class="modal">
+    <div id="modal_message_content" class="modal-content" style="font-size:12px!important;">
+        <span class="close" onclick="$('#modal_message').css('display','none');">&times;</span>
+        Hi <span id="modal_message_name"></span>! Thank you so much for your comment.<br>
+        <span id="modal_message_reply"></span>
+        <br><br><br>
+        <span style="float:right;">Eric</span>
+    </div>
+</div>
+
+<div id="modal_arlee" class="modal">
+    <div id="modal_arlee_content" class="modal-content" style="margin-top:0;font-size:12px!important;width:auto;height:auto;max-height:600px;max-width:450px;">
+        <div id="arleeloading" style="text-align:center;">Loading.. please wait.<br><img src="/assets/img/arlobird.gif" width="100px"/></div>
+        <canvas alt="Loading.. please wait." id="testCanvas" width="768" height="1024" style="width:auto;height:auto;max-height:600px;max-width:100%;">Loading.. please wait.</canvas>
+    </div>
+</div>
+
+<div id="modal_QA" class="modal" style="background-color:none">
+    <span class="close" onclick="$('#modal_QA').css('display','none');">&times;</span>
+    <div id="modal_QA_content" class="modal-content" style="display:inline-block;margin-bottom:0px;margin-top:0;font-size:12px!important;height:90%;max-width:500px;border:solid 0px;background-color:rgba(0,0,0,0)!important">
+        
+    </div>
+</div>
+
+<div id="modal_update" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <span class="close" onclick="$('#modal_update').css('display','none');">&times;</span>
+        <br><br>
+        <form id="updateform">
+            Update Title: <input type="text" id="update_title" style="width:75%" required><br><br>
+            Update Text:<br>
+            <textarea id="submit_update" cols="100" style="width:100%;height:75%;resize:none" required></textarea><br><br>
+            <input type="hidden" name="action" value="update_form">
+            <button id="update_button" type="submit" onclick="saveUpdate($('#update_title').val(),$('#submit_update').val());" value="update_form">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_update').val('');$('#update_title').val('');">Clear</button>
+        </form>
+    </div>
+</div>
+
+<div id="modal_update_list" class="modal" >
+    <div class="modal-content" style="margin-left:50px;margin-right:50px;width:auto!important;max-height:600px;">
+        <span class="close" onclick="$('#modal_update_list').css('display','none');">&times;</span>
+        <br><br>
+        <h3>Recent Updates</h3>
+        <input type="search" id="update_filter" placeholder="Search" title="Type in anything" style="width:20%" oninput="filter('modal_update_list_table','update_filter')">
+        <br><br>
+        <div style="overflow-y:scroll;overflow-x:hidden;max-height:40%;display:inline-block;width:100%;border:1px solid black;">
+            <div style="width:99%;">
+                <table id="modal_update_list_table" style="font-size:10px;width:100%!important;border-collapse:collapse;padding-right:10px;border-left:0px">
+                </table>
+            </div>
+            <br><br>
+        </div>
+        <br>
+        <button onclick="document.getElementById('modal_update_list').style.display = 'none';">Close</button>
+    </div>
+</div>
+
+<div id="modal_commitment" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <input type="text" id="commitment_modal_escalation_id" hidden></input>
+        <span class="close" onclick="$('#modal_commitment').css('display','none');">&times;</span>
+        <br><br>
+        <b>Your commitment:</b><br>
+        <textarea id="submit_commitment" cols="100" style="width:100%;height:80%"></textarea><br><br>
+        <button onclick="saveCommitment($('#commitment_modal_escalation_id').val(),$('#submit_commitment').val());update_notify($('#commitment_modal_escalation_id').val(),'0010');$('#modal_commitment').css('display','none');">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_commitment').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_feedback" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <input type="text" id="feedback_modal_escalation_id" hidden></input>
+        <span class="close" onclick="$('#modal_feedback').css('display','none');">&times;</span>
+        <br><br>
+        Your feedback:<br>
+        <textarea id="submit_feedback" cols="100" style="width:100%;height:80%"></textarea><br><br>
+        <button onclick="saveFeedback($('#feedback_modal_escalation_id').val(),$('#submit_feedback').val());update_notify($('#feedback_modal_escalation_id').val(),'1101');$('#modal_feedback').css('display','none');">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_feedback').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_remarks" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <span class="close" onclick="$('#modal_remarks').css('display','none');">&times;</span>
+        <input type="text" id="remarks_modal_escalation_id" hidden></input>
+        <b>Previous remarks:</b><br><br>
+        <div id="previous_remarks" style="width:100%;height:40%"></div><br><br>
+        
+        <br><br>
+        <b>Your remarks:</b><br>
+        <textarea id="submit_remarks" cols="100" style="width:100%;height:30%"></textarea><br><br>
+        <button onclick="updateRemarks($('#remarks_modal_escalation_id').val(),$('#previous_remarks').html() +'<br><b>'+expertName+'</b>:<br>' +$('#submit_remarks').val());$('#modal_remarks').css('display','none');$('#submit_remarks').val('');">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_remarks').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_commitment_consult" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <input type="text" id="commitment_modal_consult_id" hidden></input>
+        <span class="close" onclick="$('#modal_commitment_consult').css('display','none');">&times;</span>
+        <br><br>
+        <b>Your commitment:</b><br>
+        <textarea id="submit_commitment_consult" cols="100" style="width:100%;height:80%"></textarea><br><br>
+        <button onclick="saveCommitmentConsult($('#commitment_modal_consult_id').val(),$('#submit_commitment_consult').val());update_notifyConsult($('#commitment_modal_consult_id').val(),'0010');$('#modal_commitment_consult').css('display','none');">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_commitment_consult').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_feedback_consult" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <input type="text" id="feedback_modal_consult_id" hidden></input>
+        <span class="close" onclick="$('#modal_feedback_consult').css('display','none');">&times;</span>
+        <br><br>
+        Your feedback:<br>
+        <textarea id="submit_feedback_consult" cols="100" style="width:100%;height:80%"></textarea><br><br>
+        <button onclick="saveFeedbackConsult($('#feedback_modal_consult_id').val(),$('#submit_feedback_consult').val());update_notifyConsult($('#feedback_modal_consult_id').val(),'1101');$('#modal_feedback_consult').css('display','none');">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_feedback_consult').val('');">Clear</button>
+    </div>
+</div>
+
+<div id="modal_remarks_consult" class="modal" style="overflow:hidden">
+    <div class="modal-content" style="height:75%;min-height:600px">
+        <span class="close" onclick="$('#modal_remarks_consult').css('display','none');">&times;</span>
+        <input type="text" id="remarks_modal_consult_id" hidden></input>
+        <b>Previous remarks:</b><br><br>
+        <div id="previous_remarks_consult" style="width:100%;height:40%"></div><br><br>
+        
+        <br><br>
+        <b>Your remarks:</b><br>
+        <textarea id="submit_remarks_consult" cols="100" style="width:100%;height:30%"></textarea><br><br>
+        <button onclick="updateRemarksConsult($('#remarks_modal_consult_id').val(),$('#previous_remarks_consult').html() +'<br><b>'+expertName+'</b>:<br>' +$('#submit_remarks_consult').val());$('#modal_remarks_consult').css('display','none');$('#submit_remarks_consult').val('');">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_remarks_consult').val('');">Clear</button>
+    </div>
+</div>
+

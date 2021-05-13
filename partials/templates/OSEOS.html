@@ -1,0 +1,59 @@
+<div class="hiddenDiv" id="oseosScript">
+    getOSEOS();
+    outFunc();
+</div>
+<h4>OS End of Shift Report</h4>
+<br>
+
+<div class="row" style="width:100%">
+    <input id="OSEOS_index" type="text" style="width:100%" hidden>
+    <div class="column" style="width:15%">
+        <pre>Case Number</pre>
+        <input id="OSEOS_casenum" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:15%">
+        <pre>Order Number</pre>
+        <input id="OSEOS_ordernum" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:20%">
+        <pre>Concern</pre>
+        <input id="OSEOS_concern" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:10%">
+        <pre>AHT</pre>
+        <input id="OSEOS_AHT" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:10%">
+        <pre>Status</pre>
+        <select id="OSEOS_status" style="width:100%;text-align-last:center;">
+            <option value="Closed">Closed</option>
+            <option value="Open">Open</option>
+        </select>
+    </div>
+    <div class="column" style="width:30%">
+        <pre>Remarks</pre>
+        <input id="OSEOS_remarks" type="text" style="width:100%">
+    </div>
+
+</div>
+
+<br>
+
+<button onclick="loadExternal('/partials/templates/standard','standardScript');" ><< Standard</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="addOSEOSEntry" onclick="saveOSEOS($('#OSEOS_casenum').val(),$('#OSEOS_ordernum').val(),$('#OSEOS_concern').val(),$('#OSEOS_AHT').val(),$('#OSEOS_status').val(),$('#OSEOS_remarks').val());getOSEOS();">Add Case</button>
+<button id="updateOSEOSEntry" class="hiddenDiv" onclick="updateOSEOS($('#OSEOS_index').val(),$('#OSEOS_casenum').val(),$('#OSEOS_ordernum').val(),$('#OSEOS_concern').val(),$('#OSEOS_AHT').val(),$('#OSEOS_status').val(),$('#OSEOS_remarks').val());getOSEOS();" style="border: 2px solid #ad4500;">Update Entry</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="resetOSEOS();">Reset</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br>
+<div class="tooltip">
+    <button onclick="selectElementContents( document.getElementById('OSEOS_table') );" onmouseout="outFunc();">
+        <span class="tooltiptext" id="myTooltip"></span>
+        Copy Report
+    </button>
+</div>
+<br><br><br>
+<div id="displayOSEOS" width="70%">
+
+</div>
+</div>

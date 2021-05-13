@@ -1,0 +1,267 @@
+<div class="hiddenDiv" id="loadL2trackerscript">
+	//$('#FAQ-selector').val('videodoorbell/FAQ-videodoorbell');displayOption('FAQ');
+	console.log(userlevel);
+	if(usertype=='TM'){
+		$('#escalation_entry_collapse').addClass('hiddenDiv');
+		$('#intervention_entry_collapse').addClass('hiddenDiv');
+	}
+	if(userlevel==1){
+		$('#intervention_table_collapse').addClass('hiddenDiv')
+		$('#escalation_entry_collapse').addClass('hiddenDiv')
+		$('#intervention_entry_collapse').addClass('hiddenDiv')
+		$('#escalation_table_collapse').click();
+	}
+
+	$('.toggleL2feedbackbutton').on('click',function(){
+		$(this).toggleClass('hiddenColumn');
+		if($(this).hasClass('hiddenColumn')){
+			console.log($(this).data('columnnum'));
+			$('#escalation_table td:nth-child('+$(this).data("columnnum")+')').css('display','none');
+		}else{
+			$('#escalation_table td:nth-child('+$(this).data("columnnum")+')').css('display','table-cell');
+		}
+		
+	})
+
+	updateInterventionTable();
+	updateEscalationTable();
+	resetIntervention();
+	resetEscalation();
+
+
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+	//console.log(coll)
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+			content.style.display = "none";
+			} else {
+			content.style.display = "block";
+			}
+		});
+	}
+</div>
+<br><br>
+<div type="button" class="collapsible" id="escalation_entry_collapse"><h5><span class="escalation_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>&nbsp;&nbsp;&nbsp;Escalation Data Entry</h5></div>
+<div class="escalation_div_input escalation_div" id="L2_escalation">
+	<div class="escalation_edit hiddenDiv"><h5 style="background-color:orangered">Edit Mode</h5></div>
+	<div class="escalation_add"><h5 style="background-color:royalblue">Add Mode</h5></div>
+	<input type="text" id="escalation_id" hidden>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Case Number:
+		</div>
+		<div class="column">
+			<input type="text" id="escalation_casenumber" style="width:100%">
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Escalated to:
+		</div>
+		<div class="column">
+			<input id="L2_list_escalation" class="L2_list escalation" style="width:100%" readonly>
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Escalated by:
+		</div>
+		<div class="column">
+			<select id="L1_list_escalation_source" class="L1_list escalation" style="width:100%" onchange="getTM($('#L1_list_escalation_source').val(),function(TMname,TMCES){$('#escalation_TM').val('');$('#escalation_TM').val(TMname);$('#escalation_TM').attr('data-tm',TMCES)});">
+			</select>
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Invalid?
+		</div>
+		<div class="column">
+			<input type="checkbox" id="escalation_invalid" disabled checked>
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Reason of Invalid Escalation:
+		</div>
+		<div class="column">
+			<select id="escalation_invalidreason" style="width:100%">
+				<option value="Incorrect Tagging">Incorrect Tagging</option>
+				<option value="Did not download doorbell logs/BS Logs">Did not download doorbell logs/BS Logs</option>
+				<option value="Did not follow Call handler/TS guidelines">Did not follow Call handler/TS guidelines</option>
+				<option value="Did not escalate for Issue attachment">Did not escalate for Issue attachment</option>
+				<option value="Inaccurate TS Recommendation or Resolution">Inaccurate TS Recommendation or Resolution</option>
+				<option value="Inaccurate/Unclear Case Documentation">Inaccurate/Unclear Case Documentation</option>
+				<option value="Delayed Escalation">Delayed Escalation</option>
+				<option value="Did not processed callback nor endorsed for callback">Did not processed callback nor endorsed for callback</option>
+				<option value="Did not follow escalation process">Did not follow escalation process</option>
+				<option value="Did not escalate to L2">Did not escalate to L2</option>
+				<option value="Providing Wrong Information">Providing Wrong Information</option>
+				<option value="Did Not follow the RMA process">Did Not follow the RMA process</option>
+				<option value="Closing Case without resolution">Closing Case without resolution</option>
+				<option value="Incomplete case isolation">Incomplete case isolation</option>
+			</select>
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Select Device:
+		</div>
+		<div class="column">
+			<select class="escalation" id="escalation_product" style="width:100%">
+			</select>
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Expert's Opportunity:
+		</div>
+		<div class="column">
+			<textarea id="escalation_opportunity" style="width:100%" rows="5"></textarea>
+			
+		</div>
+	</div>
+	<div class="row escalation">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Team Manager:
+		</div>
+		<div class="column">
+			<input type="text" id="escalation_TM" style="width:100%" readonly>
+		</div>
+	</div>
+	<div class="row escalation hiddenDiv">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Coaching Feedback:
+		</div>
+		<div class="column">
+			<input type="text" id="escalation_feedback" style="width:100%">
+		</div>
+	</div>
+	<div class="row escalation hiddenDiv">
+		<div class="column" style="width:auto;min-width:220px;">	
+			Expert's Encountered Challenges<br>and Commitment:
+		</div>
+		<div class="column">
+			<input type="text" id="escalation_commitment" style="width:100%">
+		</div>
+	</div>
+	<br>
+	<span class="escalation_add">
+		<button onclick="save_escalation(
+			$('#L1_list_escalation_source').val(),
+			JSON.parse(getCookie('userdetails')).users_CES,
+			$('#escalation_casenumber').val(),
+			$('#escalation_product').val(),
+			$('#escalation_invalid').val(),
+			$('#escalation_invalidreason').val(),
+			$('#escalation_opportunity').val(),
+			$('#escalation_feedback').val(),
+			$('#escalation_commitment').val(),
+			new Date().toLocaleString('en-US', {timeZone: 'Asia/Manila'}));">
+			Save
+		</button>
+	</span>
+	<span class="escalation_edit hiddenDiv">
+		<button onclick="update_escalation(
+			$('#escalation_id').val(),
+			$('#L1_list_escalation_source').val(),
+			JSON.parse(getCookie('userdetails')).users_CES,
+			$('#escalation_casenumber').val(),
+			$('#escalation_product').val(),
+			$('#escalation_invalid').val(),
+			$('#escalation_invalidreason').val(),
+			$('#escalation_opportunity').val(),
+			$('#escalation_feedback').val(),
+			$('#escalation_commitment').val(),
+			new Date().toLocaleString('en-US', {timeZone: 'Asia/Manila'}));">
+			Update
+		</button>
+	</span>
+	<br><br>
+	<div id="escalation_status"></div>
+</div>
+
+<div type="button" class="collapsible" id="escalation_table_collapse"><h5><span class="escalation_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>&nbsp;&nbsp;&nbsp;Invalid Escalations</h5></div>
+<div class="escalation_div_table escalation_div" id="escalation_div_table">
+	<button id="saveasxlsbutton" onclick="/*tableToExcel(escalation_table, 'invald escalation', 'export_data.xlsx')*/exportTableToExcel('escalation_table','')">Save as XLS</button>&nbsp;&nbsp;&nbsp;<input style="width:300px" type="search" id="escalation_filter" placeholder="Search" title="Type in anything" style="width:100%" oninput="filter('escalation_table','escalation_filter')"></input>
+	<button id="generatel2report" onclick="generateEscalationReport($('#monthselector_l2report').val())">Generate Report for Month of:</button>
+	<select id="monthselector_l2report">
+		<option value="1">January</option>
+		<option value="2">February</option>
+		<option value="3">March</option>
+		<option value="4">April</option>
+		<option value="5">May</option>
+		<option value="6">June</option>
+		<option value="7">July</option>
+		<option value="8">August</option>
+		<option value="9" selected>September</option>
+		<option value="10">October</option>
+		<option value="11">November</option>
+		<option value="12">December</option>
+	</select>
+	<br>
+	<button class="toggleL2feedbackbutton" id="cctos_date_toggle" data-columnnum="1" >Date</button>
+	<button class="toggleL2feedbackbutton" id="cctos_L2_toggle" data-columnnum="2">Reported By</button>
+	<button class="toggleL2feedbackbutton" id="cctos_L1_toggle" data-columnnum="3">Expert</button>
+	<button class="toggleL2feedbackbutton" id="cctos_casenumber_toggle" data-columnnum="4">Case Number</button>
+	<button class="toggleL2feedbackbutton" id="cctos_Product_toggle" data-columnnum="5">Product</button><br>
+	<button class="toggleL2feedbackbutton" id="cctos_Reason_toggle" data-columnnum="6">Reason</button>
+	<button class="toggleL2feedbackbutton" id="cctos_TM_toggle" data-columnnum="7">TM</button>
+	<button class="toggleL2feedbackbutton" id="cctos_opportunity_toggle" data-columnnum="8">Expert's Opportunity</button>
+	<button class="toggleL2feedbackbutton" id="cctos_TMfeedback_toggle" data-columnnum="9">TM Feedback</button>
+	<button class="toggleL2feedbackbutton" id="cctos_commit_toggle" data-columnnum="10">Expert's Commitment</button>
+	<table id="escalation_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+	</table>
+	
+		
+</div>
+
+
+<div type="button" class="collapsible" id="intervention_table_collapse"><h5><span class="intervention_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>&nbsp;&nbsp;&nbsp;Interventions during Idle</h5></div>
+<div class="intervention_div_table intervention_div" id="intervention_div_table">
+	<table id="intervention_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+	</table>
+</div>
+
+<div type="button" class="collapsible" id="intervention_entry_collapse"><h5><span class="intervention_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>&nbsp;&nbsp;&nbsp;Intervention Data Entry</h5></div>
+<div class="intervention_div_input intervention_div" id="L2_intervention">
+	
+	Coached by:
+	<select id="L2_list_intervention" class="L2_list intervention">
+	</select>
+	
+	<br><br>
+	Select Experts Coached:<br>
+	<div>
+		<select id="L1_list_intervention_source" class="L1_list intervention" size="10" multiple="multiple" style="height:200px;width:45%">
+		</select>
+		<span style="display:inline-block">
+			<br><br><br>
+			<button onclick="$('#L1_list_intervention_source').val().forEach(option=>{$('#L1_list_intervention_dest').append(new Option($('#L1_list_intervention_source option[value=&quot' + option + '&quot]').text(), option));$('#L1_list_intervention_source option[value=&quot' + option + '&quot]').remove();});sortSelect('L1_list_intervention_dest');">>></button>
+			<br><br><br>
+			<button onclick="$('#L1_list_intervention_dest').val().forEach(option=>{$('#L1_list_intervention_source').append(new Option($('#L1_list_intervention_dest option[value=&quot' + option + '&quot]').text(), option));$('#L1_list_intervention_dest option[value=&quot' + option + '&quot]').remove();});sortSelect('L1_list_intervention_source');"><<</button>
+		</span>
+
+		<select id="L1_list_intervention_dest" class="L2_list intervention" size="10" multiple="multiple" style="height:200px;width:45%">
+		</select>
+	</div>
+	<br>
+	Topic Covered:
+	<input class="intervention" id="intervention_topic" size="50"/>
+	<br><br>
+	Select Devices Covered:<br>
+	<select class="intervention" id="intervention_product" size="10" multiple="multiple" style="height:200px;width:45%">
+	</select>
+	<br><br>
+	<button onclick="save_intervention($('#L2_list_intervention').val(),$('#L1_list_intervention_dest option').get().map(function(option){return option.value}),$('#intervention_topic').val(),$('#intervention_product').val())">Save</button>
+	<br><br>
+	<div id="intervention_status"></div>
+</div>
+<!--
+$.map(options ,function(option) {
+    return option.value;
+});
+-->

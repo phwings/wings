@@ -1,0 +1,101 @@
+<div class="row" >
+    <div class="column" style="width:200px;">
+        Customer First Name:<br><input id="template_cxname" type="text" style="width:100%"></input>
+    </div>
+    <div class="column" style="width:200px;">
+        Case Number:<br><input id="template_casenum" type="text" style="width:100%"></input>
+    </div>
+</div>
+<br>
+<button onclick="generateTemplate();">Generate Templates</button>
+&nbsp;&nbsp;&nbsp;
+<button onclick="loadExternal('/partials/templates/caseClosure')">Reset</button>
+
+<h4>Case Followup</h4>
+
+<textarea id="email_followup_templates" rows="20" cols="70">
+Hi, <<CUXNAME>>
+
+Good day!
+
+I am doing a follow up on your open case regarding your Arlo camera system. I would appreciate if you could give a reply to provide feedback updates regarding your case, or please visit https://arlo.com/en-us/support/contact.aspx to contact us, so that we may continue to work with your case.
+
+When you call, refer to your case number <<CASENUMBER>> for us to immediately pull up your information. We provide technical support from 6 AM to 6 PM PST, so you may call us at your most convenient time. If there is no response from you soon, your case will be closed due to inactivity.
+
+For more information you may visit us at https://support.arlo.com and https://community.arlo.com.
+
+Kind regards,
+    
+
+<<EXPERTNAME>>
+Arlo Support Expert
+</textarea>
+
+<h4>Case Followup with callback</h4>
+<textarea id="email_followupcallback_templates" rows="20" cols="70">
+Greetings from your Arlo Support.
+
+Hi, <<CUXNAME>>.  This is <<EXPERTNAME>>, the Arlo expert who assisted you regarding your concern, with case ID <<CASENUMBER>>.
+
+We would love to hear from you if everything is all set. If not, please provide us an update so that we can continue to work on your case. A reply at your earliest convenience would be much appreciated
+
+Please provide the following information should you need further assistance.
+Preferred call back time
+Preferred call back number
+Time zone
+
+For other concerns with your Arlo product, please feel free to visit our Support Center at https://support.arlo.com so you can decide through which channel you wish to get in touch with us.
+
+Thank you for choosing Arlo.
+
+Kind regards, 
+
+<<EXPERTNAME>>
+Arlo Support Expert
+</textarea>
+
+<h4>Case Followup with KB</h4>
+<textarea id="email_followupkb_templates" rows="20" cols="70">
+Hi,
+
+Good day!
+
+This is <<EXPERTNAME>> from Arlo Support, the one who assisted you earlier on your support case <<CASENUMBER>>. Here's the KB article that you can use for your future reference in case the same issue happens again:
+
+<<KB ARTICLE>>
+    
+Hope this information helps! Please be informed that your device comes with 1 year of hardware warranty and the support entitlement is tied up with the service plan which is on Basic.
+
+In case you need further assistance, please feel free to reach us anytime. We are open ^ AM to 6 PM PST. Please be reminded that this case will auto-close after 7 days of inactivity.
+
+For Arlo Support options, please refer to https://support.arlo.com and https://community.arlo.com for more details.
+
+It was a pleasure assisting you. Once again, thank you for choosing Arlo. Have a great day!
+
+Kind regards,
+
+    
+<<EXPERTNAME>>
+Arlo Support Expert
+</textarea>
+
+<h4>Case Closure</h4>
+<textarea id="email_close_templates" rows="20" cols="70">
+Hi,
+
+Good day!
+
+My name is <<EXPERTNAME>> and this is with regard to your Arlo support case <<CASENUMBER>>.
+
+Once I close this case, shortly thereafter you will receive a survey on your email. With this, please do rate the service and support I have provided you regarding your query.
+
+For Arlo Support options, please refer to https://support.arlo.com and https://community.arlo.com for more details.
+
+It was a pleasure assisting you. Once again, thank you for choosing Arlo. Have a great day!
+
+Regards,
+
+<<EXPERTNAME>>
+Arlo Support Expert
+</textarea>
+<br><br><br>

@@ -1,0 +1,231 @@
+<div class="hiddenDiv" id="loadTSscript">
+	$('#vdb_sipcall').load('/partials/troubleshooting/TS-SIP.html');</div>
+
+<h4>Video Doorbell</h4>
+<table style="border-collapse:collapse!important;" id="TS_table">
+	<tr class="TS_row">
+		<td>
+			<h5>No doorbells were found</h5>
+			<ul>
+				<li><a href="#cannot-scan-qr">No Chime tone + Solid <b>WHITE</b> LED ring pattern)</li>
+				<li><a href="#cannot-connect-wifi">With Chime tone + Solid <b>WHITE</b> LED ring pattern</a></li>
+				<li><a href="#cannot-discover-doorbell">With Chime tone + Flashing <b>WHITE</b> LED ring pattern)</li>
+			</ul>
+		</td>
+	</tr>
+
+
+	<tr class="TS_row">
+		<td>
+			<h5>Possible Low Battery at Onboarding</h5>
+			<b>Scenario</b>
+			<p>Customer states that the Arlo Video Doorbell is not exhibiting a solid white LED ring indicating it is ready for setup and has confirmed that the breaker is turned on.</p>
+			<b>Symptom/Issue</b>
+			<p>Customer has complete connecting the Power Kit to the chime, connected the existing wiring to the back of the Video Doorbell and confirmed that the breaker has been turned on and does not see the LED ring turn solid white.</p>
+			<p>The LED ring on the front of the Video Doorbell provides information on the doorbell state:</p>
+			<ul>
+				<li><b>SOLID</b><b style="color:darkorange"> AMBER</b> - Voltage is too low, customer should upgrade their transformer.</li>
+				<li><b>FLASHING</b><b style="color:darkorange"> AMBER</b><b> / WHITE</b> - Internal battery is low, customer should leave doorbell connected to AC power for 15 - 30 minutes and check that the LED ring transitions to <b>SOLID WHITE</b>.</li>
+				<li><b>NO LED</b> - Power is not connected, customer should verify the wiring did not come loose or disconnected when mounting the doorbell.</li>
+			</ul>
+			<b>Confirmation of Issue</b>
+			<p>Customer performed a second check on all connections and ensure the breaker is turned on but still does not see the LED ring turn solid white.</p>
+			<b>Action</b>
+			<p>At this point, it may be possible that the customer has a unit that may be affected by a less than sufficient charge to begin the onboarding process and need to be charged.</p>
+			<p>Gather the serial number from the customer's Video Doorbell.</p>
+			<p>Check if the Video Doorbell serial number is present in the affected Video Doorbells list:<br><a href="https://app.smartsheet.com/sheets/fPF488FMxQxHcwmPPP6M2664vWxQpvR5cWph2MH1?view=grid">https://app.smartsheet.com/sheets/fPF488FMxQxHcwmPPP6M2664vWxQpvR5cWph2MH1?view=grid</a></p>
+			
+			<b>Solution</b>
+			<p>If the serial number is in the list of affected devices, inform the customer that the Video Doorbell's internal battery most likely needs time to be charged in order to begin the onboarding process. It may take between 15 to 30 minutes to charge to a sufficient operatin level.</p>
+			<p>Offer a call back to see if the customer needs additional help after the Video Doorbell has had the appropriate amount of time to charge.</p>
+		</td>
+	</tr>
+	
+	<tr class="TS_row">
+		<td>
+			<h5>Chime constantly buzzing/ringing</h5>
+			<b>Possible Causes</b>
+			<ul>
+				<li>Transformer Issue</li>
+				<li>Multiple video doorbells / traditional doorbell & Arlo Video DB</li>
+				<li>Need extra Power Kit</li>
+				<li>Refer to HelloTech</li>
+			</ul>
+		</td>
+	</tr>
+	
+	<tr class="TS_row">
+		<td>
+			<h5>LED off</h5>
+			<b>No power to the unit</b>
+			<ul>
+				<li>Customer should confirm that they turned the power back on at the breakers</li>
+				<li>Customer should confirm that the wiring on the back of the doorbell is connected after mounting</li>
+			</ul>
+		</td>
+	</tr>
+
+	<tr class="TS_row">
+		<td>
+			<h5>LED: Solid <b style="color:darkorange">Amber</b></h5>
+			<b>Voltage is below 16VAC - permanent state</b>
+			<ul>
+				<li>Check voltage, if possible – may need to contact an electrician – must be above 16VAC</li>
+				<li>Confirm voltage listed on chime / transformer, if safe to do so, can take pictures</li>
+				<li>Customer will not be able to proceed with onboarding at this point</li>
+				<li>Customer could contact electrician to replace in-home transformer</li>
+			</ul>
+		</td>
+	</tr>
+	<tr class="TS_row">
+		<td>
+			<h5>LED: Alternating <b style="color:darkorange">Amber</b> and <b>White</b></h5>
+			<b>The battery voltage or operating temperature is too low – temporary state</b>
+			<ul>
+				<li>Wait up to 15 minutes for the doorbell to charge / warm up</li>
+				<li>Customer should wait and leave doorbell as-is, connected to power</li>
+				<li>In approximately 15 minutes, LED will transition to solid white and be ready for onboarding</li>
+			</ul>
+		</td>
+	</tr>
+	<tr class="TS_row">
+		<td><a name="cannot-scan-qr"><br></a>
+			<h5>Cannot Scan QR Code (Does NOT play Chime tone, ends up in Solid <b>WHITE</b> LED ring pattern)</h5>
+			<b>Doorbell Behavior:</b>
+			<ol>
+				<li>After pressing the front button to start the QR scan, the LED ring should be flashing <b>WHITE</b></li>
+				<li>Doorbell will timeout after 2-minutes and LED ring will flash <b style="color:darkorange">AMBER</b> for 10-seconds</li>
+				<li>LED ring will revert back to solid <b>WHITE</b> and remain in this state, ready to try onboarding again</li>
+				<li><b>IMPORTANT</b> – Doorbell will *<b>NOT</b>* play Chime tone</li>
+				<li><b>Summary</b> – Does NOT play Chime tone, ends up in Solid <b>WHITE</b> LED ring pattern</li>
+			</ol>
+			<b>App Behavior:</b>
+			<ol>
+				<li>On the QR code page, customer should select “I didn’t hear a chime”
+					<br>Loads KB article:  https://kb.arlo.com/000062338/My-Arlo-device-won-t-scan-the-QR-code-when-I-am-connecting-it-to-a-router-what-do-I-do</li>
+				<li>If customer selects, “Continue” then the app will proceed to “Looking for Arlo Video Doorbell” and timeout to show “No doorbells were found”</li>
+			</ol>
+			<b>Troubleshooting Steps:</b>
+			<ul>
+				<li>Try disabling Dark Mode in iOS</li>
+				<li>Try increasing brightness on mobile device screen</li>
+				<li>Try removing screen protector on mobile device</li>
+				<li>Try placing mobile screen ~4” away and slowly moving away from doorbell</li>
+				<li>Where possible, scan the QR code in a well-lit area</li>
+				<li>IF IR LED on doorbell is on while attempting to scan, cover the LED with your thumb</li>
+				<li>Angle movile device about 1" away (Galaxy Note 10 / Google Pixel)</li>
+			</ul>
+			<p>Above all else, need to ensure that the SSID is for a 2.4 GHz network and that the mobile phone is connected to the same router for discovery to succeed.</p>
+			<p>NOTE – Customer should wait until LED ring is Solid WHITE then retry the QR code entry, front button press, and QR code scan
+			</p>
+		</td>
+	</tr>
+	
+	<tr class="TS_row">
+		<td><a name="cannot-connect-wifi"><br></a>
+			<h5>Cannot Connect to WiFi (Plays Chime tone, ends up in Solid <b>WHITE</b> LED ring pattern)</h5>
+			<b>Doorbell Behavior:</b>
+			<ol>
+				<li>After pressing the front button to start the QR scan, the LED ring should be flashing <b>WHITE</b></li>
+				<li><b>IMPORTANT</b> - Doorbell will successfully scan QR code and *<b>PLAYS</b>* Chime tone</li>
+				<li>Doorbell will timeout after 2-minutes and LED ring will flash <b style="color:darkorange">AMBER</b> for 10-seconds</li>
+				<li>LED ring will revert back to solid WHITE and remain in this state, ready to try onboarding again</li>
+				<li><b>Summary</b> – Plays Chime tone, ends up in Solid <b>WHITE</b> LED ring pattern</li>
+			</ol>
+			<b>App Behavior:</b>
+			<ol>
+				<li>After customer selects, “Continue” to indicate that they heard the Chime, the app will proceed to “Looking for Arlo Video Doorbell” and timeout to show “No doorbells were found”</li>
+			</ol>
+			<b>Troubleshooting Steps</b>
+			<ul>
+				<li>Ensure SSID and Passphrase are entered correctly - *<b>BOTH</b>* are case-sensitive</li>
+				<li>Ensure SSID selected is 2.4GHz network</li>
+				<li>Confirm SSID and passphrase do not contain these special characters (“, ‘, /, etc.) – these cause an issue with Android QR code generation<br>
+				Note – may need to ask customer to create Guest 2.4GHz network with simple SSID / passphrase</li>
+				<li>Confirm WiFi SSID is set to Broadcast and is within range of the doorbell</li>
+			</ul>
+			<p>NOTE – Customer should wait until LED ring is Solid WHITE then retry the QR code entry, front button press and QR code scan</p>
+		</td>
+	</tr>
+	<tr class="TS_row">
+		<td><a name="cannot-discover-doorbell"><br></a>
+			<h5>Cannot Discover Doorbell (Plays Chime tone, ends up in Flashing <b>WHITE</b> LED ring pattern)</h5>
+			<b>Doorbell Behavior:</b>
+			<ol>
+				<li>After pressing the front button to start the QR scan, the LED ring should be flashing <b>WHITE</b></li>
+				<li><b>IMPORTANT</b> - Doorbell will successfully scan QR code and *<b>PLAYS</b>* Chime tone</li>
+				<li>Doorbell will continue flashing <b>WHITE</b> as it connects to WiFi</li>
+				<li><b>Summary</b> – Plays Chime tone, ends up in Flashing <b>WHITE</b> LED ring pattern</li>
+			</ol>
+			<b>App Behavior:</b>
+			<ol>
+				<li>After customer selects, “Continue” to indicate that they heard the Chime, the app will proceed to “Looking for Arlo Video Doorbell” and timeout to show “No doorbells were found”</li>
+			</ol>
+			
+			
+			<b>Troubleshooting Steps before Retrying</b>
+			<ul>
+				<li>Customer should confirm mobile phone is connected to same WiFi network as device (same 2.4GHz WiFi is best, but just has to be the same WAN)</li>
+				<li>Customer should try temporarily disabling Cellular data on phone or disable Mobile Assist setting in iOS
+					<br>NOTE – iOS allows for WiFi Assist (Settings > Cellular > WiFi Assist) which can use Cellular data even when WiFi is available
+					<br>Cellular data or WiFi Assist should be disabled to ensure mobile phone is using WiFi</li>
+				<li>Customer should confirm that Internet service is available from the router</li>
+				<li>Customer should confirm that Arlo Video Doorbell is listed as a “connected device” in the Router admin page</li>
+			</ul>
+			<p>NOTE – customer can enter the QR code information and skip past the QR code scan in the app (hit continue twice) as doorbell has already connected to WiFi, need to get back to the Device Discovery screen</p>
+			If still unable to discover, make sure to document the following:
+			<ol>
+				<li>Router brand/model</li>
+				<li>SSID</li>
+				<li>If the wifi pw has special characters</li>
+				<li>How far is the video doorbell from the router</li>
+				<li>Video doorbell LED pattern</li>
+				<li>Device and app logs</li>
+			</ol>
+			<p>Note – while the Video Doorbell is unclaimed, no matter the LED status, removing power will cause the device to power down within 30-seconds and will remain off until AC power is applied again.</p>
+		</td>
+	</tr>
+	<tr class="TS_row">
+		<td>
+			<h5>Hardware Reset / Reboot of the Device</h5>
+			<b>From within the app, when onboarded and online:</b><br>
+			Device Settings > Restart<br><br>
+
+			<b>Manual:</b>
+			<ol>
+				<li>Press and hold the front doorbell button *AND* press and hold the pin-hole button on the back for 10+ seconds</li>
+				<li>LED ring on the front will flash twice briefly when reset starts</li>
+				<li>Device will need approximately 15-seconds to reboot</li>
+				<li>This is hardware controlled, can be used when software is in a “stuck” or “unknown” state</li>
+			</ol>
+		</td>
+	</tr>
+	<tr class="TS_row">
+		<td>
+			<h5>Factory Reset of the Device</h5>
+			<b>From within the app, when onboarded and online:</b><br>
+			Device Settings > Remove Device<br><br>
+			<b>Manual:</b>
+			<ol>
+				<li>Press and hold the pin-hole button on the back of the device for 14+ seconds</li>
+				<li>LED ring on the front will flash twice briefly when reset starts</li>
+				<li>LED ring on the front will flash quickly when factory reset starts</li>
+				<li>This is firmware controlled, so timing is not as exact as hardware reset</li>
+			</ol>
+			<p>NOTE – both device Restart and Factory Reset can be initiated from the app, under Device Settings.  However, this requires that the device is both claimed to an Arlo account and online.</p>
+		</td>
+	</tr>
+	<tr class="TS_row">
+		<td>
+			<h5>Not Getting SIP Call on Mobile Device</h5>
+			<ol>
+				<li>Make sure that customer’s phone is connected to the Internet</li>
+				<li>Make sure customer is logged into the Arlo app.</li>
+				<li>Make sure customer has granted appropriate permissions on the mobile device</li>
+				<span id="vdb_sipcall"></span>
+				<li>Make sure that no one else is logged into the same Arlo account.</li>
+			</ol>		
+		</td>
+	</tr>
+</table>
+<br><br>

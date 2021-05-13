@@ -1,0 +1,27 @@
+<div class="hiddenDiv" id="myTemplateScript">
+    getTemplates(userCES,function(data){
+        displayTemplates(data);
+    })
+</div>
+<div>
+    <div type="button" class="collapsible mytemplate" id="mytemplate_flow_collapse_add">
+        <h5>
+            <span class="mytemplate_flow_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            Add Template
+        </h5>
+    </div>
+    <div class="mytemplate_flow_content" style="display:none">
+        <input id="templated_edit_id" type="text" hidden></input>
+        Title: <input type="text" id="mytemplate_title" size="30" style="width:100%" tabindex="6"><br>
+        Content:
+        <textarea class="areaInput" rows="10" id="mytemplate_content" style="width:100%;" tabindex="10"></textarea>
+        <button id="template_add" onclick="addTemplate($('#mytemplate_title').val(),$('#mytemplate_content').val());$('#mytemplate_title').val('');$('#mytemplate_content').val('');$('#mytemplates_message').removeClass('hiddenDiv');setTimeout(function(){$('#mytemplates_message').addClass('hiddenDiv')},5000);eval($('#myTemplateScript').html())" style="width:100px;">Add Template</button>
+        <button class="hiddenDiv" id="template_edit" onclick="editTemplate($('#templated_edit_id').val(),$('#mytemplate_title').val(),$('#mytemplate_content').val());$('#mytemplate_title').val('');$('#mytemplate_content').val('');$('#mytemplates_message_edit').removeClass('hiddenDiv');setTimeout(function(){$('#mytemplates_message_edit').addClass('hiddenDiv')},5000);eval($('#myTemplateScript').html())" style="width:100px;">Edit Template</button>&nbsp;
+        <button class="hiddenDiv" id="template_edit_cancel" onclick="cancelEditTemplate()" style="width:100px;">Cancel</button>
+        <span id="mytemplates_message" class="hiddenDiv">Added.</span>
+        <span id="mytemplates_message_edit" class="hiddenDiv">Updated.</span>
+    </div>
+    <div id="mytemplates_container">
+
+    </div>
+</div>

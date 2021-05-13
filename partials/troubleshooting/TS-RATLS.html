@@ -1,0 +1,67 @@
+<h4>Remote Access to Local Storage (RATLS)</h4>
+<table style="border-collapse:collapse!important;" id="TS_table">
+	<tr class="TS_row">
+		<td>
+			<h5>Feature doesn’t work</h5>
+			<ul>
+                Check for:
+                <li>Customer is not on v2.12+ of the app</li>
+                <li>“Record Locally” isn’t enabled</li>
+                <li>Direct Storage Access isn’t enabled</li>
+                <li>SmartHub is offline</li>
+                <li>iOS or Android device is unable to connect to the internet</li>
+                <li>Storage was removed from the SmartHub, or otherwise corrupted</li>
+                <li>Customer does not have “Overwrite Automatically” enabled for Local Storage, and the storage device ran out of space (a push notification is sent if storage is getting low and overwrite is not selected, however)</li>
+                <li>Inside Home connection: Customer is not on the same network as router/SmartHub</li>
+			</ul>
+		</td>
+    </tr>
+    <tr class="TS_row">
+		<td>
+			<h5>Feature doesn’t work outside the home connection</h5>
+			<ul>
+                Check for:
+                <li>
+                    Customer don’t have VPN configured on router and mobile device correctly
+                    <ul>
+                        <li>Advise customer to check with router manufacturer and the provider of the VPN app you are using</li>
+                    </ul>
+                </li>
+                <li>
+                    There is a mismatch between the Port Forwarding settings in the app vs router; check both and ensure they match
+                    <ul>
+                        <li>Check with router manufacturer for where to find, and change, Port Forwarding settings</li>
+                    </ul>
+                </li>
+                <li>
+                    There was a power failure on the router
+                    <ul>
+                        <li>VPN as a result may need to be checked</li>
+                        <li>Port forwarding settings may need to be checked</li>
+                        <li>User should confirm no mismatch between Port Forwarding settings in app vs router</li>
+                        <li>User should also, in their router, assign a static DHCP to the SmartHub. This means that, even if there is a power failure, the SmartHub will always have the same IP address</li>
+                    </ul>
+                </li>
+                <li>
+                    User has two routers, where the SmartHub-connected router is also connected to a router
+                    <ul>
+                        <li>Check with your router manufacturers for where to find, and change, Port Forwarding settings and resolve the issue for both routers</li>
+                    </ul>
+                </li>
+                <li>
+                    Owner of the Wi-Fi network does not allow the non-standard port we use for port forwarding
+                    <ul>
+                        <li>Check with the owner of the Wi-Fi network</li>
+                    </ul>
+                </li>
+                <li>
+                    The user’s home ISP does not allow port forwarding
+                    <ul>
+                        <li>Check with the ISP</li>
+                    </ul>
+                </li>
+            </ul>
+            
+		</td>
+    </tr>
+</table>

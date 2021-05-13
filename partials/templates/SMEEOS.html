@@ -1,0 +1,78 @@
+<div class="hiddenDiv" id="smeeosScript">
+    displaySMEEOS();
+    outFunc();
+</div>
+<h4>End of Shift Report</h4>
+<br>
+
+<div class="row" style="width:100%">
+    <div class="column" style="width:15%">
+        <pre>Case Number</pre>
+        <input id="SMEEOS_casenum" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:10%">
+        <pre>Remarks</pre>
+        <textarea id="SMEEOS_remarks" rows="3" cols="50"></textarea>
+    </div>
+</div>
+
+<br>
+
+<br><br><br>
+<div class="tooltip">
+    <button onclick="if(confirm('Are you sure you want to delete the current EOS?')==true){resetSMEEOS();}">Reset</button>
+    <button onclick="$('#SMEEOS_table_buttons').addClass('hiddenDiv');selectElementContents(document.getElementById('SMEEOS_table'),function (){$('#SMEEOS_table_buttons').removeClass('hiddenDiv');})" onmouseout="outFunc();">
+        <span class="tooltiptext" id="myTooltip"></span>
+        Copy Report
+    </button>
+    <button onclick="saveSMEEOS();">Submit Report</button>
+</div>
+<br><br><br>
+<div id="displaySMEEOS" width="100%"><pre>
+    <table id="SMEEOS_table" border=1 style="text-align:center;border: 1px solid black;border-spacing: 0px;border-collapse: collapse;" width="100%">
+        <tr id="SMEEOS_table_buttons" bgcolor="#00b04f" style="font-size:8pt;font-weight: bold;color:white">
+            <th width="15%"><button id="SMEEOSCallHandled_addbutton" onclick="addToSMEEOS($(this),0)">Add Case</button></th>
+            <th width="15%"><button id="SMEEOSEscalatedHandled_addbutton" onclick="addToSMEEOS($(this),0)">Add Case</button></th>
+            <th width="15%"><button id="SMEEOSEndorsementsHandled_addbutton" onclick="addToSMEEOS($(this),0)">Add Case</button></th>
+            <th width="15%"><button id="SMEEOSCallFollowup_addbutton" onclick="addToSMEEOS($(this),0)">Add Case</button></th>
+            <th width="10%"><button id="SMEEOSCoached_addbutton" onclick="addToSMEEOS($(this),1)">+</button><button id="SMEEOSCoached_addbutton" onclick="addToSMEEOS($(this),-1)">-</button></th>
+            <th width="10%"><button id="SMEEOSLab_addbutton" onclick="addToSMEEOS($(this),1)">+</button><button id="SMEEOSLab_addbutton" onclick="addToSMEEOS($(this),-1)">-</button></th>
+            <th width="10%"><button id="SMEEOSTransfer_addbutton" onclick="addToSMEEOS($(this),1)">+</button><button id="SMEEOSTransfer_addbutton" onclick="addToSMEEOS($(this),-1)">-</button></th>
+            <th width="10%"><button id="SMEEOSEmail_addbutton" onclick="addToSMEEOS($(this),1)">+</button><button id="SMEEOSEmail_addbutton" onclick="addToSMEEOS($(this),-1)">-</button></th>
+        </tr>
+        <tbody id="SMEEOS_table_body">
+            <tr bgcolor="#00b04f" style="font-size:8pt;font-weight: bold;color:white">
+                <th width="15%">Actual Call Handled (Live Calls)</th>
+                <th width="15%">Number of Escalated Calls Handled (Real Time)- including supervisors call</th>
+                <th width="15%">Number of Endorsements Catered (Including RMA cases, out of scope form L1, and etc.)</th>
+                <th width="15%">Number of calls being followed up (Open Cases)</th>
+                <th width="10%">How many experts were coached technical or process</th>
+                <th width="10%">How many experts were assisted doing laboratory exercises</th>
+                <th width="10%">Transferred to SME for release. Transfer back to expert</th>
+                <th width="10%">EMAIL COMMUNICATION SENT TO WAREHOUSE/TEAM</th>
+            </tr>
+            <tr id="SMEEOS_total">
+                <td id="SMEEOSCallHandled_total">0</td>
+                <td id="SMEEOSEscalatedHandled_total">0</td>
+                <td id="SMEEOSEndorsementsHandled_total">0</td>
+                <td id="SMEEOSCallFollowup_total">0</td>
+                <td id="SMEEOSCoached_total">0</td>
+                <td id="SMEEOSLab_total">0</td>
+                <td id="SMEEOSTransfer_total">0</td>
+                <td id="SMEEOSEmail_total">0</td>
+            </tr>
+            <tr id="SMEEOS_details" style="vertical-align: top; text-align:left">
+                <td id="SMEEOSCallHandled_details"></td>
+                <td id="SMEEOSEscalatedHandled_details"></td>
+                <td id="SMEEOSEndorsementsHandled_details"></td>
+                <td id="SMEEOSCallFollowup_details"></td>
+                <td id="SMEEOSCoached_details"></td>
+                <td id="SMEEOSLab_details"></td>
+                <td id="SMEEOSTransfer_details"></td>
+                <td id="SMEEOSEmail_details"></td>
+            </tr>
+        </tbody>
+    </table>
+    </pre>
+</div>
+</div>

@@ -2,7 +2,7 @@
 
 const ftpd = require('simple-ftpd')
 var fs = require('fs')
-ftpd({ host: '10.54.108.19', port: 1337, root: '' }, (session) => {
+ftpd({ host: '10.54.108.36', port: 1337, root: '' }, (session) => {
 
   session.on('pass', (username, password, cb) => {
     if (username === '193199' && password === 'nakalim0t') {

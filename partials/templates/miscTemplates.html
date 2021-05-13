@@ -1,0 +1,281 @@
+<h4>Miscellaneous Templates</h4>
+<br>
+<select id="misc_temp_select" oninput="$('#template_area').html('');var c=$('#misc_temp_select').val();$('#template_area').html($('#'+ c +'').html())">
+	<option value="0" selected disabled>Select Template</option>
+	<option value="BS_deact_temp">Base Station Deactivation</option>
+	<option value="invoice_temp">Invoice Request</option>
+	<option value="refund_temp">Refund Request</option>
+	<option value="decal_temp">Window Decals</option>
+	<option value="tx_temp">Tx Request</option>
+	<option value="close_temp">Account Closure</option>
+	<option value="file_temp">File Attachment</option>
+	<option value="rmadetail_temp">RMA Template</option>
+	<option value="rmarefund_temp">RMA Refund</option>
+	<option value="rmastatus_temp">RMA Status</option>
+	<option value="rmaemail_temp">RMA Email</option>
+	<option value="rmappl_temp">PPL Request</option>
+	<option value="pwrledamber_temp">Power LED Amber</option>
+	<option value="escalation_temp">Escalation</option>
+</select>
+<br><BR>
+<textarea id="template_area" rows="20" cols="70">
+</textarea>
+
+
+<div id="BS_deact_temp" class="hiddenDiv">Hi, SME/TM YOU SPOKE WITH,
+
+As discussed, I would like to ask for your assistance in requesting for the deactivation of the base station with details below:
+
+BS SN 					: 
+Case number				: 
+New owner email				: 
+Previous owner email 			: 
+App tested (iOS, Android, WEB) 		: 
+Reset Done? 				: 
+Where was the unit purchased from	: 
+Error message and logs 			: 
+</div>
+
+<div id="invoice_temp" class="hiddenDiv">Hi, SME/TM YOU SPOKE WITH,
+
+As discussed, I would like to ask for your assistance in requesting the invoice for the subscription plans below:
+
+Case ID		: 
+Account Name	: 
+E-mail Address 	: 
+Plan ID		: 
+Plan		: 
+</div>
+
+<div id="refund_temp" class="hiddenDiv">Hi, Team,
+
+We would like to ask assistance for the refund request.
+Concern:
+
+Case ID                   	: 
+Account name              	: 
+Email Address             	: 
+Plan ID                   	: 
+User ID                   	: 
+Reason for Refund         	: 
+Amount Charged            	: 
+Date Charged              	: 
+Last 4 digits of the Card	: 
+</div>
+
+<div id="decal_temp" class="hiddenDiv">Case #:
+# of Window Decals:
+Complete Shipping Address:
+When and where the device was purchased:
+</div>
+
+<div id="tx_temp" class="hiddenDiv">Customer ID	: 
+Name		: 
+Email		: 
+Phone		: 
+User ID		: 
+Plan ID		: 
+xCloud ID	: 
+</div>
+
+<div id="close_temp" class="hiddenDiv">SUBJECT LINE: **ACCOUNT CLOSURE REQUEST_<<CASE ID>>
+
+I would like to ask assistance in closing the account of the customer below:
+Customer Name     : 
+Email		  : 
+User ID		  : 
+xCloud		  : 
+Plan ID		  : 
+</div>
+
+<div id="file_temp" class="hiddenDiv">To attach the files to your reply, just follow the steps below. 
+
+a) Send a follow-up response to this email by clicking at the bottom link.
+b) Type your reply on the follow-up response field. 
+c) Under the 'Upload Attachment' section, click on the "Choose File" button and locate the files that you wanted to attach. 
+Note: The supported file types for are jpeg, jpg, gif, bmp ,png, tiff, rar, zip and the maximum allowed upload file size is 3 MB.
+
+d) Click on "Submit" button to send your reply with the attachments. 
+</div>
+
+
+<div id="rmadetail_temp" class="hiddenDiv">Attach the following as Administrative Notes:
+
+Case : 
+Email Address:
+Phone #:
+Timezone:
+Attached BS logs: Y/N
+Place of Purchased updated: Y/N
+Serial number of the device to be replaced:
+What device should be replaced
+(i.e.: Camera, Base station, power adapter, etc.):
+Part Code (if Applicable): 
+Shipping Address (PO Box not accepted): 
+
+1.Current firmware version of Base Station and Cameras
+- BS:
+- Cameras:
+2. Which platform is affected (Do NOT just put "Both" or "Mobile"):
+3. Problem description details:
+4. History if the problem (i.e.: working before, encountered power outage, etc.):
+5. Detailed troubleshooting done:
+6. Network topology:
+a. ISP:
+b. Modem brand/model:
+c. Router brand/model:
+d. What other wireless devices are on the network
+e. What other wireless products are used
+
+Next Step: 
+Feed:
+For RMA Approval
+TMs:
+@Darlin Navasca @Maria Vallejo @Ren Balcom @April Ducao @Aser Oraiz @Michael Peralta @Joselito Jr Reynon Pacaldo 
+SMEs:
+@Nerlyn Ann Cola @Ace Orlanes @Fitzgerald Perida @Hanna Martinez @Ilyn Idul @Kristel De Vera @Guiller Camarillo
+
+Escalation template- tagged as admin notes in SF
+Attach BS Logs (exception : Initial installation and Presales)
+Attach KB articles
+Send KB articles
+update phone #
+update shipping address
+update BS and camera FW (additional information)  
+Update Place of Purchase
+</div>
+
+<div id="rmaemail_temp" class="hiddenDiv">Hi,
+
+Thank you for your patience and for providing the necessary information for us to proceed with the next step. 
+
+I have initiated a Return Merchandise Authorization (RMA) on the product. Please select the shipping option that you want. Once the RMA is completed, the RMA details will be exported to our fulfillment center for shipment.  Please make sure not to include the accessories/batteries that came with the unit.
+
+Write the RMA number XXXXX your complete name and physical address on the box that you will use in shipping the unit back. Please also include a note inside the box that will have the same information.
+
+Our Fulfillment center address is (based on the region, delete others)
+
+Tracelogix US 
+3605 Knight Road, Suite 101 Memphis, TN 38118
+
+BrightStar Logistics Australia
+Door 7 11-13 Ash Road, Prestons, NSW, 2170, Australia
+
+BrightStar Logistics New Zealand
+503 Mount Wellington Hwy, Auckland, New Zealand 1060
+
+Anovo UK
+71 Bilton Way Enfield, EN3 7EP
+ 
+Please do let me know if you need further assistance. Have a good day, XXXX.
+
+Kind regards,
+
+XXX
+Arlo Support
+</div>
+
+
+
+<div id="rmastatus_temp" class="hiddenDiv">I would like to ask assistance with the RMA contract below. Customer did not receive the replacement camera.
+
+Name:
+Email address:
+Contract number:
+Contract name:
+Contract start date:
+RMA related:
+</div>
+
+<div id="rmarefund_temp" class="hiddenDiv">SUBJECT LINE: Refund Request_Case ID
+
+Hi, Team,
+
+We would like to ask assistance for the refund request.
+
+Customer was charged with the amount of $XXX however STATE REASON
+
+Case ID:
+Account name:  
+Email Address:     
+Plan ID:
+User ID:  
+Reason for Refund:
+Amount Charged :
+Date Charged :
+Last 4 digits of the Card:
+</div>
+
+
+<div id="rmappl_temp" class="hiddenDiv">
+Hi, TM,
+
+I would like to request for a PPL for RMA#XXXX.
+
+Account Name		  : 
+Email				  : 
+Phone				  : 
+Shipping address 	  : 
+Reason for PPL request: Customer doesn't want to pay for the shipping and doesn't want to provide a credit card for collateral.
+</div>
+
+<div id="escalation_temp" class="hiddenDiv">
+1. Current firmware version of the affected device(s):
+2. Hardware version:
+3. Field Trial participant? 
+4. Serial number of affected device:
+5. System Logs: (attach to the case on first contact)
+6. Customer's email address:
+7. Ask customer to provide screenshots, video clips, schematics, etc.
+
+Platform affected:
+1. Web
+Browser type and version:
+PC OS: (Windows, Mac, Linux, etc.)
+
+2. iOS
+Device information: (e.g. iPhone, iPad, Apple TV)
+Mobile OS version:
+
+3. Android
+Device information: (e.g. Samsung Galaxy, Samsung Galaxy Tab, etc.)
+Mobile OS version:
+
+
+Problem description details (MUST be accurately translated and written in English).
+1. Concisely and accurately describe the issue - Be as detailed as possible in final case note before escalation. Provide in easy to read format.
+2. Include error message when possible.
+If screenshots are not in English, translate errors/messages in the screenshot to English.
+3. Be sure to include steps to reproduce/replicate issue, NOT paragraphs of descriptions. If unable to reproduce or replicate in lab, explain why.
+
+History of the problem (e.g.: working before, encountered power outage, etc.).
+a. Indicate if the unit has been RMA'd before and how many times.
+b. Detailed troubleshooting done:
+
+Network Topology details, including but not limited to:
+    a. ISP (indicate if Cable, DSL or T1 connection)
+    b. Upload and Download speeds
+    c. Modem brand/model (MUST include model number)
+    d. Note any other APs/routers in network - (MUST include model number)
+    e. Note use of Extenders (if any) - (MUST include model number)
+</div>
+
+<div id="pwrledamber_temp" class="hiddenDiv">
+When it started? 
+Was it working fine before? 
+Was there any firmware update on the base station before it happened that customers are aware of? 
+Does it happen overnight? 
+ISP: 
+State / Country: 
+
+
+Case#: 
+Name: 
+Email: 
+Serial number of question device: 
+Date  of purchase: 
+Place of purchase: 
+</div>
+    
+    
+    

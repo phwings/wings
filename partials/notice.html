@@ -1,0 +1,122 @@
+<div class="hiddenDiv" id="noticeScript">
+    var unseen_num=-1;
+    var unseennoticeDiv_array=[]
+    getDataRecord('/api/notice/get/'+userCES,function(notices){
+        
+        var notice_array = notices.map(function (el) { return el.notice_id; });
+        console.log(notice_array);
+        var nowDate= new Date();
+        var noticeDiv_array=$('.notice_img');
+        console.log(noticeDiv_array)
+        noticeDiv_array.each(element => {
+            var expiry=new Date(noticeDiv_array.eq(element).data('expiry'));
+            if(!notice_array.includes(noticeDiv_array.eq(element).data('id'))){
+                noticeDiv_array.eq(element).addClass('unseen');
+                $('#unseennotice_list').append(noticeDiv_array.eq(element))
+            }
+        })
+        unseennoticeDiv_array=$('.notice_img.unseen');
+        if(unseennoticeDiv_array.length>0){
+            $('#modal_notice').css('display','block');
+            unseennoticeDiv_array.eq(0).removeClass('hiddenDiv');
+            unseen_num=0;
+        }
+    })
+
+    function getNextUnseen(){
+        data={
+            id:unseennoticeDiv_array.eq(unseen_num).data('id'),
+            ces:userCES,
+        }
+        console.log(data);
+        $.ajax({
+            type:"POST",
+            url:"/api/notice/add" ,
+            data:JSON.stringify(data),
+            headers:{
+                "Content-Type":"application/json"
+            },
+            //dataType:"json",
+            success:function(data){
+                unseennoticeDiv_array.eq(unseen_num).addClass('hiddenDiv');
+                unseen_num++;
+                console.log(unseen_num);
+                console.log(unseennoticeDiv_array.length);
+                console.log(unseennoticeDiv_array);
+                if(unseen_num < unseennoticeDiv_array.length-1){
+                    unseennoticeDiv_array.eq(unseen_num).removeClass('hiddenDiv')
+                } else {
+                    $('#modal_notice').addClass('hiddenDiv');
+                    //console.log('hide')
+                }
+                //console.log(unseen_num);
+                //console.log(unseennoticeDiv_array.length);
+            },
+            error:function(error){
+            }
+        });
+    
+    
+        
+    }
+</div>
+
+<div id="modal_notice" class="modal" style="overflow:scroll-y;background-color:rgba(0,0,0,0.8);border:0px">
+    <div class="modal-content" style="margin-left:10px;margin-top:10px;height:75%;min-height:600px;width:90%;background-color:rgba(0,0,0,0);border:0px">
+        <button onclick="getNextUnseen()">Acknowledge</button><br><br>
+        <div id="unseennotice_list">
+        </div>
+    </div>
+</div>
+<div id="notice_list" class="hiddenDiv">
+    <div class="notice_img hiddenDiv" data-id="1" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice001.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="2" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice002.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="4" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice004.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="5" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice005.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="6" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice006.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="7" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice007.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="8" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice008.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="9" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice009.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="10" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice010.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="11" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice011.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="12" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice012.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="15" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice015.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="16" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice016.jpg" width="100%">
+    </div>
+</div>
+<div class="hiddenDiv">
+    <div class="notice_img hiddenDiv" data-id="3" data-expiry="30/05/2020">
+        <img src="/assets/img/notices/notice003.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="13" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice013.jpg" width="100%">
+    </div>
+    <div class="notice_img hiddenDiv" data-id="14" data-expiry="01/01/2060">
+        <img src="/assets/img/notices/notice014.jpg" width="100%">
+    </div>
+</div>

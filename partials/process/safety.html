@@ -1,0 +1,212 @@
+<div id="loadSafetyscript" class="hiddenDiv">
+  var maxDate=new Date(Date.now());
+  console.log(Date.now())
+  $('#sah_incdate').datepicker({minDate:new Date(2019,10,24),maxDate:new Date(Date.now()),defaultDate:new Date(Date.now())});
+  $('#sah_incdate').datepicker("setDate",maxDate);
+  $('#sah_inctime').timepicker({
+    timeFormat: 'HH:mm',
+    interval: 10,
+    minTime: '0',
+    maxTime: '11:59pm',
+    startTime: '12:00am',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+  });
+  $('#sah_usedate').datepicker({minDate:new Date(2019,10,24),maxDate:new Date(Date.now()),defaultDate:new Date(Date.now())});
+</div>
+<h4>Safety and Hazard Questionnaire</h4>
+<div>
+<br>
+<select id="sah_selector" onchange="$('.sah_device_div').addClass('hiddenDiv');$(`#`+$('#sah_selector').val()).removeClass(`hiddenDiv`);">
+  <option disabled selected>Select Device Type</option>
+  <option value="sah_charger">Battery Charger</option>
+  <option value="sah_camera">Camera</option>
+  <option value="sah_bs">Base Station</option>
+</select>
+<!--
+<div class="row">
+  <div class="column">Case Number</div>
+  <div class="column"><input type="text" class="sah_input"></div>
+</div>
+<div class="row">
+  <div class="column">Was the customer injured?</div>
+  <div class="column"><label class="switch_cctos_sah"><input type="checkbox" id="togBtn"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></div>
+</div>
+<div class="row">
+  <div class="column">If yes, then describe how it happened and what part of body was injured:</div>
+  <div class="column"><textarea class="sah_textarea"></textarea></div>
+</div>
+-->
+<div class="sah_device_div hiddenDiv" id="sah_charger">
+  <table id="sah_charger_table" style="border-collapse: collapse;">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Case Number</td>
+        <td><input type="text" class="sah_charger_input" id="sah_charger_cn" placeholder="Case Number"></td>
+      </tr>
+      <tr>
+        <td>Was the customer injured?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_injured"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>If yes, then describe how it happened and what part of body was injured:</td>
+        <td><textarea class="sah_charger_textarea" id="sah_charger_injuredesc" placeholder="Description of injury"></textarea></td>
+      </tr>
+      <tr>
+        <td>Did the customer experience an electrical shock?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_shock"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>Describe where the customer felt the shock:</td>
+        <td><textarea class="sah_charger_textarea" id="sah_charger_shockdesc" placeholder="Location of shock felt"></textarea></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td colspan=2>When did the incident occur?</td>
+      </tr>
+      <tr>
+        <td>Date:</td>
+        <td><input type="text" class="sah_charger_date" id="sah_charger_incdate" placeholder="mm/dd/yyyy"></td>
+      </tr>
+      <tr>
+        <td>Time, if known?:</td>
+        <td><input type="text" class="sah_charger_time" id="sah_charger_inctime" placeholder="HH:mm - 24 hour format"></td>
+      </tr>
+      <tr>
+        <td rowspan=2>How long had it been in use?</td>
+        <td><input type="text" class="sah_charger_input" id="sah_charger_usedlength" placeholder="e.g. 1 year 2 months"></td>
+      </tr>
+      <tr>
+        <td>Or date put into use?<input type="text" class="sah_charger_date" id="sah_charger_usedate" placeholder="mm/dd/yyyy"></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td>How was the incident detected?</td>
+        <td><textarea class="sah_charger_textarea" id="sah_charger_detected" placeholder="Description of how incident was detected"></textarea></td>
+      </tr>
+      <tr>
+        <td>Was the charger in use at the time of the incident?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_chargerused"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>How many batteries were charging?</td>
+        <td>
+          <select id="sah_charger_numbatteries">
+            <option value=0 selected>0</option>
+            <option value=1 >1</option>
+            <option value=2 >2</option>
+            <option value=3 >3</option>
+            <option value=4 >4</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2>What type of battery was charging?</td>
+      </tr>
+      <tr>
+        <td>CR123?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_CR123"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>Part Number:</td>
+        <td>
+          <select id="sah_charger_partnumbatteries">
+            <option selected disabled>Select Part Number</option>
+            <option value="10029-01" >308-10029-01 (Pro)</option>
+            <option value="10031-01" >308-10031-01 (Pro 2)</option>
+            <option value="10032-01" >308-10032-01 (Go)</option>
+            <option value="10030-01" >308-10030-01 (Go)</option>
+            <option value="10070-01" >308-10070-01 (Ultra/Pro 3)</option>
+            <option value="50006-02" >308-50006-02 (Pro 3 Floodlight)</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td>Was there a fire or significant smoke observed by the customer?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_fire"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>If yes then was there a visible signs of fire damage on the charging station or a strong burning/smoke smell coming from the charging station?</td>
+        <td><textarea class="sah_charger_textarea" id="sah_charger_firesigns" placeholder="Description of signs of fire damage"></textarea></td>
+      </tr>
+      <tr>
+        <td>Was any other item damaged in the vicinity?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_fireothers"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>If yes then describe item(s) and type(s) of damage. Include photos.</td>
+        <td><textarea class="sah_charger_textarea" id="sah_charger_fireothersdescription" placeholder="Description of other items damaged"></textarea></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td>Was the enclosure damaged?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_enclosure"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>If yes, then is there exposed wiring or electrical circuits/parts?</td>
+        <td><label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_exposewire"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label></td>
+      </tr>
+      <tr>
+        <td>If yes, then describe if the enclosure is </td>
+        <td>
+          <input type="checkbox" class="sah_charger_checkbox" id="sah_charger_melted">melted <br>
+          <input type="checkbox" class="sah_charger_checkbox" id="sah_charger_cracked">cracked <br>
+          <input type="checkbox" class="sah_charger_checkbox" id="sah_charger_breached">breached <br>
+        </td>
+      </tr>
+      <tr>
+        <td>Where indoors was the charger installed?</td>
+        <td><textarea class="sah_charger_textarea" id="sah_charger_locationinstalled" placeholder="Location of charger"></textarea></td>
+      </tr>
+      <tr>
+        <td>Were there any sources of heat near where the incident charger was located?</td>
+        <td>
+          <label class="switch_cctos_sah"><input type="checkbox" id="sah_charger_heatnearlocation"><div class="slider_cctos_sah round"><span class="on">YES</span><span class="off">NO</span></div></label>
+          <textarea class="sah_charger_textarea" id="sah_charger_heatlocationinstalled" placeholder="Location of heat source"></textarea>
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td>What type of charger was being used (Arlo or Tenergy) </td>
+        <td>
+          <input type="radio" class="sah_charger_radio" id="sah_charger_arlo" value="Arlo" name="ChargerBrand" selected>Arlo <br>
+          <input type="radio" class="sah_charger_radio" id="sah_charger_tenergy" value="Tenergy" name="ChargerBrand">Tenergy <br>
+          <input type="radio" class="sah_charger_radio" id="sah_charger_others" value="Others" name="ChargerBrand">See Below <br>
+        </td>
+      </tr>
+      <tr>
+        <td>Record brand (if not Arlo or Tenergy)</td>
+        <td><input type="text" class="sah_charger_input" id="sah_charger_chargerbrand" placeholder="Brand"></td>
+      </tr>
+      <tr>
+        <td>Record model number:</td>
+        <td><input type="text" class="sah_charger_input" id="sah_charger_chargermodel" placeholder="Model"></td>
+      </tr>
+      <tr>
+        <td>Serial number</td>
+        <td><input type="text" class="sah_charger_input" id="sah_charger_chargerserial" placeholder="Serial Number"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <!--<button onclick="generatePDF()">Preview PDF</button>-->
+  <button onclick="saveAsPDF()">Save as PDF</button>
+  <br><br>
+</div>
+<!--<iframe id="pdfviewer" src="/partials/process/trial.html" width="100%" height="300">
+
+</iframe>-->
+<div id="elementH"></div>
+<br><br>
+<br><br>
+</div>

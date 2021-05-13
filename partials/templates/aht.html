@@ -1,0 +1,110 @@
+<div class="hiddenDiv" id="ahtScript">
+    getDataRecord('/api/devices',function(devices){
+		devices.sort((a, b) => (a["device_name"] > b["device_name"]) ? 1 : -1)
+		devices.forEach(data => {
+			//console.log(data);
+            $("#AHT_device").append(new Option(data.device_name + "    (" + data.device_model + ")", data.device_model));
+        });
+        getAHT();
+        outFunc();
+        loadAHT(0);
+        $('#AHT_expert').val(userCN);
+        $('#AHT_casenum').val(localStorage.getItem('AHT_casenumber_temp'));
+        if(localStorage.getItem('AHT_device_temp')){
+            $('#AHT_device').val(localStorage.getItem('AHT_device_temp'));
+        }
+    },'');
+
+
+</div>
+<h4>High AHT Report</h4>
+<br>
+<form id="aht_from">
+<div class="row" style="width:100%">
+    <input id="AHT_index" type="text" style="width:100%" hidden>
+    <div class="column" style="width:25%;margin-right:10px;">
+        <pre>Expert</pre>
+        <input id="AHT_expert" oninput="saveAHTFields('AHT_expert');" type="text" style="width:100%" required>
+    </div>
+    <div class="column" style="width:15%;margin-right:10px;">
+        <pre>Case Number</pre>
+        <input id="AHT_casenum" oninput="saveAHTFields('AHT_casenum');" type="text" style="width:100%" required>
+    </div>
+    <div class="column" style="width:15%;margin-right:10px;">
+        <pre>Device</pre>
+        <select id="AHT_device" style="width:100%" onchange="saveAHTFields('AHT_device');" required>
+            <option class="selectheader" value="0" disabled selected>Select Device</option>
+        </select>
+    </div>
+    <div class="column" style="width:15%;margin-right:10px;">
+        <pre>AHT</pre>
+        <input id="AHT_AHT" oninput="saveAHTFields('AHT_AHT');" type="text" style="width:100%" required>
+    </div>
+    <div class="column" style="width:15%;margin-right:10px;">
+        <pre>Hold Time</pre>
+        <input id="AHT_holdtime" oninput="saveAHTFields('AHT_holdtime');" type="text" style="width:100%" required>
+    </div>
+</div>
+<div class="row" style="width:100%">
+    <div class="column" style="width:25%;margin-right:10px;">
+        <pre>Reason for Hold</pre>
+        <select id="AHT_holdreason" onchange="saveAHTFields('AHT_holdreason');" style="width:100%" required>
+            <option class="selectheader" value="0" disabled selected>Select Reason</option>
+            <option value="RMA Inquiry">RMA Inquiry</option>
+            <option value="Technical Inquiry">Technical Inquiry</option>
+            <option value="Process Inquiry">Process Inquiry</option>
+            <option value="Called CCT">Process Inquiry</option>
+        </select>
+
+    </div>
+    <div class="column" style="width:25%;margin-right:10px;" required>
+        <pre>Reason for high AHT(>35mins):</pre>
+        <select id="AHT_reason" onchange="saveAHTFields('AHT_reason');" style="width:100%" required>
+            <option class="selectheader" value="0" disabled selected>Select Reason</option>
+            <option value="Product Related">Product Related</option>
+            <option value="Customer Related">Customer Related</option>
+            <option value="System Related">System Related</option>
+            <option value="Expert Related">Expert Related</option>
+            <option value="Expert Related">CCT Related</option>
+        </select>
+    </div>
+</div>
+<div class="row" style="width:100%">
+    <div class="column" style="width:40%;margin-right:10px;">
+        <pre>Scenario Complexity Description</pre>
+        <textarea id="AHT_complexity" oninput="saveAHTFields('AHT_complexity');" type="text" style="width:100%;resize:vertical" required></textarea>
+    </div>
+    <div class="column" style="width:40%;margin-right:10px;">
+        <pre>Resolution:</pre>
+        <textarea id="AHT_resolution" oninput="saveAHTFields('AHT_resolution');" type="text" style="width:100%;resize:vertical" required></textarea>
+    </div>
+</div>
+
+<br>
+
+
+<input type="hidden" name="action" value="aht">
+<button  onclick="loadExternal('/partials/templates/standard','standardScript');" ><< Standard</button>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<button id="addAHTEntry" type="submit" onclick="saveAHT($('#AHT_expert').val(),$('#AHT_casenum').val(),$('#AHT_device').val(),$('#AHT_AHT').val(),$('#AHT_holdtime').val(),
+$('#AHT_holdreason').val(),$('#AHT_reason').val(),$('#AHT_complexity').val(),$('#AHT_resolution').val());" value="aht">Add Case</button>
+<button id="updateAHTEntry" class="hiddenDiv" onclick="updateAHT($('#AHT_index').val(),$('#AHT_expert').val(),$('#AHT_casenum').val(),$('#AHT_device').val(),$('#AHT_AHT').val(),$('#AHT_holdtime').val(),
+$('#AHT_holdreason').val(),$('#AHT_reason').val(),$('#AHT_complexity').val(),$('#AHT_resolution').val());" style="border: 2px solid #ad4500;">Update Entry</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="clearAHTinput();">Clear Form</button></form>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br>
+<div class="tooltip">
+    <button onclick="selectElementContents( document.getElementById('AHT_table') );" onmouseout="outFunc();">
+        <span class="tooltiptext" id="myTooltip"></span>
+        Copy Report
+    </button>
+</div>
+<button onclick="resetAHT();">Reset</button></form>
+<br><br><br>
+<div id="displayAHT" width="70%">
+
+</div>
+</div>

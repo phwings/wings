@@ -1,0 +1,136 @@
+<div class="hiddenDiv" id="chatScript">
+	var coll = $('.collapsible');
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			$(this).toggleClass("active");
+			var content = $(this).next();
+			$('.chat_flow_content').css("display","none").removeClass("active");
+			if (content.css("display") == "block") {
+				content.css("display","none");
+			} else {
+				content.css("display","block");
+			}
+		});
+	}
+	$('.chat_expertname').html(expertName);
+</div>
+
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Opening Spiel
+        </h5>
+    </div>
+    <div class="chat_flow_content" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> 
+        <span id="opening_spiel"><br>Thank you for choosing Arlo! I'm <span class="chat_expertname"></span>, how may I assist you today?</span>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Issue Acknowledgement
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="issue_acknowledgement" style="display:none">
+        <button onclick="copyToCB($(this).next().next().text())">Copy</button> <b>Concern requires TS : </b><span><br>I am sorry to hear that you are experiencing difficulties with it.</span><br><br>
+        <button onclick="copyToCB($(this).next().next().text())">Copy</button> <b>Concern is inquiry-related: </b><span><br>Thank you for raising that question.</span>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Account Verification
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="account_verification" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>To ensure account security, may I have the phone number and email address you have registered for your Arlo account?</span><br><br>
+        <button onclick="copyToCB($(this).next().next().text())">Copy</button> <b>If the name on the chat is different from the account : </b><span><br>May I have the name the account is registered to?</span>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Probing & Troubleshooting
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="probing_troubleshooting" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>Going back to your concern...</span><br><br>
+        <b>
+            If concern was clearly provided, proceed with Probing.<br>
+            If concern was unclearly provided, proceed with Paraphrasing.<br>
+        </b>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Support And Community Site Promotion
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="support_community" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>For other online support options, you may visit our website @ support.arlo.com and community.arlo.com</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Providing Case ID
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="case_id" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>Here is your Case ID:</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Offering additional assistance
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="assistance" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>Is there anything else I may be able to assist you with today?</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;CSAT Spiel
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="csat_spiel" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>Once I close this case, we will be emailing you a survey. Kindly take time to rate the support and service I have provided you today.</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Closing Spiel
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="closing_spiel" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>Again, I'm <span class="chat_expertname"></span>, thank you for choosing Arlo and have a great day!</span><br><br>
+        <button onclick="copyToCB($(this).next().next().text())">Copy</button> <b>If customer will no longer use Arlo : </b><span><br>Again, I'm <span class="chat_expertname"></span>, thank you for contacting Arlo and have a great day!</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Customer Inactive
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="customer_inactive" style="display:none">
+        <button onclick="copyToCB($(this).next().next().text())">Copy</button> <b>When customer becomes inactive for 2 minutes: </b><span><br>Hi __,  it's been a few minutes, do you still require further assistance? I will end this session if there is no response within the next 2 minutes.</span><br><br>
+        <button onclick="copyToCB($(this).next().next().text())">Copy</button> <b>When customer does not respond after 2 minutes from your warning message: </b><span><br>Since there isn't a response, I will now end this session. Again, thank you for choosing ARLO, have a great day!</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Device Proven Defective but OOW
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="customer_defective_oow" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>Your Arlo system comes with 1 year of hardware warranty. With the troubleshooting steps that we have done, your device is already defective. However, we will be unable to provide a replacement for it since it is already beyond its warranty. For more information about our warranty, you may go to https://www.arlo.com/en-us/about/warranty/default.aspx.<br><br>I would suggest that you purchase a new one, you may check our online webstore at shop.arlo.com or you may also check out other retail stores.</span><br>
+    </div>
+    <div type="button" class="collapsible" id="chat_flow_collapse">
+        <h5>
+            <span class="chat_flow_hide" style="border: solid white; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+            &nbsp;Customer Insisted to get a Replacement
+        </h5>
+    </div>
+    <div class="chat_flow_content" id="customer_insists_replacement" style="display:none">
+        <button onclick="copyToCB($(this).next().text())">Copy</button> <span><br>I understand your sentiments. Let me escalate this case to have your request reviewed and get a one-time replacement exemption. Once I get a feedback, I will update you via email.</span><br>
+    </div>

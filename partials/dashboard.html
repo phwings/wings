@@ -1,0 +1,2028 @@
+<div class="hiddenDiv" id="dashboardScript">
+    $('.togglecallbackbutton').on('click',function(){
+		$(this).toggleClass('hiddenRow');
+		var buttonStatus=$(this).hasClass('hiddenRow');
+		if($(this).html()=="Overdue"){
+			$('#callback_body tr').each(function(){	
+				console.log($(this).find(".overdueMessage").html());
+				if($(this).find(".overdueMessage").html()=='&lt;br&gt;&lt;b style="color:red"&gt;Overdue&lt;/b&gt;'){
+					if(!buttonStatus){
+						if(usertype=='TM'){
+							$(this).removeClass('hiddenDiv')
+						} else {
+							if($(this).find(".callbackOwnerSelect").val()==userCES){
+								$(this).removeClass('hiddenDiv')
+							}
+						}
+					}else{
+						if(usertype=='TM'){
+							$(this).addClass('hiddenDiv')
+						} else {
+							if($(this).find(".callbackOwnerSelect").val()==userCES){
+								$(this).addClass('hiddenDiv')
+							}
+						}
+					}
+				}
+			})
+		}else if($(this).html()=="Call Taken"){
+			$('#callback_body tr').each(function(){	
+				console.log($(this).find(".callbackStatus").html());
+				if($(this).find(".callbackStatus").html()=='Call Taken'){
+					if(!buttonStatus){
+						if(usertype=='TM'){
+							$(this).removeClass('hiddenDiv')
+						} else {
+							if($(this).find(".callbackOwnerSelect").val()==userCES){
+								$(this).removeClass('hiddenDiv')
+							}
+						}
+					}else{
+						if(usertype=='TM'){
+							$(this).addClass('hiddenDiv')
+						} else {
+							if($(this).find(".callbackOwnerSelect").val()==userCES){
+								$(this).addClass('hiddenDiv')
+							}
+						}
+					}
+				}
+			})
+		}
+	});
+
+    var maxDate;
+    var metricPromise;
+    var inbound;
+    var QAMasterImageList=[];
+    var today=new Date();
+    var todaySunday= new Date();
+    todaySunday.setDate(today.getDate()-today.getDay());
+    
+    $('#endorser_month').val(today.getMonth()+1);
+	$('#endorser_month').change();
+	var weekstarts=(todaySunday.getMonth().toString().length<2?'0'+(todaySunday.getMonth()+1).toString():(todaySunday.getMonth()+1).toString())+""+(todaySunday.getDate().toString().length<2?'0'+todaySunday.getDate().toString():todaySunday.getDate().toString());
+    for(i=0;i<7;i++){
+        if((todaySunday.getDate()+i)>31){
+            $('#date_'+i).html(((todaySunday.getMonth()+2).toString().length<2?('0'+((todaySunday.getMonth()+2).toString())):(todaySunday.getMonth()+2).toString())+"/"+((todaySunday.getDate()+i-31).toString().length<2?'0'+(todaySunday.getDate()+i-31).toString():(todaySunday.getDate()+i-31).toString()));
+        }else{
+            $('#date_'+i).html(((todaySunday.getMonth()+1).toString().length<2?'0'+(todaySunday.getMonth()+1).toString():(todaySunday.getMonth()+1).toString())+"/"+((todaySunday.getDate()+i).toString().length<2?'0'+(todaySunday.getDate()+i).toString():(todaySunday.getDate()+i).toString()));
+        }
+    }
+
+    getDataRecord('/api/callback/get',function(callbacks){
+		console.log(callbacks);
+		populateCallbackTable(callbacks);
+    });
+
+    console.log(user.users_CES);
+    if((usertype=='TM')||(usertype=='SME')||(userLOB=="QA ARLO")||(userLOB=="L2 ARLO")){
+        $('#callback').removeClass('hiddenDiv');
+        $('#loyalty').removeClass('hiddenDiv');
+        $('#consult_report').removeClass('hiddenDiv');
+    }else if(userlevel==2){
+        $('#l2').removeClass('hiddenDiv');
+        $('#endorser').removeClass('hiddenDiv');
+        $('#chatconsults').removeClass('hiddenDiv');
+        $('#consult_report').removeClass('hiddenDiv');
+    }else if(usertype=='Voice'){
+        $('#voice').removeClass('hiddenDiv');
+        $('#callback').removeClass('hiddenDiv');
+    }else{
+        $('#chat').removeClass('hiddenDiv');
+    }
+    if((userCES==8056)||(userCES==193199)||(userCES==8000)){
+        $('#loyalty').removeClass('hiddenDiv');
+    }
+    if((userLOB=="CCT ARLO")||(userLOB=="CCT IOPEX")||(userLOB=="CCT/OS ARLO")){
+        $('#chatcctconsults').removeClass('hiddenDiv');
+    }
+    
+
+    if(l2endorser_editor.indexOf(user.users_CES)>=0){
+        $('#l2').removeClass('hiddenDiv');
+        $('#endorser').removeClass('hiddenDiv');
+        $('.endorser_schedule .select_endorser').attr('disabled',false);
+        $('#week_starts').val((todaySunday.getMonth().toString().length<2?'0'+(todaySunday.getMonth()+1).toString():(todaySunday.getMonth()+1).toString())+""+(todaySunday.getDate().toString().length<2?'0'+todaySunday.getDate().toString():todaySunday.getDate().toString()));
+    }else{
+        $('.endorser_schedule .select_endorser').css('display','none');
+        $('#week_starts').val((todaySunday.getMonth().toString().length<2?'0'+(todaySunday.getMonth()+1).toString():(todaySunday.getMonth()+1).toString())+""+(todaySunday.getDate().toString().length<2?'0'+todaySunday.getDate().toString():todaySunday.getDate().toString()));
+        $('#save_endorser_schedule').css('display','none');
+        $('#reset_endorser_schedule').css('display','none');
+    }
+    
+
+    $('#dashboard_expertname').html(expertName);
+    //console.log("in dashboard")
+    getMetricDate(function(datametric){
+        maxDate=new Date('20'+datametric.split("/")[0],datametric.split("/")[1]-1,datametric.split("/")[2].split(" ")[0]);
+        //console.log(maxDate);
+        $("#datepicker1").datepicker({minDate:new Date(2019,10,24), maxDate:maxDate});
+        $("#datepicker2").datepicker({minDate:new Date(2019,10,24), maxDate:maxDate});
+        if((usertype!='TM')&&(usertype!='SME')){
+            $('#dashboard_metricDate').html(metricDate.toLocaleString('default',{month:'long'}) +' ' + parseInt(metricDate.getDate()) + ', ' + parseInt(metricDate.getYear()+1900));
+            getCsatTable(user.users_CES);
+            //getMonthData(user.users_CES);
+            getUtilDateStats((metricDate.getMonth()+1)+'/1/'+metricDate.getYear(),(metricDate.getMonth()+1)+'/31/'+metricDate.getYear(),user.users_CES,function(data){
+                calcUtil(data,function(utildata){
+                    //console.log(utildata);
+                    $('#table_metrics_summary_header').append('&lt;th&gt;Utilization&lt;/th&gt;&lt;th&gt;Productivity&lt;/th&gt;');
+                    $('#table_metrics_summary_data').append('&lt;td&gt;'+utildata.utilRate+'&lt;/td&gt;&lt;td&gt;'+utildata.prodRate+'&lt;/td&gt;');
+                })
+            });
+            getMonthData(userCES,function(monthdata){
+                utilization=monthdata.map(a=>parseFloat(a["util_utilizationrate"]));
+                productivity=monthdata.map(a=>parseFloat(a["util_productivityrate"]));
+                csat=monthdata.map(a=>parseFloat(a["csat"][0]));
+                nps=monthdata.map(a=>parseFloat(a["nps"][0]));
+                fcr=monthdata.map(a=>parseFloat(a["fcr"][0]));
+        
+                dates=monthdata.map(a=>"Feb-"+a["util_date"].split("/")[2]);
+                //console.log(utilization);
+                /*var ctxCSAT = document.getElementById('csatChart').getContext('2d');
+                var csatChart = new Chart(ctxCSAT, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            label: 'CSAT',
+                            data: [],
+                            spanGaps:true,
+                            lineTension:0,
+                            fill:true,
+                            pointBackgroundColor:'rgba(255, 99, 132, 1)',
+                            pointBorderColor:'rgba(255, 99, 132, 1)',
+                            backgroundColor:'rgba(0,0,0,0)',
+                            borderColor:'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: [{
+                        cutoutPercentage:50,
+                    }]
+                });*/
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: 'Utilization',
+                            data: utilization,
+                            spanGaps:true,
+                            lineTension:0,
+                            fill:true,
+                            pointBackgroundColor:'rgba(255, 99, 132, 1)',
+                            pointBorderColor:'rgba(255, 99, 132, 1)',
+                            backgroundColor:'rgba(0,0,0,0)',
+                            borderColor:'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },{
+                            label: 'Productivity',
+                            data: productivity,
+                            spanGaps:true,
+                            lineTension:0,
+                            pointBackgroundColor:'rgba(255, 159, 64, 1)',
+                            pointBorderColor:'rgba(255, 159, 64, 1)',
+                            backgroundColor:'rgba(0,0,0,0)',
+                            borderColor:'rgba(255, 159, 64, 1)',
+                            borderWidth: 1
+                        },{
+                            label: 'CSAT',
+                            data: csat,
+                            lineTension:0,
+                            pointBackgroundColor:'rgba(150, 159, 64, 1)',
+                            pointBorderColor:'rgba(150, 159, 64, 1)',
+                            backgroundColor:'rgba(0,0,0,0)',
+                            borderColor:'rgba(150, 159, 64, 1)',
+                            borderWidth: 1
+                        },{
+                            label: 'NPS',
+                            data: nps,
+                            lineTension:0,
+                            pointBackgroundColor:'rgba(150, 30, 64, 1)',
+                            pointBorderColor:'rgba(150, 30, 64, 1)',
+                            backgroundColor:'rgba(0,0,0,0)',
+                            borderColor:'rgba(150, 30, 64, 1)',
+                            borderWidth: 1
+                        },{
+                            label: 'FCR',
+                            data: fcr,
+                            lineTension:0,
+                            pointBackgroundColor:'rgba(20, 159, 64, 1)',
+                            pointBorderColor:'rgba(20, 159, 64, 1)',
+                            backgroundColor:'rgba(0,0,0,0)',
+                            borderColor:'rgba(20, 159, 64, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    suggestedMax: 100,
+                                },
+                                scaleLabel:{
+                                    display:true,
+                                    labelString:'in percent',
+                                },
+                            }],
+                            xAxes: [{
+                                scaleLabel:{
+                                    display:true,
+                                    labelString:'Day',
+                                },
+                            }],
+                        },
+                        title: {
+                            display:true,
+                            text: metricDate.toLocaleString('default', { month: 'long' })+' Stats',
+                        }
+                    }
+                });
+            });
+        }else{
+            $('#dashboard_metricDate').html(metricDate.toLocaleString('default',{month:'long'}) +' ' + parseInt(metricDate.getDate()) + ', ' + parseInt(metricDate.getYear()+1900));
+            getCsatTeamTable(userteam);
+            //getMonthDataTeam(userteam);
+            
+        }
+    })
+    if(userLOB=="DAT ARLO"){
+        $('#consult_report').removeClass('hiddenDiv');
+        $('#front').addClass('hiddenDiv');
+        $('#escalation').addClass('hiddenDiv');
+        $('#consult').addClass('hiddenDiv');
+        $('#cctosfeedback').addClass('hiddenDiv');
+        $('#mip').addClass('hiddenDiv');
+        $('#consult_report').click();
+    }else{
+        openTab('dashboard','front');
+    }
+    
+    function getDashboardNotifications(){
+        console.log(usertype);
+        console.log(userlevel);
+
+        if((userLOB=='CCT/OS ARLO')||(userLOB=='CCT ARLO')||(userLOB=='OS ARLO')){
+            if(usertype=='TM'){
+                var fornotification='COTM'
+            }else{
+                var fornotification='COL1'
+            }
+        }else if(userlevel=='1'){
+            if(usertype=='TM'){
+                var fornotification='TM'
+            }else{
+                var fornotification='L1'
+            }
+        }else if(userlevel=='2'){
+            if(usertype=='TM'){
+                var fornotification='L2TM'
+            }else{
+                var fornotification='L2'
+            }
+        }
+
+        getDataRecord('/api/tracking/get/'+fornotification+'/'+userCES,function(notifications){
+            var pending_notification=false;
+            console.log(fornotification);
+            if(notifications[0].escalation>0){
+                $('#escalation_notification').html('You have '+ notifications[0].escalation + ' pending tasks for Invalid Escalation.');
+                pending_notification=true;
+                $('button#escalation').css('background-color','red');
+            }
+            if(notifications[0].consult>0){
+                $('#consult_notification').html('You have '+ notifications[0].consult + ' pending tasks for Consult Tracking.');
+                pending_notification=true;
+                $('button#consult').css('background-color','red');
+            }
+            if((usertype=='TM')&&(userlevel==2)){
+
+            }else{
+                if(notifications[0].cctosfeedback>0){
+                    $('#cctosfeedback_notification').html('You have '+ notifications[0].cctosfeedback + ' pending tasks for CCT/OS Tracking.');
+                    pending_notification=true;
+                    $('button#cctosfeedback').css('background-color','red');
+                }
+            }
+            if(!pending_notification){
+                $('#notificationpending').html('You have no pending tasks.');
+            }
+        });
+    }
+    
+    /*$.ajax({
+		url : '/assets/img/QAfyi/',
+		success: function (data) {
+			//console.log(data);
+			$(data).find("a").attr("href", function (i, val) {
+				if( val.match(/\.(jpg|png|gif)$/i) ) { 
+                    QAMasterImageList.push(val);
+				}
+            });
+            
+            $("#modal_QA_content").html("<"+"img"+" id='QAimage' style='height:100%;' src='" + QAMasterImageList[Math.floor(Math.random()*QAMasterImageList.length)] +"' onclick=$('#modal_QA\').css('display','none')>");
+            
+        },
+        complete: function (data){
+            $("#modal_QA").css('display','block');
+        }
+    });*/
+    
+    if(userLOB=='L1 IOPEX'){
+        //$("button#escalation").css('display','none');
+        $("button#mip").css('display','none');
+        $("#metric_select_date").css('display','none');
+    }
+</div>
+<br><br>
+<div class="tab_bar">
+    <button id="front" class="tab_button" onclick="openTab('dashboard','front');">Dashboard</button>
+    <button id="escalation" class="tab_button" onclick="loadPage('/partials/L2tracking/L2_tracker','dashboard_escalation','loadL2trackerscript');openTab('dashboard','escalation')">Invalid Escalation</button>
+    <button id="consult" class="tab_button" onclick="loadPage('/partials/L2tracking/L2_consult','dashboard_consult','loadL2consultscript');openTab('dashboard','consult')">Consult Tracking</button>
+    <button id="cctosfeedback" class="tab_button" onclick="loadPage('/partials/L2tracking/cctos','dashboard_cctosfeedback','loadcctosfeedbackscript');openTab('dashboard','cctosfeedback')">CCT/OS Tracking</button>
+    <button id="mip" class="tab_button" onclick="openTab('dashboard','mip');populateMIPCurrentStats();">MIP</button>
+    <button id="endorser" class="tab_button hiddenDiv" onclick="openTab('dashboard','endorser');populateL2Endorsers('endorser_schedule','select_endorser',$('#week_starts').val())">L2 Schedule</button>
+    <button id="chatconsults" class="tab_button hiddenDiv" onclick="loadPage('/partials/L2tracking/chatconsults','dashboard_chatconsults','loadchatconsultsscript');openTab('dashboard','chatconsults');">L2 Chat Consults</button>
+    <button id="chatcctconsults" class="tab_button hiddenDiv" onclick="loadPage('/partials/L2tracking/chatcctconsults','dashboard_chatcctconsults','loadchatcctconsultsscript');openTab('dashboard','chatcctconsults');">CCT Chat Consults</button>
+    <button id="callback" class="tab_button hiddenDiv" onclick="openTab('dashboard','callback');$('#callback').addClass('callbackDisplayed');">Callback Tracker</button>
+    <button id="loyalty" class="tab_button hiddenDiv" onclick="loadPage('/partials/loyalty','dashboard_loyalty','loadloyaltyscript');openTab('dashboard','loyalty');">Loyalty Report</button>
+    <button id="consult_report" class="tab_button hiddenDiv" onclick="loadPage('/partials/L2tracking/consult_report','dashboard_consult_report','loadconsultreportscript');openTab('dashboard','consult_report');">Consult Report</button>
+</div>
+<div id="front" class="dashboard tab_div ">
+    <div class="dashboard_front_page_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <h5>Notifications</h5>
+        <div class='dashboard_notification' id="notificationpending"></div>
+        <div class='dashboard_notification' id="escalation_notification"></div>
+        <div class='dashboard_notification' id="consult_notification"></div>
+        <div class='dashboard_notification' id="cctosfeedback_notification"></div>
+        <br>
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <h5>Your Stats as of <span id="dashboard_metricDate"></span></h5>
+        <div style="margin:10px;">
+            <canvas class="hiddenDiv" id="csatChart" width="50%" style="max-width:200px!important;max-height:200px!important;"></canvas>
+            <table id="table_metrics_summary" style="border-collapse:collapse;font-size:10px;">
+        
+            </table>
+            <br>Deficit:
+            <table id="table_metrics_deficit" style="border-collapse:collapse;font-size:10px;">
+                <tr>
+                    <th style="width:70px">CSAT<br>target: 85%</th>
+                    <th style="width:70px">NPS<br>target: 45%</th>
+                    <th style="width:70px">FCR<br>target: 70%</th>
+                </tr>
+                <tr style="text-align:center">
+                    <td id="CSAT_deficit"></td>
+                    <td id="NPS_deficit"></td>
+                    <td id="FCR_deficit"></td>
+                </tr>
+            </table>
+            <br>
+            <table id="table_metrics_expert_summary" style="border-collapse:collapse;font-size:10px;">
+        
+            </table>
+            <br>
+            <button id="button_dashboard_details" onclick="if($('#table_metrics').hasClass('hiddenDiv')){
+            $('#table_metrics').removeClass('hiddenDiv');$('#button_dashboard_details').html('Hide Details')}else{ $('#table_metrics').addClass('hiddenDiv');$('#button_dashboard_details').html('Show Details')}">Hide Details</button>
+            <br><br>
+            <table class="hiddenDiv" id="table_metrics" style="border-collapse:collapse;font-size:10px;">
+            </table>
+            <canvas id="myChart" width="50%" style="max-width:70%!important;max-height:400px!important;min-height:100px!important;"></canvas>
+        </div>
+        
+        <div id="metric_select_date">
+            <h5>Metrics: Select Date</h5>
+            <div style="margin:10px;">
+                <div id="dashboard_selectmonth" class="row">
+                    <div class="column" style="text-align:right;width:100px">
+                        From Date:
+                    </div>
+                    <div class="column">
+                        <input type="text" id="datepicker1" onchange="$('#datepicker2').datepicker('option','minDate',new Date($('#datepicker1').val()));if(($('#datepicker2').val()!='')&&($('#datepicker1').val()!='')){$('#dashboard_generate').prop('disabled',false)}else{$('#dashboard_generate').prop('disabled',true)}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column" style="text-align:right;width:100px">
+                        To Date:
+                    </div>
+                    <div class="column" style="text-align:left;width:300px">
+                        <input type="text" id="datepicker2" onchange="$('#datepicker1').datepicker('option','maxDate',new Date($('#datepicker2').val()));if(($('#datepicker2').val()!='')&&($('#datepicker1').val()!='')){$('#dashboard_generate').prop('disabled',false)}else{$('#dashboard_generate').prop('disabled',true)}">
+                        <button id="dashboard_generate"  onclick="$('#generate_loading').css('display','block');$('#dashboard_generate').prop('disabled',true);displayDateStats($('#datepicker1').val(),$('#datepicker2').val(),userCES,'table_metrics_summary_selection','table_metrics_details_selection',function(){
+                            $('#dashboard_generate').prop('disabled',false);
+                            $('#generate_loading').css('display','none');
+                        })" disabled>Generate</button>
+                    </div>
+                    <br>
+                    <br>
+                    <div id="generate_loading" style="text-align:center;display:none">
+                        <img src="/assets/img/arlobird.gif" width="100px;"><br>
+                        Loading...
+                    </div>
+                </div>
+                <br>
+                <table id="table_metrics_summary_selection" style="border-collapse:collapse;font-size:10px;">
+                </table>
+                <br><br>
+                <table id="table_metrics_details_selection" style="border-collapse:collapse;font-size:10px;">
+                </table>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<div id="escalation" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_escalation_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_escalation">
+        </div>
+    </div>
+</div>
+<div id="chatconsults" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_chatconsults_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_chatconsults">
+        </div>
+    </div>
+</div>
+<div id="chatcctconsults" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_chatcctconsults_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_chatcctconsults">
+        </div>
+    </div>
+</div>
+<div id="consult" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_consult_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_consult">
+        </div>
+    </div>
+</div>
+<div id="consult_report" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_consult_report_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_consult_report">
+        </div>
+    </div>
+</div>
+<div id="cctosfeedback" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_cctosfeedback_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_cctosfeedback">
+        </div>
+    </div>
+</div>
+<div id="loyalty" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_loyalty_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_loyalty">
+        </div>
+    </div>
+</div>
+<div id="callback" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_callback_header " style="width:100%">
+    </div>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_callback">
+            <h5>&nbsp;&nbsp;&nbsp;Callback Tracker</h5>
+            <div class="callback_div_table callback_div" id="callback_div_table">
+                Filters: <button class="togglecallbackbutton" id="callback_overdue_toggle" data-columnnum="1" >Overdue</button>
+                <button class="togglecallbackbutton" id="callback_status_toggle" data-columnnum="1" >Call Taken</button>
+                <table id="callback_table" style="border-collapse:collapse;font-size:10px;vertical-align: top;">
+                    <thead>
+                        <tr>
+                            <th rowspan=2>Case Number</th>
+                            <th rowspan=2>Concern</th>
+                            <th rowspan=2>Supcall?</th>
+                            <th rowspan=2>Device</th>
+                            <th colspan=2>Callback Time</th>
+                            <th rowspan=2>Remaining Time</th>
+                            <th rowspan=2>Owner</th>
+                            <th rowspan=2>Status</th>
+                            <th rowspan=2>Actions</th>
+                        </tr>
+                        <tr>
+                            <th>CX time</th>
+                            <th>Local time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="callback_body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="mip" class="dashboard tab_div hiddenDiv">
+    <div id="voice" class="hiddenDiv">
+        <div class="dashboard_mip_header " style="width:100%">
+            <b>Voice MIP Grid </b><!-- for Month: 
+            <select id="mip_month_selector" onchange="">
+                <option value=0>January</option>
+                <option value=1>February</option>
+                <option value=2>March</option>
+                <option value=3>April</option>
+                <option value=4>May</option>
+                <option value=5>June</option>
+                <option value=6>July</option>
+                <option value=7>August</option>
+                <option value=8>September</option>
+                <option value=9>October</option>
+                <option value=10>November</option>
+                <option value=11>December</option>
+            </select>-->
+
+        </div>
+        <div class="dashboard_mip_content " style="width:100%">
+            <table id="dashboard_mip_table" >
+                <thead>
+                    <tr>
+                        <th style="min-width:220px;width:220px">
+                            GRID
+                        </th>
+                        <th style="width:120px" rowspan="2">
+                            Current
+                        </th>
+                        <th rowspan="2" colspan="2" >
+                            Bucket
+                        </th>
+                        <th colspan="2">
+
+                        </th>
+                        <th>
+                            Next 40%
+                        </th>
+                        <th>
+                            Next 20%
+                        </th>
+                        <th>
+                            Top 10%
+                        </th>
+                        <th rowspan="2">
+                            Remarks
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Qualifiers
+                        </th>                    
+                        <th>
+                            1
+                        </th>
+                        <th>
+                            2
+                        </th>
+                        <th>
+                            3
+                        </th>
+                        <th>
+                            4
+                        </th>
+                        <th>
+                            5
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:rgb(255, 167, 167)">
+                        <th>
+                            Mandatory Qualifier 1: Fraud
+                        </th>
+                        <td id="mip_fraud" style="min-width:125px;width:125px">
+                            
+                        </td>
+                        <td rowspan="2" colspan="2">
+
+                        </td>
+                        <td colspan="5">
+                            Hit or Miss
+                        </td>
+                        <td rowspan="2">
+                            Higher the Better
+                        </td>
+                    </tr>
+                    <tr style="background-color:rgb(255, 167, 167)">
+                        <th>
+                            Mandatory Qualifier 2: Attendance
+                        </th>
+                        <td id="mip_attendance">
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            92%
+                        </td>
+                        <td>
+                            94%
+                        </td>
+                        <td>
+                            96%
+                        </td>
+                    </tr >
+                    <tr style="background-color:rgb(124, 207, 121)">
+                        <th colspan="10">
+                            Mandatory Qualifiers 3: SLA/SLO
+                        </th>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th id="mip_score">
+                            
+                        </td>
+                        <th>
+                            Current
+                        </th>
+                        <th>
+                            Weight
+                        </th>
+                        <th>
+                            Target
+                        </th>
+                        <th>
+                            &lt; 95%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 95%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 100%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 102%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 105%<br>Client Target
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            SLA/SLO1: Overall CSAT
+                        </th>
+                        <td id="mip_CSAT">
+                            
+                        </td>
+                        <td id="mip_CSAT_wt">
+                            20%
+                        </td>
+                        <td id="mip_CSAT_target">
+                            85%
+                        </td>
+                        <td id="mip_CSAT_1">
+                            80.75%
+                        </td>
+                        <td id="mip_CSAT_2">
+                            80.75%
+                        </td>
+                        <td id="mip_CSAT_3">
+                            85%
+                        </td>
+                        <td id="mip_CSAT_4">
+                            86.70%
+                        </td>
+                        <td id="mip_CSAT_5">
+                            89.25%
+                        </td>
+                        <td rowspan="6">
+                            Higher the Better
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO2: Overall NPS
+                        </th>
+                        <td id="mip_NPS">
+                            
+                        </td>
+                        <td id="mip_NPS_wt">
+                            15%
+                        </td>
+                        <td id="mip_NPS_target">
+                            45%
+                        </td>
+                        <td id="mip_NPS_1">
+                            42.75%
+                        </td>
+                        <td id="mip_NPS_2">
+                            42.75%
+                        </td>
+                        <td id="mip_NPS_3">
+                            45%
+                        </td>
+                        <td id="mip_NPS_4">
+                            45.90%
+                        </td>
+                        <td id="mip_NPS_5">
+                            47.25%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO3: Overall FCR
+                        </th>
+                        <td id="mip_FCR">
+                            
+                        </td>
+                        <td id="mip_FCR_wt">
+                            15%
+                        </td>
+                        <td id="mip_FCR_target">
+                            70%
+                        </td>
+                        <td id="mip_FCR_1">
+                            66.50%
+                        </td>
+                        <td id="mip_FCR_2">
+                            66.50%
+                        </td>
+                        <td id="mip_FCR_3">
+                            70%
+                        </td>
+                        <td id="mip_FCR_4">
+                            71.40%
+                        </td>
+                        <td id="mip_FCR_5">
+                            73.50%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO4: Ave Contacts / Day
+                        </th>
+                        <td id="mip_ACD">
+                            
+                        </td>
+                        <td id="mip_ACD_wt">
+                            25%
+                        </td>
+                        <td id="mip_ACD_target">
+                            15
+                        </td>
+                        <td id="mip_ACD_1">
+                            14.25
+                        </td>
+                        <td id="mip_ACD_2">
+                            14.25
+                        </td>
+                        <td id="mip_ACD_3">
+                            15
+                        </td>
+                        <td id="mip_ACD_4">
+                            15.30
+                        </td>
+                        <td id="mip_ACD_5">
+                            15.75
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO5: QA Score
+                        </th>
+                        <td id="mip_QA">
+                            
+                        </td>
+                        <td id="mip_QA_wt">
+                            15%
+                        </td>
+                        <td id="mip_QA_target">
+                            85%
+                        </td>
+                        <td id="mip_QA_1">
+                            80.75%
+                        </td>
+                        <td id="mip_QA_2">
+                            80.75%
+                        </td>
+                        <td id="mip_QA_3">
+                            85%
+                        </td>
+                        <td id="mip_QA_4">
+                            86.70%
+                        </td>
+                        <td id="mip_QA_5">
+                            89.25%
+                        </td>
+                    </tr>
+                    <tr>                    
+                        <th>
+                            SLA/SLO5: Closure Rate
+                        </th>
+                        <td id="mip_closure">
+
+                        </td>
+                        <td id="mip_closure_wt">
+                            10%
+                        </td>
+                        <td id="mip_closure_target">
+                            90%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_1">
+                            85.50%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_2">
+                            85.50%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_3">
+                            90%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_4">
+                            91.80%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_5">
+                            94.50%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+    </div>
+    <div id="l2" class="hiddenDiv">
+        <div class="dashboard_mip_header " style="width:100%">
+            <b>Voice MIP Grid</b>
+        </div>
+        <div class="dashboard_mip_content " style="width:100%">
+            <table id="dashboard_mip_table" >
+                <thead>
+                    <tr>
+                        <th style="min-width:220px;width:220px">
+                            GRID
+                        </th>
+                        <th style="width:120px" rowspan="2">
+                            Current
+                        </th>
+                        <th rowspan="2" colspan="2" >
+                            Bucket
+                        </th>
+                        <th colspan="2">
+
+                        </th>
+                        <th>
+                            Next 40%
+                        </th>
+                        <th>
+                            Next 20%
+                        </th>
+                        <th>
+                            Top 10%
+                        </th>
+                        <th rowspan="2">
+                            Remarks
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Qualifiers
+                        </th>                    
+                        <th>
+                            1
+                        </th>
+                        <th>
+                            2
+                        </th>
+                        <th>
+                            3
+                        </th>
+                        <th>
+                            4
+                        </th>
+                        <th>
+                            5
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:rgb(255, 167, 167)">
+                        <th>
+                            Mandatory Qualifier 1: Fraud
+                        </th>
+                        <td id="mip_fraud" style="min-width:125px;width:125px">
+                            
+                        </td>
+                        <td rowspan="2" colspan="2">
+
+                        </td>
+                        <td colspan="5">
+                            Hit or Miss
+                        </td>
+                        <td rowspan="2">
+                            Higher the Better
+                        </td>
+                    </tr>
+                    <tr style="background-color:rgb(255, 167, 167)">
+                        <th>
+                            Mandatory Qualifier 2: Attendance
+                        </th>
+                        <td id="mip_attendance">
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            92%
+                        </td>
+                        <td>
+                            94%
+                        </td>
+                        <td>
+                            96%
+                        </td>
+                    </tr >
+                    <tr style="background-color:rgb(124, 207, 121)">
+                        <th colspan="10">
+                            Mandatory Qualifiers 3: SLA/SLO
+                        </th>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th id="mip_score">
+                            
+                        </td>
+                        <th>
+                            Current
+                        </th>
+                        <th>
+                            Weight
+                        </th>
+                        <th>
+                            Target
+                        </th>
+                        <th>
+                            &lt; 95%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 95%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 100%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 102%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 105%<br>Client Target
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            SLA/SLO1: Overall CSAT
+                        </th>
+                        <td id="mip_CSAT">
+                            
+                        </td>
+                        <td id="mip_CSAT_wt">
+                            20%
+                        </td>
+                        <td id="mip_CSAT_target">
+                            85%
+                        </td>
+                        <td id="mip_CSAT_1">
+                            80.75%
+                        </td>
+                        <td id="mip_CSAT_2">
+                            80.75%
+                        </td>
+                        <td id="mip_CSAT_3">
+                            85%
+                        </td>
+                        <td id="mip_CSAT_4">
+                            86.70%
+                        </td>
+                        <td id="mip_CSAT_5">
+                            89.25%
+                        </td>
+                        <td rowspan="6">
+                            Higher the Better
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO2: Overall NPS
+                        </th>
+                        <td id="mip_NPS">
+                            
+                        </td>
+                        <td id="mip_NPS_wt">
+                            15%
+                        </td>
+                        <td id="mip_NPS_target">
+                            45%
+                        </td>
+                        <td id="mip_NPS_1">
+                            42.75%
+                        </td>
+                        <td id="mip_NPS_2">
+                            42.75%
+                        </td>
+                        <td id="mip_NPS_3">
+                            45%
+                        </td>
+                        <td id="mip_NPS_4">
+                            45.90%
+                        </td>
+                        <td id="mip_NPS_5">
+                            47.25%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO3: Overall FCR
+                        </th>
+                        <td id="mip_FCR">
+                            
+                        </td>
+                        <td id="mip_FCR_wt">
+                            15%
+                        </td>
+                        <td id="mip_FCR_target">
+                            70%
+                        </td>
+                        <td id="mip_FCR_1">
+                            66.50%
+                        </td>
+                        <td id="mip_FCR_2">
+                            66.50%
+                        </td>
+                        <td id="mip_FCR_3">
+                            70%
+                        </td>
+                        <td id="mip_FCR_4">
+                            71.40%
+                        </td>
+                        <td id="mip_FCR_5">
+                            73.50%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO4: Ave Contacts / Day
+                        </th>
+                        <td id="mip_ACD">
+                            
+                        </td>
+                        <td id="mip_ACD_wt">
+                            25%
+                        </td>
+                        <td id="mip_ACD_target">
+                            15
+                        </td>
+                        <td id="mip_ACD_1">
+                            14.25
+                        </td>
+                        <td id="mip_ACD_2">
+                            14.25
+                        </td>
+                        <td id="mip_ACD_3">
+                            15
+                        </td>
+                        <td id="mip_ACD_4">
+                            15.30
+                        </td>
+                        <td id="mip_ACD_5">
+                            15.75
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO5: QA Score
+                        </th>
+                        <td id="mip_QA">
+                            
+                        </td>
+                        <td id="mip_QA_wt">
+                            15%
+                        </td>
+                        <td id="mip_QA_target">
+                            85%
+                        </td>
+                        <td id="mip_QA_1">
+                            80.75%
+                        </td>
+                        <td id="mip_QA_2">
+                            80.75%
+                        </td>
+                        <td id="mip_QA_3">
+                            85%
+                        </td>
+                        <td id="mip_QA_4">
+                            86.70%
+                        </td>
+                        <td id="mip_QA_5">
+                            89.25%
+                        </td>
+                    </tr>
+                    <tr>                    
+                        <th>
+                            SLA/SLO5: Closure Rate
+                        </th>
+                        <td id="mip_closure">
+
+                        </td>
+                        <td id="mip_closure_wt">
+                            10%
+                        </td>
+                        <td id="mip_closure_target">
+                            90%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_1">
+                            85.50%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_2">
+                            85.50%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_3">
+                            90%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_4">
+                            91.80%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_5">
+                            94.50%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+    </div>
+
+    <div id="chat" class="hiddenDiv">
+        <div class="dashboard_mip_header " style="width:100%">
+            <b>Voice MIP Grid</b>
+        </div>
+        <div class="dashboard_mip_content " style="width:100%">
+            <table id="dashboard_mip_table" >
+                <thead>
+                    <tr>
+                        <th style="min-width:220px;width:220px">
+                            GRID
+                        </th>
+                        <th style="width:120px" rowspan="2">
+                            Current
+                        </th>
+                        <th rowspan="2" colspan="2" >
+                            Bucket
+                        </th>
+                        <th colspan="2">
+
+                        </th>
+                        <th>
+                            Next 40%
+                        </th>
+                        <th>
+                            Next 20%
+                        </th>
+                        <th>
+                            Top 10%
+                        </th>
+                        <th rowspan="2">
+                            Remarks
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Qualifiers
+                        </th>                    
+                        <th>
+                            1
+                        </th>
+                        <th>
+                            2
+                        </th>
+                        <th>
+                            3
+                        </th>
+                        <th>
+                            4
+                        </th>
+                        <th>
+                            5
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:rgb(255, 167, 167)">
+                        <th>
+                            Mandatory Qualifier 1: Fraud
+                        </th>
+                        <td id="mip_fraud" style="min-width:125px;width:125px">
+                            
+                        </td>
+                        <td rowspan="2" colspan="2">
+
+                        </td>
+                        <td colspan="5">
+                            Hit or Miss
+                        </td>
+                        <td rowspan="2">
+                            Higher the Better
+                        </td>
+                    </tr>
+                    <tr style="background-color:rgb(255, 167, 167)">
+                        <th>
+                            Mandatory Qualifier 2: Attendance
+                        </th>
+                        <td id="mip_attendance">
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            92%
+                        </td>
+                        <td>
+                            94%
+                        </td>
+                        <td>
+                            96%
+                        </td>
+                    </tr >
+                    <tr style="background-color:rgb(124, 207, 121)">
+                        <th colspan="10">
+                            Mandatory Qualifiers 3: SLA/SLO
+                        </th>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th id="mip_score">
+                            
+                        </td>
+                        <th>
+                            Current
+                        </th>
+                        <th>
+                            Weight
+                        </th>
+                        <th>
+                            Target
+                        </th>
+                        <th>
+                            &lt; 95%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 95%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 100%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 102%<br>Client Target
+                        </th>
+                        <th>
+                            &gt;= 105%<br>Client Target
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            SLA/SLO1: Overall CSAT
+                        </th>
+                        <td id="mip_CSAT">
+                            
+                        </td>
+                        <td id="mip_CSAT_wt">
+                            20%
+                        </td>
+                        <td id="mip_CSAT_target">
+                            85%
+                        </td>
+                        <td id="mip_CSAT_1">
+                            80.75%
+                        </td>
+                        <td id="mip_CSAT_2">
+                            80.75%
+                        </td>
+                        <td id="mip_CSAT_3">
+                            85%
+                        </td>
+                        <td id="mip_CSAT_4">
+                            86.70%
+                        </td>
+                        <td id="mip_CSAT_5">
+                            89.25%
+                        </td>
+                        <td rowspan="6">
+                            Higher the Better
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO2: Overall NPS
+                        </th>
+                        <td id="mip_NPS">
+                            
+                        </td>
+                        <td id="mip_NPS_wt">
+                            15%
+                        </td>
+                        <td id="mip_NPS_target">
+                            45%
+                        </td>
+                        <td id="mip_NPS_1">
+                            42.75%
+                        </td>
+                        <td id="mip_NPS_2">
+                            42.75%
+                        </td>
+                        <td id="mip_NPS_3">
+                            45%
+                        </td>
+                        <td id="mip_NPS_4">
+                            45.90%
+                        </td>
+                        <td id="mip_NPS_5">
+                            47.25%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO3: Overall FCR
+                        </th>
+                        <td id="mip_FCR">
+                            
+                        </td>
+                        <td id="mip_FCR_wt">
+                            15%
+                        </td>
+                        <td id="mip_FCR_target">
+                            70%
+                        </td>
+                        <td id="mip_FCR_1">
+                            66.50%
+                        </td>
+                        <td id="mip_FCR_2">
+                            66.50%
+                        </td>
+                        <td id="mip_FCR_3">
+                            70%
+                        </td>
+                        <td id="mip_FCR_4">
+                            71.40%
+                        </td>
+                        <td id="mip_FCR_5">
+                            73.50%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO4: Ave Contacts / Day
+                        </th>
+                        <td id="mip_ACD">
+                            
+                        </td>
+                        <td id="mip_ACD_wt">
+                            25%
+                        </td>
+                        <td id="mip_ACD_target">
+                            15
+                        </td>
+                        <td id="mip_ACD_1">
+                            14.25
+                        </td>
+                        <td id="mip_ACD_2">
+                            14.25
+                        </td>
+                        <td id="mip_ACD_3">
+                            15
+                        </td>
+                        <td id="mip_ACD_4">
+                            15.30
+                        </td>
+                        <td id="mip_ACD_5">
+                            15.75
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SLA/SLO5: QA Score
+                        </th>
+                        <td id="mip_QA">
+                            
+                        </td>
+                        <td id="mip_QA_wt">
+                            15%
+                        </td>
+                        <td id="mip_QA_target">
+                            85%
+                        </td>
+                        <td id="mip_QA_1">
+                            80.75%
+                        </td>
+                        <td id="mip_QA_2">
+                            80.75%
+                        </td>
+                        <td id="mip_QA_3">
+                            85%
+                        </td>
+                        <td id="mip_QA_4">
+                            86.70%
+                        </td>
+                        <td id="mip_QA_5">
+                            89.25%
+                        </td>
+                    </tr>
+                    <tr>                    
+                        <th>
+                            SLA/SLO5: Closure Rate
+                        </th>
+                        <td id="mip_closure">
+
+                        </td>
+                        <td id="mip_closure_wt">
+                            10%
+                        </td>
+                        <td id="mip_closure_target">
+                            90%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_1">
+                            85.50%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_2">
+                            85.50%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_3">
+                            90%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_4">
+                            91.80%
+                        </td>
+                        <td class="mip_closure_grid" id="mip_closure_5">
+                            94.50%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+    </div>
+</div>
+<div id="endorser" class="dashboard tab_div hiddenDiv">
+    <div class="dashboard_endorser_header " style="width:100%">
+        <br>
+        <b>L2 Endorser Schedule</b>
+        <br><br>
+    </div>
+    <span>
+        <select id="endorser_month" onchange="getSundays($('#endorser_month').val(),function(weeks){
+            $('#week_starts').html('');
+            $('#week_starts').append(new Option('Select WS',''));
+            $('#week_starts>option').attr('disabled',true).attr('selected',true);
+            weeks.forEach(function(week){
+                console.log((week.toString().length<2)?'0'+week.toString():week.toString());
+                var weekString=(($('#endorser_month').val().length<2)?'0'+$('#endorser_month').val():$('#endorser_month').val()).toString()+((week.toString().length<2)?'0'+week.toString():week.toString()).toString();
+                
+                $('#week_starts').append(new Option(weekString,weekString));
+            });
+        })">
+            <option value="" disabled selected>Month</option>
+            <option value="1">Jan 2021</option>
+            <option value="2">Feb 2021</option>
+            <option value="3">Mar 2021</option>
+            <option value="4">Apr 2021</option>
+            <option value="5">May 2021</option>
+            <option value="6">Jun 2021</option>
+            <option value="7">Jul 2021</option>
+            <option value="8">Aug 2021</option>
+            <option value="9">Sep 2021</option>
+            <option value="10">Oct 2021</option>
+            <option value="11">Nov 2021</option>
+            <option value="12">Dec 2021</option>
+        </select>
+    </span>
+    <span>
+        <select id="week_starts" onchange="if($('#week_starts').val()==''){
+            $('#save_endorser_schedule').attr('disabled',true);
+        }else{
+            $('#save_endorser_schedule').attr('disabled',false);
+            populateL2Endorsers('endorser_schedule','select_endorser',$('#week_starts').val())
+        }">
+            <option value="" disabled selected>Week Start</option>
+        </select>
+    </span>
+    <br><br>
+    <div class="dashboard_front_page_content " style="width:100%">
+        <div id="dashboard_endorser">
+            <div class="grid-container endorser_schedule">
+                <div class="grid-item date dates" id="date_header">Date</div>
+                <div class="grid-item sun dates" id="date_0"></div>
+                <div class="grid-item mon dates" id="date_1"></div>  
+                <div class="grid-item tue dates" id="date_2"></div>
+                <div class="grid-item wed dates" id="date_3"></div>
+                <div class="grid-item thu dates" id="date_4"></div>  
+                <div class="grid-item fri dates" id="date_5"></div>
+                <div class="grid-item sat dates" id="date_6"></div>
+
+                <div class="grid-item time time" id="time_header">Time</div>
+                <div class="grid-item sun days" id="sun_header">Sunday</div>
+                <div class="grid-item mon days" id="mon_header">Monday</div>  
+                <div class="grid-item tue days" id="tue_header">Tuesday</div>
+                <div class="grid-item wed days" id="wed_header">Wednesday</div>
+                <div class="grid-item thu days" id="thu_header">Thursday</div>  
+                <div class="grid-item fri days" id="fri_header">Friday</div>
+                <div class="grid-item sat days" id="sat_header">Saturday</div>
+
+                <div class="grid-item time" id="time_1">0001H-0200H</div>
+                <div class="grid-item sun" id="sun_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_1">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_1_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_2">0201H-0400H</div>
+                <div class="grid-item sun" id="sun_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_2">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_2_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_3">0401H-0600H</div>
+                <div class="grid-item sun" id="sun_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_3">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_3_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_4">0601H-0800H</div>
+                <div class="grid-item sun" id="sun_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_4">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_4_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_5">0801H-1000H</div>
+                <div class="grid-item sun" id="sun_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_5">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_5_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_6">1001H-1200H</div>
+                <div class="grid-item sun" id="sun_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_6">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_6_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_7">1201H-1800H</div>
+                <div class="grid-item sun" id="sun_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_7">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_7_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_8">1801H-2000H</div>
+                <div class="grid-item sun" id="sun_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_8">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_8_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_9">2001H-2200H</div>
+                <div class="grid-item sun" id="sun_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_9">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_9_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+
+                <div class="grid-item time" id="time_10">2201H-2400H</div>
+                <div class="grid-item sun" id="sun_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sun_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item mon" id="mon_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="mon_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item tue" id="tue_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="tue_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item wed" id="wed_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="wed_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item thu" id="thu_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="thu_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>  
+                <div class="grid-item fri" id="fri_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="fri_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+                <div class="grid-item sat" id="sat_10">
+                    <div class="endorser_name"></div>
+                    <select class="select_endorser" id="sat_10_name">
+                        <option value="" disabled selected>Select Expert</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <button id="save_endorser_schedule" onclick="saveEndorserSchedule('select_endorser',$('#week_starts').val())">Save schedule</button> <button id="reset_endorser_schedule" onclick="$('.select_endorser').val('')">Reset schedule</button>
+            <br><br>
+        </div>
+    </div>
+
+    <div class="dashboard_endorser_header " style="width:100%">
+        <br>
+        <b>L2 Schedule</b>
+        <br><br>
+        <img src="/assets/img/l2/WS0726-schedule.jpg">
+    </div>
+</div>
+
+
+<br><br>

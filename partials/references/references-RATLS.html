@@ -1,0 +1,228 @@
+<div class="hiddenDiv" id="loadref-ratlsscript">
+    $('#faq_ratls').load('partials/references/FAQ-RATLS.html');
+    $('#ts_ratls').load('partials/troubleshooting/TS-RATLS.html');
+
+    
+</div>
+
+<div id="ratlsdiv">
+<h4 class="ratls">Introduction - Direct Storage Access</h4>
+<p>
+    <b>What is this feature?</b><br>
+    We are introducing a new free feature to the Arlo app, Direct Storage Access, that will allow users to browse the contents of a microSD card or USB drive attached to their Ultra or Pro 3 SmartHub.
+</p>
+<p>
+    <b>Why are we releasing?</b><br>
+    <ul>
+        <li>After we launched Ultra, which required an Arlo Smart subscription, users were upset that Arlo no longer offered free cloud storage.</li>
+        <li>Retail accounts were similarly upset and warned that they would not carry Ultra or Pro 3 if we did not offer some sort of free recording storage and access option.</li>
+    </ul>
+</p>
+<p>
+    <b>Major Features</b><br>
+    <ul>
+        <li>In-app access to video recordings stored on your SmartHub, with 30 days of history.
+            <br>To access recordings on SmartHub older than 30 days, user must physically remove storage device and plug into computer. (Assumes that automatic overwrite has also not deleted these recordings)</li>
+        <li>Download videos from your SmartHub directly to the Arlo app on your iOS or Android device.</li>
+        <li>Share videos with others, or save to your phone’s camera roll to keep permanently.</li>
+        <li>Can be used in addition to Arlo Smart – have the best of both worlds!
+            <br>For Ultra, resolution in SmartHub will match resolution in cloud (<b>i.e. Arlo Smart Premier on Ultra = 2K on cloud and SmartHub</b>); also dependent on selecting “Best Quality” in local storage settings. (<b>If best quality is OFF, then local recording = 1080p</b>)</li>
+    </ul>
+</p>
+
+<h4 class="ratls">Advantages - Direct Storage Access</h4>
+<p>
+    <ul>
+        <li><b>Flexibility</b> - Anywhere access to recordings stored on the SmartHub at home.</li>
+        <li><b>100% Control</b> - Local recordings are never stored on the Arlo Cloud.</li>
+        <li><b>Capacity</b> - Swap out storage devices and keep all your recordings. Forever.</li>
+        <li><b>Cost</b> - No subscription required.</li>
+    </ul>
+</p>
+
+<h4 class="ratls">Requirements - Direct Storage Access</h4>
+<p>
+    Supported devices which supports this feature:
+    <ul>
+        <li>VMB5000 (Ultra Smarthub)
+            <ul>
+                <li>microSD card inserted into SmartHub, formatted to FAT32</li>
+                <li>Capacity >= 16GB</li>
+            </ul>
+        </li>
+        <li>VMB4540 (Pro 3 Smarthub)
+            <ul>
+                <li>USB drive inserted into SmartHub</li>
+                <li>Flash drives are recommended</li>
+            </ul>
+        </li>
+        Note: Not all external hard drives will work; <b>hard drive must be USB 2.0 compliant and formatted to FAT32</b>. <br><br>
+        Older, thicker portable drives may not work as the SmartHub does not provide enough power; 500GB, 1TB, and 2TB slim portable drives released by Seagate and WD in the past two years should be compatible, as should all desktop (wall-powered) external hard drives. <br><br>
+        Maximum capacity possible is 2TB.<br><br>
+        <li>Arlo camera that connect to SmartHub (ie, Arlo Q, Baby, Go, and Video Doorbell are currently excluded)</li>
+        <li>Owner account login</li>
+        <li>iOS or Android app version 2.12 or higher</li>
+    </ul>
+</p>
+<a name="ratls-enable"></a><br><br>
+<h4 class="ratls">Enabling - Direct Storage Access</h4>
+<div class="row">
+    <div id="ratls-enable-image" class="column" style="width:20%;">
+        <img style='width:100%;' src='/assets/img/ratls/ratls-enable01.jpg'>
+    </div>
+    <div class="column" style="width:60%;">
+        <p>
+            <ol>
+                <li><a href="#ratls-enable" onclick="loadPic('ratls/ratls-enable01','#ratls-enable-image');">Go to Smarthub settings</a></li>
+                <li><a href="#ratls-enable" onclick="loadPic('ratls/ratls-enable02','#ratls-enable-image');">Go to Storage Settings</a></li>
+                <li><a href="#ratls-enable" onclick="loadPic('ratls/ratls-enable03','#ratls-enable-image');">Enable "Record Locally</a></li>
+                <li><a href="#ratls-enable" onclick="loadPic('ratls/ratls-enable04','#ratls-enable-image');">Enable "Direct Storage Access"</a></li>
+            </ol>
+            <ul>
+                <li>
+                    Once enabled, the user will be able to access video recordings that are stored on the storage device (microSD or USB) connected to their SmartHub <b>while on the same network as the SmartHub</b>
+                </li>
+                <li>
+                    For example – if on the same WiFi network that the SmartHub is on, the user will be able to access the clips stored on their SmartHub.
+                </li>
+                <li>
+                    With no further setup, if the user turns off WiFi or leaves the network, they will not be able to access their clips
+                </li>
+            </ul>
+        </p>
+    </div>
+    
+</div>
+
+<h4 class="ratls">Enabling for Outside the Local Network - Direct Storage Access</h4>
+<p>
+    Use a VPN
+    <ul>
+        <li>The router connected to the SmartHub must provide a VPN (Virtual Private Network).</li>
+        <li>On the user’s iOS or Android device, the device must be connected to this VPN.</li>
+        <li>Very few routers have this functionality</li>
+        <li>No additional steps in the Arlo app are required for this option</li>
+    </ul>
+</p>
+<p>
+    Set up Port Forwarding
+    <ul>
+        <li>The Arlo app can provide basic instructions to the user for setting up port forwarding</li>
+        <li>User must go into their router settings and define ports that can allow the SmartHub to be accessed from outside the home</li>
+        <li>Port Forwarding literally opens a whole in the user’s network; users concerned about Port Forwarding should use VPN or subscribe to Arlo Smart for access outside the home</li>
+    </ul>
+</p>
+<a name="ratls-portforward"></a><br><br>
+<h4 class="ratls">Enabling for Port Forwarding - Direct Storage Access</h4>
+<div class="row">
+    <div id="ratls-portforward-image" class="column" style="width:20%;">
+        <img style='width:100%;' src='/assets/img/ratls/ratls-portforward01.jpg'>
+    </div>
+    <div class="column" style="width:60%;">
+        <p>
+            <ol>
+                <li><a href="#ratls-portforward" onclick="loadPic('ratls/ratls-portforward01','#ratls-portforward-image');">In Storage Settings, scroll down to Port Forwarding.</a></li>
+                <li>
+                    <a href="#ratls-portforward" onclick="loadPic('ratls/ratls-portforward02','#ratls-portforward-image');">User must accept the risk of using PortForwarding:</a><br>
+                    Port Forwarding gives a direct connection from the Internet to your Arlo Smarthub.<br>
+                    By using port forwarding, you risk exposing your Smarthub and the contents of any device connected to it to the outside world.<br>
+                    Use port forwarding at your own risk.
+                </li>
+                <li><a href="#ratls-portforward" onclick="loadPic('ratls/ratls-portforward03','#ratls-portforward-image');">User sees the configuration required for their router.</a></li>
+                Note: User can refresh the ports (in case of conflict with another application, or for security). Ports are randomly assigned and cannot be specifically controlled by the user.
+            </ol>
+            Note: <b>We will NOT walk a user in how to set up port forwarding (or VPN) on their specific router.</b><br><br>
+            We will only tell them how to get the Port Forwarding information in the Arlo app, and advise that they must contact their router manufacturer, user manual, and/or ISP for setting up Port Forwarding on their specific router.<br><br>
+            <b>Empathize and deflect with compassion.</b>
+        </p>
+    </div>
+</div>
+
+<a name="ratls-optiona"></a><br><br>
+<h4 class="ratls">Accessing Locally Stored Recordings: Option A - Direct Storage Access</h4>
+<div class="row">
+    <div id="ratls-optiona-image" class="column" style="width:20%;">
+        <img style='width:100%;' src='/assets/img/ratls/ratls-optiona01.jpg'>
+    </div>
+    <div class="column" style="width:60%;">
+        <p>
+            <ol>
+                <li><a href="#ratls-optiona" onclick="loadPic('ratls/ratls-optiona01','#ratls-optiona-image');">Go to Devices Screen.</a></li>
+                <li>
+                    For cameras that do NOT have cloud recording (ala no Smart plan and no 7 Day Free Cloud), users can access their library (pre-filtered to that camera) via the new “Library badge” icon.<br><br>
+                    Note: Because we don’t scan the SmartHub library until you open it, the Arlo app has no way of knowing how many SmartHub-only clips were created since the last viewing.<br><br>
+                    So, we have this new icon to represent the ability to filter the library to that camera.
+                </li>
+            </ol>
+        </p>
+    </div>
+</div>
+
+<a name="ratls-optionb"></a><br><br>
+<h4 class="ratls">Accessing Locally Stored Recordings: Option B - Direct Storage Access</h4>
+<div class="row">
+    <div id="ratls-optionb-image" class="column" style="width:20%;">
+        <img style='width:100%;' src='/assets/img/ratls/ratls-optionb01.jpg'>
+    </div>
+    <div class="column" style="width:60%;">
+        <p>
+            <ol>
+                <li><a href="#ratls-optionb" onclick="loadPic('ratls/ratls-optionb01','#ratls-optionb-image');">Go to Library.</a></li>
+                <li><a href="#ratls-optionb" onclick="loadPic('ratls/ratls-optionb02','#ratls-optionb-image');">Click on source selector, tap on SmartHub.</a></li>
+                <li>
+                    <a href="#ratls-optionb" onclick="loadPic('ratls/ratls-optionb03','#ratls-optionb-image');">Library shows locall stored clips.</a><br><br>
+                    Note: Thumbnails are not shown as we generate thumbnails today via the cloud.<br><br>
+                    However, when a clip is downloaded and on the device, that is when the user will see a thumbnail (as we can process a thumbnail after it is downloaded to device)
+                </li>
+            </ol>
+        </p>
+    </div>
+</div>
+
+<a name="ratls-play"></a><br><br>
+<h4 class="ratls">Playing Locally Stored Recordings - Direct Storage Access</h4>
+<div class="row">
+    <div id="ratls-play-image" class="column" style="width:20%;">
+        <img style='width:100%;' src='/assets/img/ratls/ratls-play01.jpg'>
+    </div>
+    <div class="column" style="width:60%;">
+        <p>
+            <ol>
+                <li><a href="#ratls-play" onclick="loadPic('ratls/ratls-play01','#ratls-play-image');">Tap on a clip.</a></li>
+                <li><a href="#ratls-play" onclick="loadPic('ratls/ratls-play02','#ratls-play-image');">Clip will download to Arlo app and play.</a></li>
+                <li>
+                    <a href="#ratls-play" onclick="loadPic('ratls/ratls-play03','#ratls-play-image');">User can save or share clip.</a><br><br>
+                    Note: Because clips do not get stored on the cloud, user cannot favorite or donate clips.<br><br>
+                    Furthermore, for security, we do not allow clips on SmartHub to be deleted.
+                </li>
+            </ol>
+        </p>
+    </div>
+</div>
+
+<a name="ratls-delete"></a><br><br>
+<h4 class="ratls">Deleting Files Stored Locally on App - Direct Storage Access</h4>
+<div class="row">
+    <div id="ratls-delete-image" class="column" style="width:20%;">
+        <img style='width:100%;' src='/assets/img/ratls/ratls-delete01.jpg'>
+    </div>
+    <div class="column" style="width:60%;">
+        <p>
+            <ol>
+                <li><a href="#ratls-delete" onclick="loadPic('ratls/ratls-delete01','#ratls-delete-image');">Go to settings & Cache.</a></li>
+                <li><a href="#ratls-delete" onclick="loadPic('ratls/ratls-delete01','#ratls-delete-image');">Tap on "Delete downloaded videos."</a><br><br>
+                    Note: “Deleting downloaded videos” will ONLY delete videos that have been downloaded to the Arlo app. <br><br>
+                    It will NOT affect videos on the SmartHub itself.<br><br>
+                    This feature exists in case the user needs to free up storage on their device.
+                </li>
+            </ol>
+        </p>
+    </div>
+</div>
+
+<h4 class="ratls">Troubleshooting</h4>
+<div id="ts_ratls"></div>
+
+<h4 class="ratls">Frequently Asked Questions (FAQs)</h4>
+<div id="faq_ratls"></div>
+<br><br>

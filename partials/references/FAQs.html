@@ -1,0 +1,20 @@
+<div class="hiddenDiv" id="loadVDBFAQscript">
+	$('#FAQ-selector').val('/partials/references/FAQ-videodoorbell');
+	displayOption('FAQ');</div>
+
+<h4>Frequently Asked Questions (FAQs)</h4><br>
+<select id="FAQ-selector" oninput="displayOption('FAQ');$('#FAQ_filter').val('')">
+	<option value="0" class="selectheader" selected disabled>Select Device/Feature to View</option>
+	<option value="/partials/references/FAQ-pro3">Arlo Pro 3</option>
+	<option value="/partials/references/FAQ-hellotech">HelloTech</option>
+	<option value="/partials/references/FAQ-RATLS">RATLS</option>
+	<option value="/partials/references/FAQ-subscription">Subscriptions</option>
+	<option value="/partials/references/FAQ-videodoorbell">Video Doorbell</option>
+	
+	
+</select>
+<br><br>
+<input type="search" id="FAQ_filter" placeholder="Search" title="Type in anything" style="width:20%" oninput="filter('FAQ_table','FAQ_filter')">
+<div id="FAQ-content">
+</div>
+<br><br>

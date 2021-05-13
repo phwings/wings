@@ -1,0 +1,150 @@
+<div class="hiddenDiv" id="loadconsultreportscript">
+	var d = new Date();
+	$("#consult_date1").datepicker({minDate:new Date(2020,10,01), maxDate:maxDate});
+	$("#consult_date2").datepicker({minDate:new Date(2020,10,01), maxDate:maxDate});
+
+	$("#consult_date1").datepicker("setDate", Date.now());
+	$("#consult_date2").datepicker("setDate", Date.now());
+	$("#consult_date1").datepicker("option", "dateFormat", "yy-mm-dd");
+	$("#consult_date2").datepicker("option", "dateFormat", "yy-mm-dd");
+	updateConsultReportTable();
+	
+
+
+	var coll = document.getElementsByClassName("collapsibleConsult");
+	var i;
+	console.log(coll)
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+			content.style.display = "none";
+			} else {
+			content.style.display = "block";
+			}
+		});
+		
+	}
+
+</div>
+<br><br>
+<h5>Consult Report</h5>
+	<div class="row">
+		<div class="column" style="width:180px">
+			Start Date: <br><input type="text" id="consult_date1" onchange="$('#consult_date2').datepicker('option','minDate',new Date($('#consult_date1').val()));if(($('#consult_date2').val()!='')&&($('#consult_date1').val()!='')){updateLoyaltyReport()}">
+		</div>
+		<div class="column" style="width:180px">
+			End Date: <br><input type="text" id="consult_date2" onchange="$('#consult_date1').datepicker('option','maxDate',new Date($('#consult_date2').val()));if(($('#consult_date2').val()!='')&&($('#consult_date1').val()!='')){updateLoyaltyReport()}">
+		</div>
+	</div>
+	<br>
+	
+	<button id="consult_reports_xls" onclick="tablesToExcel(['consult_report_source_table','consult_report_center_table','consult_report_L2_table','consult_report_expert_table','consult_report_reason_table','consult_report_device_table','consult_report_table'], ['Source','Center','Consultant','Expert','Reason','Device','Raw'], 'Excel')" disabled>Export to Excel</button>
+	<br>
+	<div id="consult_report_loading" >
+		<img src="/assets/img/arlobird.gif" style="text-align:center;width:20%;height:auto">
+	</div>
+	<br>
+	<table id="consult_report_source_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Source</th>
+				<th>Consults</th>
+				<th>AHT</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_source_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	<br><br>
+
+	<table id="consult_report_center_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Center</th>
+				<th>Consults</th>
+				<th>AHT</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_center_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	<br><br>
+
+	<table id="consult_report_L2_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Consultant</th>
+				<th>Consults</th>
+				<th>AHT</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_L2_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	<br><br>
+
+	<table id="consult_report_expert_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Experts</th>
+				<th>Consults</th>
+				<th>AHT</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_expert_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	<br><br>
+
+	<table id="consult_report_reason_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Reason</th>
+				<th>Consults</th>
+				<th>AHT</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_reason_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	<br><br>
+
+	<table id="consult_report_device_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Device</th>
+				<th>Consults</th>
+				<th>AHT</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_device_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	<br><br>
+
+	<table id="consult_report_table" class="consult_reports hiddenDiv" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+		<thead>
+			<tr style="text-align:center">
+				<th>Date/Time</th>
+				<th>Team</th>
+				<th>Expert</th>
+				<th>Consultant</th>
+				<th>Case Number</th>
+				<th>Device</th>
+				<th>Reason</th>
+				<th>Opportunity</th>
+				<th>Duration</th>
+				<th>Center</th>
+				<th>Source</th>
+			</tr>
+		</thead>
+		<tbody id="consult_report_body" style="text-align: left;font-family: 'Courier New', Courier, monospace;">
+		</tbody>
+	</table>
+	
+		
+</div>
+
+

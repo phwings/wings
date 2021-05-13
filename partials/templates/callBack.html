@@ -1,0 +1,161 @@
+<div class="hiddenDiv" id="callbackScript">
+    getDataRecord('/api/devices',function(devices){
+        //console.log(experts.length);
+        //$("#escalation_product").html('');
+        $("#callback_device").empty();
+        $("#callback_device").append(new Option('Select device', 0, true, true));
+        $("#callback_device option").addClass('selectheader');
+        $("#callback_device option").attr('disabled','disabled');
+        devices.sort((a, b) => (a["device_name"] > b["device_name"]) ? 1 : -1)
+        devices.forEach(data => {
+            //console.log(data);
+            $("#callback_device").append(new Option(data.device_name + "    (" + data.device_model + ")", data.device_model));
+        });
+        $("#callback_device").prop("disabled",false);
+    },'tagging_device');
+
+    var maxDate=new Date(Date.now());
+    console.log(Date.now())
+
+    $('#callback_cxtime').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 1,
+        minTime: '0',
+        maxTime: '11:59pm',
+        startTime: '12:00am',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true,
+        change: function (time){
+            changeCallbackTime(1);
+        }
+    });
+
+    $('#callback_localtime').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 1,
+        minTime: '0',
+        maxTime: '11:59pm',
+        startTime: '12:00am',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true,
+        change: function (time){
+            changeCallbackTime(2);
+        }
+    });
+    
+    
+    $('#callback_cxdate').datepicker({dateFormat: 'yy-mm-dd',minDate:new Date(Date.now()-86400000),defaultDate:new Date(Date.now())});
+    $('#callback_cxdate').datepicker("setDate",maxDate);
+    $('#callback_localdate').datepicker({dateFormat: 'yy-mm-dd',minDate:new Date(Date.now()-86400000),defaultDate:new Date(Date.now())});
+    $('#callback_localdate').datepicker("setDate",maxDate);
+    
+</div>
+
+<h4>Callback Request</h4>
+<button onclick="loadExternal('/partials/templates/standard','standardScript');"><< Back to Standard</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="clearCallback();loadCallback();">Clear Callback Request</button>
+<br><br>
+<div class="row" style="width:100%;font-family:monospace;">
+    <div class="column" style="width:55%;float:left;">
+        <div class="panel-group" style="width:95%;padding-left:5px;padding-right:5px;text-align:left;">
+            <div class="panel-group-label">Callback Details</div>
+            
+            <div style="width:100%;text-align:right;vertical-align:top;align-items:center;">
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Case Number: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <input type="text" id="callback_casenum" size="30" style="width:100%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="2">
+                    </div>
+                </div><br>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Device: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <select id="callback_device" style="width:100%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6">
+                        </select>
+                    </div>
+                </div><br>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Phone: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <input type="text" id="callback_phone" size="30" style="width:100%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6">
+                    </div>
+                </div><br>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Time Zone: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <select id="callback_tz" style="width:100%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6" onchange="changeCallbackTime(0 );">
+                            <option disabled selected>Select Time Zone</option>
+                            <option value="America/Los_Angeles">US-Pacific</option>
+                            <option value="America/Denver">US-Mountain</option>
+                            <option value="America/Chicago">US-Central</option>
+                            <option value="America/New_York">US-Eastern</option>
+                            <option value="Australia/Perth">AUS-Western</option>
+                            <option value="Australia/Adelaide">AUS-Central</option>
+                            <option value="Australia/Queensland">AUS-Eastern</option>
+                        </select>
+                    </div>
+                </div><br>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:60%;float:left;">
+                        Callback Schedule:
+                    </div>
+                    <div class="column" style="width:30%;float:left;">
+                    </div>
+                </div>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        CX Time: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <input disabled type="text" id="callback_cxdate" onchange="changeCallbackTime(1);" placeholder="mm/dd/yyyy" style="width:50%;height:18px;clear:both;padding:0px;margin:0px;">
+                        <input disabled type="text" id="callback_cxtime"  oninput="changeCallbackTime(1);" placeholder="HH:mm" style="width:45%;height:18px;clear:both;padding:0px;margin:0px;">
+                    </div>
+                </div>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:29%;float:left;">
+                        OR
+                    </div>
+                    <div class="column" style="width:70%;text-align:center">
+                    </div>
+                </div>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Local Time: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <input disabled type="text" id="callback_localdate" onchange="changeCallbackTime(2);" placeholder="mm/dd/yyyy" style="width:50%;height:18px;clear:both;padding:0px;margin:0px;">
+                        <input disabled type="text" id="callback_localtime"  oninput="changeCallbackTime(2);" placeholder="HH:mm" style="width:45%;height:18px;clear:both;padding:0px;margin:0px;">
+                    </div>
+                </div><br>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Concern: 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <textarea id="callback_concern" size="30" rows="5" style="float:left;min-width:100%;max-width:100%;width:100%;height:50px;clear:both;padding:0px;margin:0px;" tabindex="6"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="width:100%;font-family:monospace;">
+                    <div class="column" style="width:35%;float:left;padding-right:5px">
+                        Sup Call? 
+                    </div>
+                    <div class="column" style="width:60%;float:left;">
+                        <input type="checkbox" id="callback_supcall" size="30" style="float:left;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="saveCallback" onclick="saveCallback();">&nbsp;&nbsp;Submit Request</button><span class="hiddenDiv" id="callbackMessage" style="color:red;font-weight:bold">Callback request processed.</span>
+<br><br><br>

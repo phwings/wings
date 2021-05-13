@@ -1,0 +1,671 @@
+.scrollable {
+  height: 255px;
+  overflow-y: auto;
+  margin:0px;
+}
+
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 6px;
+  right: 10px;
+  width: 60px;
+  z-index:99;
+}
+
+.open-buttonL2 {
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 6px;
+  right: 80px;
+  width: 60px;
+  z-index:99;
+}
+
+#btnContainer{
+  position: fixed;
+  bottom: 6px;
+  right: 5px;
+  z-index:20;
+}
+
+.open-buttonChatCCTConsultQueue, .open-buttonChatConsultQueue, .open-buttonChatRmaApprovalQueue{
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: relative;
+  width: 100px;
+  z-index:20;
+  margin-right:5px;
+  vertical-align:bottom;
+}
+
+.open-buttonChatCCTConsult {
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: relative;
+  width: 84px;
+  z-index:20;
+  margin-right:5px;
+}
+
+.open-buttonRmaApproval {
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: relative;
+  width: 102px;
+  z-index:20;
+  margin-right:5px;
+}
+
+.open-buttonChatConsult {
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: relative;
+  width: 84px;
+  z-index:20;
+  margin-right:5px;
+}
+
+.open-buttonChatTrainer {
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 6px;
+  right: 160px;
+  width: 84px;
+  z-index:99;
+}
+
+.open-aux {
+  display:none;
+  background-color: #555;
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 6px;
+  right: 20px;
+  width: 60px;
+  z-index:99;
+}
+
+/* The popup chat - hidden by default */
+#chatForm,#chatFormL2,#auxForm,#chatFormChatConsult,#chatFormChatConsult1,#chatFormChatConsult2,#chatFormChatConsultQueue,#chatFormChatTrainer,#chatFormChatTrainer2,#chatFormChatCCTConsult1,#chatFormChatCCTConsult2,#chatFormChatCCTConsult,#chatFormChatCCTConsultQueue,#chatFormRmaApproval,#chatFormRmaApprovalQueue {
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+    border: 3px solid #f1f1f1;
+    z-index: 20;
+    height:370px;
+    min-width:230px;
+    max-width:230px;
+    background-color:white;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+/* Add styles to the form container */
+
+.form-container {
+  max-width: 230px;
+  padding: 10px;
+  background-color: white;
+  overflow-x:hidden;
+}
+
+#consult-info, #chatQueue, #chatCountdown {
+  max-width: 230px;
+  padding: 10px;
+  background-color: white;
+  overflow-x:hidden;
+}
+
+#CCTconsult-info, #chatCCTQueue, #chatCCTCountdown {
+  max-width: 230px;
+  padding: 10px;
+  background-color: white;
+  overflow-x:hidden;
+}
+
+#trainer-info, #chatTrainerQueue, #chatTrainerCountdown {
+  max-width: 230px;
+  padding: 10px;
+  background-color: white;
+  overflow-x:hidden;
+}
+
+
+#consult-info b, #chatQueue b  {
+  padding-left:2px!important;
+  color: blue;
+}
+
+#CCTconsult-info b, #chatCCTQueue b  {
+  padding-left:2px!important;
+  color: blue;
+}
+
+#trainer-info b, #chatTrainerQueue b {
+  padding-left:2px!important;
+  color: blue;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 80%;
+  padding: 5px;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 50px;
+  font-size:10px;
+
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container ul {
+  font-size:8pt;
+  padding-left:2px;
+  overflow-x:hidden;
+  width:90%;
+}
+
+.form-container b {
+  padding-left:2px!important;
+  color: blue;
+}
+
+.form-container li>span {
+  padding-left:10px!important;
+  color:black;
+  font-weight:normal;
+}
+
+ul#chatuserlist{
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+#listDisplay{
+  overflow-x:hidden;
+}
+
+ul#chatuserlist>li {
+  width:100%;
+  font-size: 12px;
+  display:inline-block;
+  overflow-x:hidden;
+  padding-bottom:4px;
+}
+
+ul#chatuserlistL2{
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+ul#userlistChatConsultQueue, ul#userlistChatTrainerQueue {
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding-inline-start:10px;
+}
+
+ul#chatuserlistL2>li {
+  width:100%;
+  display:inline-block;
+  overflow-x:hidden;
+}
+
+ul#userlistChatConsult>li, ul#userlistChatTrainer>li {
+  width:100%;
+  display:inline-block;
+  overflow-x:hidden;
+}
+
+ul#userlistChatConsultQueue>li, ul#userlistChatTrainerQueue>li {
+  width:100%;
+  display:inline-block;
+  overflow-x:hidden;
+}
+
+.form-container#messages li {
+  background-color: #deebdd;
+  border-radius:5px;
+  margin-bottom: 3px;
+  padding:2px;
+  word-wrap: break-word;
+  max-width:204px;
+}
+
+.form-container#messagesL2 li {
+  background-color: #deebdd;
+  border-radius:5px;
+  margin-bottom: 3px;
+  padding:2px;
+  word-wrap: break-word;
+  max-width:204px;
+}
+
+.form-container#messagesChatConsult li, .form-container#messagesChatTrainer li, .form-container#messagesChatTrainer2 li {
+  background-color: #deebdd;
+  border-radius:5px;
+  margin-bottom: 3px;
+  padding:2px;
+  word-wrap: break-word;
+  max-width:204px;
+}
+
+.form-container>#messages li:nth-child(odd) {
+  background-color: #ddebea;
+}
+
+.form-container>#messagesL2 li:nth-child(odd) {
+  background-color: #ddebea;
+}
+
+.form-container>#messagesChatConsult li:nth-child(odd), .form-container>#messagesChatTrainer li:nth-child(odd), .form-container>#messagesChatTrainer2 li:nth-child(odd) {
+  background-color: #ddebea;
+}
+
+.form-container .sub {
+    background-color: #4CAF50;
+    color: white;
+    padding: 18px 5px;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    vertical-align:top;
+  }
+
+/* Set a style for the submit/login button */
+.form-container .cancel {
+  
+  color: white;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+
+  float:right;
+  opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.badge {
+  /*position: relative;*/
+  top: -10px;
+  left: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+.badge#chatbadgeChatTrainer {
+  position: absolute;
+  top: -10px;
+  left: -35px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+.updatebadge {
+  position: relative;
+  top: 0px;
+  right: 0px;
+  padding: 7px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 14px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 14px;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.auxLabel{
+  font-size: 14px;
+  position: absolute;
+  padding-left:4px;
+}
+
+#auxRequests,#auxRequestList{
+  font-size:11px;
+}
+
+#auxRequests td,#auxRequestList td{
+  padding:2px;
+  text-align:center;
+}
+
+#auxRequests>thead>tr>th:nth-child(1){
+  width:200px;
+  cursor:pointer;
+}
+
+#auxRequests>tr>td:nth-child(1){
+  width:200px;
+  text-align:left!important;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+#auxRequests th:nth-child(2){
+  width:60px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#auxRequests td:nth-child(2){
+  width:60px;
+  text-align:center;
+}
+
+#auxRequests th:nth-child(3){
+  width:50px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#auxRequests td:nth-child(3){
+  width:50px;
+  text-align:center;
+}
+
+#auxRequests th:nth-child(4){
+  width:200px;
+  text-align:center;
+}
+
+#auxRequests td:nth-child(4){
+  width:200px;
+  text-align:left;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+#auxRequestList>thead>tr>th:nth-child(1){
+  width:200px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#auxRequestList>tr>td:nth-child(1){
+  width:200px;
+  text-align:left;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+#auxRequestList th:nth-child(2){
+  width:60px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#auxRequestList td:nth-child(2){
+  width:60px;
+  text-align:center;
+}
+
+#auxRequestList th:nth-child(3){
+  width:50px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#auxRequestList td:nth-child(3){
+  width:50px;
+  text-align:center;
+}
+
+#auxRequestList th:nth-child(4),#auxRequestList td:nth-child(4){
+  width:200px;
+  text-align:center;
+}
+
+#auxRequestList th:nth-child(5),#auxRequestList td:nth-child(5){
+  width:200px;
+  text-align:center;
+}
+
+#auxRequestList th:nth-child(6){
+  width:110px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#auxRequestList td:nth-child(6){
+  width:110px;
+  text-align:center;
+}
+
+
+.blink-bg{
+  color: #fff;
+  animation: blinkingBackground 2s infinite;
+}
+@keyframes blinkingBackground{
+  0%		{ background-color: #10c018;}
+  25%		{ background-color: #1056c0;}
+  50%		{ background-color: #ef0a1a;}
+  75%		{ background-color: #254878;}
+  100%	        { background-color: #04a1d5;}
+}
+
+#rtaPopup{
+  position: absolute;
+  display:none;
+  z-index:100;
+  background-color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:10pt;
+}
+
+#rtaPopup>div{
+  height:15px;
+  border:1px solid black;
+  padding:2px;
+}
+
+#rtaPopup>div:hover{
+  color:white;
+  background-color:green;
+
+}
+
+#rtaMessage{
+  border: 3px solid red;
+  background-color: rgba(255,255,255,0.7);
+  width:300px;
+  position:absolute;
+  display:none;
+  font-size:20px;
+}
+
+#rtaMessageClose{
+  height:20px;
+}
+
+#rtaMessageText{
+  font-weight:bold;
+  text-align:center;
+  font-size:20px;
+  height:50px;
+  padding:20px;
+}
+
+#l2availchatconsult, #cctavailchatconsult{
+  font-weight: bold;
+  color:red;
+}
+
+
+
+
+/* The switch - the box around the slider */
+.switch_rmaapproval, .switch_l2consult, .switch_trainer, .switch_cctconsult {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  z-index:99;
+}
+
+/* Hide default HTML checkbox */
+.switch_rmaapproval input, .switch_l2consult input, .switch_trainer input, .switch_cctconsult input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider_rmaapproval, .slider_l2consult, .slider_trainer, .slider_cctconsult {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider_rmaapproval:before, .slider_l2consult:before, .slider_trainer:before, .slider_cctconsult:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider_rmaapproval, input:checked + .slider_l2consult, input:checked + .slider_trainer, input:checked + .slider_cctconsult {
+  background-color: rgb(1, 117, 39);
+}
+
+input:focus + .slider_rmaapproval, input:focus + .slider_l2consult, input:focus + .slider_trainer, input:focus + .slider_cctconsult {
+  box-shadow: 0 0 1px rgb(1, 117, 39);
+}
+
+input:checked + .slider_rmaapproval:before, input:checked + .slider_l2consult:before, input:checked + .slider_trainer:before,  input:checked + .slider_cctconsult:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider_rmaapproval.round_rmaapproval, .slider_l2consult.round_l2consult, .slider_trainer.round_trainer, .slider_cctconsult.round_cctconsult {
+  border-radius: 10px;
+}
+
+.slider_rmaapproval.round_rmaapproval:before, .slider_l2consult.round_l2consult:before, .slider_trainer.round_trainer:before, .slider_cctconsult.round_cctconsult:before {
+  border-radius: 50%;
+}

@@ -1,0 +1,38 @@
+<div class="hiddenDiv" id="loadchattrainerscript">
+	populateChatTrainer();
+</div>
+<br><br>
+
+
+<h5>Chat Trainer Transcripts</h5>
+<div class="chattrainer_div_table chattrainers_div" id="chattrainer_div_table">
+	<button id="saveaschattrainerxlsbutton" onclick="/*tableToExcel(consult_table, 'invald consult', 'export_data.xlsx')*/exportTableToExcel('chatconsults_table','')">Save as XLS</button>&nbsp;&nbsp;&nbsp;<input style="width:300px" type="search" id="chatconsults_filter" placeholder="Search" title="Type in anything" style="width:100%" oninput="filter('chatconsults_table','chatconsults_filter')"></input><br>
+<!--
+	<button class="toggleconsultbutton" id="consult_date_toggle" data-columnnum="1" >Date</button>
+	<button class="toggleconsultbutton" id="consult_L2_toggle" data-columnnum="2">Reported By</button>
+	<button class="toggleconsultbutton" id="consult_L1_toggle" data-columnnum="3">Expert</button>
+	<button class="toggleconsultbutton" id="consult_casenumber_toggle" data-columnnum="4">Case Number</button>
+	<button class="toggleconsultbutton" id="consult_Product_toggle" data-columnnum="5">Product</button><br>
+	<button class="toggleconsultbutton" id="consult_Reason_toggle" data-columnnum="6">Reason</button>
+	<button class="toggleconsultbutton" id="consult_duration_toggle" data-columnnum="7">Duration</button>
+	<button class="toggleconsultbutton" id="consult_TM_toggle" data-columnnum="8">TM</button>
+	<button class="toggleconsultbutton" id="consult_opportunity_toggle" data-columnnum="9">Expert's Opportunity</button>
+	<button class="toggleconsultbutton" id="consult_TMfeedback_toggle" data-columnnum="10">TM Feedback</button>
+	<button class="toggleconsultbutton" id="consult_commit_toggle" data-columnnum="11">Expert's Commitment</button>
+	<button id="generateconsultl2report" onclick="generateConsultReport($('#monthselector_l2reportconsult').val())">Generate Report for Month of:</button>
+	<select id="monthselector_l2reportconsult">
+		<option value="1">January</option>
+		<option value="2">February</option>
+		<option value="3">March</option>
+		<option value="4" selected>April</option>
+		<option value="5">May</option>
+		<option value="6">June</option>
+	</select>-->
+	<br>
+	<table id="chattrainer_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+	</table>
+	
+		
+</div>
+
+

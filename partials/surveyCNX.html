@@ -1,0 +1,199 @@
+<div class="hiddenDiv" id="surveyCNXScript">
+    var unseensurveycnx_num=-1;
+    var unseensurveycnxDiv_array=[]
+    var dateNow = new Date(Date.now())
+    getDataRecord('/api/survey/get/'+userCES,function(surveycnx){
+        console.log(surveycnx);
+        var surveycnx_array = surveycnx.map(function (el) { return el.surveyresults_survey; });
+        console.log(surveycnx_array);
+        var nowDate= new Date();
+        var surveycnxDiv_array=$('.surveycnx_question');
+        surveycnxDiv_array.each(element => {
+            var expiry=new Date(surveycnxDiv_array.eq(element).data('expiry'));
+            if(!surveycnx_array.includes(2)){
+                console.log("unseen");
+                surveycnxDiv_array.eq(element).addClass('unseen');
+                $('#unseensurveycnx_list').append(surveycnxDiv_array.eq(element))
+            }
+        })
+        unseensurveycnxDiv_array=$('.surveycnx_question.unseen');
+        console.log(unseensurveycnxDiv_array);
+        if(unseensurveycnxDiv_array.length>0){
+            $('#modal_surveycnx').css('display','block');
+            unseensurveycnxDiv_array.eq(0).removeClass('hiddenDiv');
+            unseensurveycnx_num=0;
+
+            getDataRecord('/api/devices',function(devices){
+                $(".surveycnx_product").empty();
+                $('.surveycnx_product').append(new Option('Select Product', 0, true, true));
+                $('.surveycnx_product option').addClass('selectheader');
+                $('.surveycnx_product option').attr('disabled','disabled');
+                //$(".surveycnx_product").html('');
+                devices.sort((a, b) => (a["device_name"] > b["device_name"]) ? 1 : -1)
+                devices.forEach(data => {
+                    //console.log(data);
+                    $(".surveycnx_product").append(new Option(data.device_name + "    (" + data.device_model + ")", data.device_model));
+                });
+            },'');
+        }else{
+            //eval($('#noticeScript').text())
+        }
+    })
+
+    function getNextSurveyCnx(){
+        var surveycnxComplete=true;
+        console.log(($("#q2a").val()=="")&&($("#q2b").val()=="")&&($("#q2c").val()==""));
+        if(($("#q1a").val()==null)||($("#q1b").val()==null)||($("#q1c").val()==null)){
+            $("#q1a").parent().parent().parent().css("background-color","#ff9494");
+            surveycnxComplete=false;
+        }else{
+            console.log("black")
+            $("#q1a").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if(($("#q2a").val()=="")&&($("#q2b").val()=="")&&($("#q2c").val()=="")){
+            $("#q2a").parent().parent().parent().css("background-color","#ff9494");
+        }else{
+            $("#q2a").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if(($("#q3a").val()=="")&&($("#q3b").val()=="")&&($("#q3c").val()=="")){
+            $("#q3a").parent().parent().parent().css("background-color","#ff9494");
+        }else{
+            $("#q3a").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if(($("#q4a").val()=="")&&($("#q4b").val()=="")&&($("#q4c").val()=="")){
+            $("#q4a").parent().parent().parent().css("background-color","#ff9494");
+        }else{
+            $("#q4a").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+
+        if(!surveycnxComplete){
+            $("#surveycnx_error").removeClass("hiddenDiv");
+        }else{
+            var answers={
+                q1:$("#q1a").val()+"%#%"+$("#q1b").val()+"%#%"+$("#q1c").val(),
+                q2:$("#q2a").val()+"%#%"+$("#q2b").val()+"%#%"+$("#q2c").val()+"%#%"+$("#q2d").val(),
+                q3:$("#q3a").val()+"%#%"+$("#q3b").val()+"%#%"+$("#q3c").val(),
+                q4:$("#q4a").val()+"%#%"+$("#q4b").val()+"%#%"+$("#q4c").val(),
+            }
+            data={
+                id:unseensurveycnxDiv_array.eq(unseensurveycnx_num).data('id'),
+                ces:userCES,
+                //datetime:dateNow.toISOString().replace(/T/g," ").replace(/Z/g,""),
+                datetime:dateNow.getFullYear()+"-"+(dateNow.getMonth()+1)+"-"+dateNow.getDate()+" "+dateNow.getHours()+":"+dateNow.getMinutes()+":"+dateNow.getSeconds(),
+                answers:JSON.stringify(answers)
+            }
+            console.log(data);
+            $.ajax({
+                type:"POST",
+                url:"/api/surveys/add" ,
+                data:JSON.stringify(data),
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                //dataType:"json",
+                success:function(data){
+                    unseensurveycnxDiv_array.eq(unseensurveycnx_num).addClass('hiddenDiv');
+                    unseensurveycnx_num++;
+                    if(unseensurveycnx_num < unseensurveycnxDiv_array.length-1){
+                        unseensurveycnxDiv_array.eq(unseensurveycnx_num).removeClass('hiddenDiv')
+                    } else {
+                        $('#modal_surveycnx').addClass('hiddenDiv');
+                        //console.log($('#noticeScript').text());
+                        //eval($('#noticeScript').text())
+                        //console.log('hide')
+                    }
+                    //console.log(unseensurveycnx_num);
+                    //console.log(unseensurveycnxDiv_array.length);
+                },
+                error:function(error){
+                }
+            }); 
+        }
+    }
+</div>
+
+<div id="modal_surveycnx" class="modal" style="z-index:200;overflow:scroll-y;background-color:rgba(0,0,0,0.8);border:0px">
+    <div class="modal-content" style="margin-left:10px;margin-top:10px;min-height:600px;width:90%;background-color:rgba(255,255,255,1);border:0px">
+        <div id="unseensurveycnx_list">
+        </div>
+    </div>
+</div>
+<div id="surveycnx_list" class="hiddenDiv" >
+    <div class="surveycnx_question" data-id="2" data-expiry="01/01/2060">
+        <div id="surveycnx_heading">
+            <h2>Feedback Survey</h2>
+            <br>
+            The primary purpose of this survey is to gather feedback from you, our Expert, that will help us improve our current processes and level of technical support.
+            <br><br>
+            Your identity as a respondent will be held strictly confidential, and will only be used to check for adherence. Feel free enter any concerns, as well as your ideas for improvement. Your ideas, when validated, shall be enrolled to ROOTS for innovation.
+            <br><br>
+            <span class="hiddenDiv" style="font-weight:bold;color:red">Note: All fields are required to be filled out.</span>
+        </div>
+        <ol type="1">
+            <li>What are the most difficult products you are handling? Select 3 according to rank.
+                <ol type="a">
+                    <li>
+                        <select class="surveycnx_product" id="q1a">
+                        </select>
+                    </li>
+                    <li>
+                        <select class="surveycnx_product" id="q1b">
+                        </select>
+                    </li>
+                    <li>
+                        <select class="surveycnx_product" id="q1c">
+                        </select>
+                    </li>
+                </ol>
+            </li>
+            <li>What are the customer problems you have difficulty in resolving, that usually lead to long calls and/or multiple calls for the customer? List at least 3.
+                <ol type="a">
+                    <li>
+                        <textarea id="q2a"></textarea>
+                    </li>
+                    <li>
+                        <textarea id="q2b"></textarea>
+                    </li>
+                    <li>
+                        <textarea id="q2c"></textarea>
+                    </li>
+                    <li>
+                        <textarea id="q2d"></textarea>
+                    </li>
+                </ol>
+            </li>
+            <li>What processes, tools, and KB problems do you experience, that usually lead to long calls and multiple calls for the customer? List at least 3 total.<br>
+                <ol type="a">
+                    <li>Process ( Example : RMA related, ATR, Safety and Hazard, etc.)<br>
+                        <textarea id="q3a"></textarea>
+                    </li>
+                    <li>Client Tools ( Example : Sales Force, CS diag Tool, KB Articles)<br>
+                        <textarea id="q3b"></textarea>
+                    </li>
+                    <li>CNX Tools ( Example : Wings, Chat Simulator, Etc)<br>
+                        <textarea id="q3c"></textarea>
+                    </li>
+                </ol>
+            </li>
+            <li>What innovations, ideas, or changes can we implement to improve our delivery of technical support?
+                <ol type="a">
+                    <li>Process ( Example : RMA related, ATR, Safety and Hazard, etc. )
+                        <textarea id="q4a"></textarea>
+                    </li>
+                    <li>Client Tools ( Example : Sales Force , CS diag Tool , KB Articles )
+                        <textarea id="q4b"></textarea>
+                    </li>
+                    <li>CNX Tools ( Example : Wings, Chat Simulator, Etc )
+                        <textarea id="q4c"></textarea>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+        <div class="hiddenDiv" id="surveycnx_error" style="font-weight:bold;color:red">Please complete all fields.</div>
+        <button onclick="getNextSurveyCnx()">Submit</button><br><br>
+    </div>
+</div>

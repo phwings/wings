@@ -1,0 +1,346 @@
+<div class="hiddenDiv" id="standardScript">
+	var outBoundStart;
+	$('#name').css('background-color','white');
+	$('#phone').css('background-color','white');
+	$('#TSoutbound').css('background-color','white');
+	$('#nextaction').css('background-color','white');
+	getDataRecord('/api/devices',function(devices){
+		//console.log(experts.length);
+		//$("#escalation_product").html('');
+		devices.sort((a, b) => (a["device_name"] > b["device_name"]) ? 1 : -1)
+		devices.forEach(data => {
+			//console.log(data);
+			$("#standard_device").append(new Option(data.device_name + "    (" + data.device_model + ")", data.device_model));
+		});
+		loadData(currentRecord);
+		displayPhonetics('name','namephonetics');
+		displayPhonetics('email','emailphonetics');
+		$('#counter').val(currentRecord);
+		$('.callflow_expertname').html(expertName);
+		standardLocation="/partials/templates/standard";
+		//console.log(standardLocation);
+	},'standard_device');
+
+
+    
+    $('.areaInput').on('focus', function(e) {
+        var v = $(this).val();
+        if(v.length==0){
+            $(this).val('- ');
+        }
+    });
+    
+    $('.areaInput').on('keyup', function(e) {
+        if (e.keyCode === 13) {
+            var cursorPos = $(this).prop('selectionStart');
+            var v = $(this).val();
+            var textBefore = v.substring(0,  cursorPos);
+            var textAfter  = v.substring(cursorPos, v.length);
+            $(this).val(textBefore + '- ' + textAfter);
+            $(this).prop('selectionEnd',(cursorPos+2));
+        }
+	});
+	
+	$('#chat').load('/partials/templates/chat.html',function(){
+		eval($('#chatScript').text());
+	});
+	$('#mytemp').load('/partials/templates/myTemplates.html',function(){
+		eval($('#myTemplateScript').text());
+	});
+
+	handle_time.init();
+	hold_time.init();
+</div>
+
+<h4>Standard Template</h4>
+<div class="row" style="font-family:monospace;">
+<div class="column" style="width:65%;">
+	<div class="navbarin">
+		<div class="dropdown" id="cases">
+			<button class="dropbtn" onmouseout="hideMenu('casessub')" onmouseover="drop('casessub')">Cases <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content" id="casessub" onmouseout="hideMenu('casessub')" onmouseover="drop('casessub')">
+				<a href="#" onclick="addData(currentRecord);$('#counter').val(currentRecord);" style="width:100px;">Add Case</a>
+				<hr>
+				<!--<a href="#" onclick="if(confirm('Are you sure you want to save all cases to database?')==true){saveCases()}" style="width:100px;">Save to Online</a>-->
+				<a href="#" onclick="if(confirm('Are you sure you want to load all cases from database?\nTHIS WILL OVERWRITE CASES DOCUMENTED ON THIS PC!')==true){loadCases()}" style="width:100px;">Load from Online</a>
+				<hr>
+				<a href="#" onclick="saveCasesFile()" style="width:100px;">Save to Local File</a>
+				<a href="#" onclick="loadCasesFile()" style="width:100px;">Load from Local File</a>
+				<input id="load-input" type="file" name="name" style="display: none;" />
+				<hr>
+				<a href="#" onclick="if(confirm('Are you sure you want to delete the current case?')==true){resetData(currentRecord);$('#counter').val(currentRecord);};" style="width:100px;">Delete Case</a>
+				<a href="#" onclick="if(confirm('Are you sure you want to delete all cases?')==true){resetStorage();currentRecord=1;resetData(currentRecord);$('#counter').val(currentRecord);};" style="width:100px;">Delete All</a>
+			</div>
+		</div>
+		<div class="dropdown" id="reports">
+			<button class="dropbtn" onmouseout="hideMenu('reportssub')" onmouseover="drop('reportssub')">Reports <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content" id="reportssub" onmouseout="hideMenu('reportssub')" onmouseover="drop('reportssub')">
+				<a href="#" onclick="if(userLOB=='OS ARLO'){getOSEOS();saveOSEOS($('#casenumber_standard').val(),'',$('#inquiry').val(),'',$('#caseclosed_standard').prop('checked')?'Closed':'Open','');}else{getEOS();saveEOS($('#casenumber_standard').val(),$('#caseclosed_standard').prop('checked')?'Closed':'Open',$('#inquiry').val() +':' + $('#nextaction').val(),$('#RMA_standard').prop('checked')?'Y':'N',$('#call_pulse').prop('checked')?'Y':'N');}">Add to EOS</a>
+				<a href="#" onClick="forAHT($('#casenumber_standard').val(),$('#standard_device').val(),$('#handle_time-time').text(),$('#hold_time-time').text());loadExternal('/partials/templates/aht','ahtScript');loadAHT(1)">Add to High AHT</a>
+			</div>
+		</div>
+		<div class="dropdown" id="generate">
+			<button class="dropbtn" onmouseout="hideMenu('generatesub')" onmouseover="drop('generatesub')">Generate <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content" id="generatesub" onmouseout="hideMenu('generatesub')" onmouseover="drop('generatesub')">
+				<a href="#" onclick="generateText();">Generate Inbound</a>
+				<a href="#" class="outbound_button hiddenDiv" onclick="generateOutboundText();">Generate Outbound</a>			</div>
+		</div>
+		<div class="dropdown" id="download">
+			<button class="dropbtn" onmouseout="hideMenu('downloadsub')" onmouseover="drop('downloadsub')">Download <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content" id="downloadsub" onmouseout="hideMenu('downloadsub')" onmouseover="drop('downloadsub')">
+				<a href="#" onclick="downloadFile();">Download</a>
+				<a href="#" onclick="downloadAllFile();">Download All</a>
+			</div>
+		</div>
+	</div>
+
+<br><br><br><div class="hiddenDiv">
+<button id="handle_time-go">Start Call</button><span id="handle_time-time" style="padding:0px 4px 0px 4px">00:00:00</span><button id="handle_time-rst" disabled>Reset</button>
+<button id="hold_time-go" >Start Hold</button><span id="hold_time-time" style="padding:0px 4px 0px 4px">00:00:00</span><button id="hold_time-rst" disabled>Reset</button><br><br>
+</div>
+<button id="get_loyalty" onclick="displayLoyalty();">Get Loyalty Code</button><br><br>
+<button onclick="getData(-1);$('#counter').val(currentRecord);" style="width:75px;"><<</button>
+<input id="counter" type="text" style="width:30px;display:inline-block;text-align:center;margin:auto;"></input>
+<button onclick="getData(+1);$('#counter').val(currentRecord);" style="width:75px">>></button>
+
+<br>
+<!--<button onclick="" disabled>Escalate to L2</button>
+<button onclick="" disabled>Endorse for Callback</button>-->
+<br>
+<div class="row">
+	<div class="column" style="width:40%">
+		Email:<i class="far fa-lightbulb tooltip" onmouseover="displayPhonetics('email','emailphonetics');"><span class="tooltiptext" id="emailphonetics"> </span></i><br>
+		<input type="text" id="email" oninput="saveData('email');displayPhonetics('email','emailphonetics');" style="width:90%" tabindex="2">
+	</div>
+	<div class="column" style="float:right;">
+		Phone:<br>
+		<input type="text" id="phone" size="30" oninput="saveData('phone');" style="width:100%" tabindex="6"><br>
+		<customboldred style="float:right;color:red;font-weight:bold">Update customer Phone on salesforce!</customboldred><br>
+		<!--<button onclick="loadExternal('/partials/templates/callback','callbackScript');">Request Callback</button>-->
+		
+	</div>
+	<div class="column" style="float:right;">
+		Name:<i class="far fa-lightbulb tooltip" onmouseover="displayPhonetics('name','namephonetics');"><span class="tooltiptext" id="namephonetics"> </span></i><br>
+		<input type="text" id="name" oninput="saveData('name');displayPhonetics('name','namephonetics');$('#callflow_cxname').html($('#name').val().split(' ')[0]);" size="30" style="width:90%" tabindex="2">
+	</div><br>
+	
+	
+</div>
+
+<div>
+
+Issue/Status:
+<br><input type="text" id="inquiry" oninput="saveData('inquiry');" style="width:100%" tabindex="1"><br>
+</div>
+
+
+<div class="column" style="width:50%;">
+	Case History:<br>
+	<textarea class="areaInput" rows="10" id="CH" oninput="saveData('CH');" style="width:100%;" tabindex="10">
+	</textarea>
+</div>
+<div class="column" style="width:250px;float:right;text-align:right;">
+<span style="float:left;text-align:left;">Device Information:</span><button style="height:18px;vertical-align:top;width:44px;" onClick="$('#casenumber_standard').val()==$('#RMA_casenum').val()?clearRMA():{};forRMA('BS');loadExternal('/partials/templates/rmaForm','rmaFormScript');">RMA</button><br>
+Device:<select class="standard" id="standard_device" onchange="saveData('standard_device');" style="width:190px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8">
+	<option class="selectheader" value="" disabled selected>Select Device</option>
+</select><br>
+SN:<input type="text" id="standard_deviceSN" oninput="saveData('standard_deviceSN');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+FW:<input type="text" id="standard_deviceFW" oninput="saveData('standard_deviceFW');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+DOP:<input type="text" id="DOP" oninput="saveData('DOP');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+POP:<input type="text" id="POP" oninput="saveData('POP');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+ISP:<input type="text" id="ISP" oninput="saveData('ISP');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+Login Dev.:<select class="standard" id="standard_login" onchange="saveData('standard_login');" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8">
+	<option class="selectheader" value="" disabled selected>Select Device</option>
+	<option value="Android" >Android</option>
+	<option value="iOS" >iOS</option>
+	<option value="Web" >Web</option>
+</select><br>
+Model/OS:<input type="text" id="standard_login_model" oninput="saveData('standard_login_model');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+<!--<br>do not use the following fields anymore(for phase out)<br>
+BS SN:<input type="text" id="BSSN" oninput="saveData('BSSN');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+BS FW:<input type="text" id="BSFW" oninput="saveData('BSFW');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+Cam SN:<input type="text" id="CamSN" oninput="saveData('CamSN');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+Cam FW:<input type="text" id="CamFW" oninput="saveData('CamFW');" size="30" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+-->
+</div>
+
+<div style="float:left;width:100%;"><br>
+	<div class="tab_bar">
+		<button class="tab_button" id='inbound' onclick="openTab('callType','inbound');
+		$('#name').css('background-color','white');
+		$('#phone').css('background-color','white');
+		$('#TSoutbound').css('background-color','white');
+		$('#inquiry').css('background-color','white');
+		$('#nextaction').css('background-color','white');
+		$('.outbound_button').addClass('hiddenDiv');" style="background-color:green;color:white;height:20px;padding:0;">Inbound</button>
+		
+		<button class="tab_button" id='outbound' onclick="openTab('callType','outbound');
+		outBoundStart=new Date();
+		$('#name').css('background-color','#add2ff');
+		$('#phone').css('background-color','#add2ff');
+		$('#TSoutbound').css('background-color','#add2ff');
+		$('#inquiry').css('background-color','#add2ff');
+		$('#nextaction').css('background-color','#add2ff');
+		$('.outbound_button').removeClass('hiddenDiv');" style="height:20px;padding:0;">Outbound</button>
+	</div>
+	<div class="callType" id="inbound" >
+		Troubleshooting details at the time of call:<br>
+		<textarea class="areaInput" rows="10" id="TS" oninput="saveData('TS');" style="width:100%;resize:vertical" tabindex="10">
+		</textarea>
+	</div>
+	<div class="callType" id="outbound" style="display:none">
+		Troubleshooting details at the time of call:<br>
+		<textarea class="areaInput" rows="10" id="TSoutbound" oninput="saveData('TSoutbound');" style="width:100%;resize:vertical" tabindex="10">
+		</textarea>
+	</div>
+</div>
+
+<div class="row" style="float:left;">
+<br><input type="checkbox" id="caseclosed_standard" value="Y" oninput="saveCheck('caseclosed_standard');" tabindex="14">Case closed
+<input type="checkbox" id="RMA_standard" value="Y" oninput="saveCheck('RMA_standard');" tabindex="14">For RMA
+<input type="checkbox" id="call_pulse" value="Y" oninput="saveCheck('call_pulse');" tabindex="14">Good Call
+</div>
+
+
+<div class="row" style="float:left;">
+<div class="column" style="width:65%">
+<br>Next Actions:
+<br><textarea class="areaInput" rows="3" id="nextaction" oninput="saveData('nextaction');" style="width:100%;resize:vertical" tabindex="12">
+</textarea><br>
+</div>
+<div class="column" style="width:25%;float:right;">
+<br>Case Number:
+<br><input type="text" id="casenumber_standard" size="50" oninput="saveData('casenumber_standard');$('#callflow_casenumber_spiel').html($('#casenumber_standard').val());" style="width:100%" tabindex="12"><br>
+</div>
+</div>
+
+<div class="row" style="float:left;">
+<br>
+Checklist: <br>
+<div style="display:inline-block"><input type="checkbox" id="logs" value="Y" oninput="saveCheck('logs');" tabindex="14">Downloaded logs? &nbsp;</div>
+<div style="display:inline-block"><input type="checkbox" id="selfservice" value="Y" oninput="saveCheck('selfservice');" tabindex="16">Promoted self-service? &nbsp;</div style="display:inline-block">
+<div style="display:inline-block"><input type="checkbox" id="survey" value="Y" oninput="saveCheck('survey');" tabindex="18">Pitched survey? &nbsp;</div style="display:inline-block">
+</div>
+<div class="row" style="float:left;">
+<br>
+KB Articles: 
+<select id="kblinks" oninput="addKBlink();" style="width:160px;height:18px;clear:both;padding:0px;margin:0px;float:right;">
+	<option value="0" class="selectheader" selected disabled>Select KB to Add</option>
+	<option value="0" disabled>>> Installation</option>
+	<option value="https://kb.arlo.com/1179139/How-do-I-connect-my-Arlo-SmartHub-or-base-station-to-the-Internet">BS Install</option>
+	<option value="https://kb.arlo.com/1179130/Arlo-can-t-discover-my-SmartHub-or-base-station-during-installation-what-do-I-do">BS Cannot Discover</option>
+	<option value="https://kb.arlo.com/987/How-do-I-set-up-and-sync-my-Arlo-wire-free-cameras">Sync Wirefree</option>
+	<option value="https://kb.arlo.com/1001944/How-do-I-set-up-Arlo-Q-on-iOS">Arlo Q iOS</option>
+	<option value="https://kb.arlo.com/1002006/How-do-I-set-up-Arlo-Q-on-Android">Arlo Q Android</option>
+	<option value="0" disabled>>> Offline</option>
+	<option value="https://kb.arlo.com/996/My-Arlo-SmartHub-or-base-station-is-offline-how-can-I-troubleshoot-it">BS Offline (TS)</option>
+	<option value="https://kb.arlo.com/1133448/My-Arlo-wire-free-camera-is-offline-how-can-I-troubleshoot-it">Camera Offline (TS)</option>
+	<option value="0" disabled>>> Features</option>
+	<option value="https://kb.arlo.com/994085/Why-isn-t-my-Arlo-camera-detecting-motion">Motion Detection (TS)</option>
+	<option value="https://kb.arlo.com/1004319/What-is-the-push-to-talk-feature-on-my-Arlo-camera-and-how-does-it-work">Push to Talk</option>
+	<option value="https://kb.arlo.com/1019297/How-do-I-set-up-notifications-or-alerts">Push Notifications</option>
+	<option value="https://kb.arlo.com/000056586/What-key-features-are-available-with-Arlo-Smart">Arlo Smart</option>
+	<option value="0" disabled>>> Battery</option>
+	<option value="https://kb.arlo.com/291/How-can-I-extend-my-Arlo-camera-s-battery-life">Extend Battery Life</option>
+	<option value="https://kb.arlo.com/000052305/My-Arlo-Pro-or-Arlo-Pro-2-battery-is-dead-what-do-I-do">Battery Dead (TS)</option>
+	<option value="https://kb.arlo.com/000059145/My-Arlo-Pro-or-Arlo-Pro-2-camera-battery-isn-t-charging-what-do-I-do">Battery Won't Charge (TS)</option>
+	<option value="0" disabled>>> Accounts</option>
+	<option value="https://kb.arlo.com/000062252/Why-do-I-need-to-download-a-new-Arlo-app">New Arlo App</option>
+	<option value="https://kb.arlo.com/000039122/How-do-I-add-friends-to-my-Arlo-account">Grant Access</option>
+	<option value="https://kb.arlo.com/4118/How-can-I-change-my-Arlo-user-ID">Change Email</option>
+	<option value="https://kb.arlo.com/4377/How-do-I-change-my-Arlo-password">Change password</option>
+	<option value="0" disabled>>> Subscription</option>
+	<option value="https://kb.arlo.com/88/What-are-the-available-Arlo-subscription-plans-and-how-much-cloud-recording-is-available">Subscription</option>
+	<option value="https://kb.arlo.com/1215141/How-do-I-change-or-cancel-my-Arlo-subscription-plan">Cancel Subscription</option>
+	<option value="https://kb.arlo.com/1018425/What-is-continuous-video-recording-CVR-and-how-do-I-get-it">CVR</option>
+	<option value="0" disabled>>> Modes</option>
+	<option value="https://kb.arlo.com/42/What-are-modes-and-rules-and-how-does-Arlo-use-them">Modes</option>
+	<option value="https://kb.arlo.com/1085093/How-does-Arlo-Geofencing-work-and-how-do-I-set-it-up">Geofencing</option>
+	<option value="https://kb.arlo.com/4900/How-can-I-set-a-schedule-for-my-camera-in-my-Arlo-account">Scheduling</option>
+	<option value="0" disabled>>> Others</option>
+	<option value="https://kb.arlo.com/000062077/How-to-troubleshoot-Arlo-web-client-Flash-errors-when-using-Google-Chrome">Flash Player</option>
+	<option value="https://kb.arlo.com/1273/Why-are-images-from-my-Arlo-camera-tinted">Pink Tint</option>
+	<option value="https://kb.arlo.com/000062236/How-do-I-request-a-Return-Material-Authorization-RMA">RMA</option>
+	
+	
+	
+	
+	
+</select>
+
+<br>
+<textarea rows="2" cols="80" id="KB" oninput="saveData('KB');" style="width:100%" tabindex="18">
+</textarea>
+</div>
+<div class="row" style="float:left;">
+<br>
+<br><br><br>
+</div>
+</div>
+
+<div class="column" style="width:30%;float:right;" >
+	<div class="tab_bar">
+		<button class="tab_button" onclick="openTab('flow','call')">Call Flow</button>
+		<button class="tab_button" onclick="openTab('flow','chat')">Chat Flow</button>
+		<button class="tab_button" onclick="openTab('flow','mytemp')">My Templates</button>
+	</div>
+	<div id="call" class="flow tab_div" style="display:none">
+		<div >"Thank you for calling Arlo Support. My name is <span class="callflow_expertname"></span>. May I have the email address associated with your Arlo Account?"</div>
+		<div class="row" style="text-align:center;display:flex;">
+			<div class="column callflow_1" style="background-color:#ffcccc;width:33%;" onclick="$('.callflow_3').addClass('hiddenDiv');$('.callflow_check').prop('checked',false);$('.callflow_2').addClass('hiddenDiv');$('#callflow_noemail').removeClass('hiddenDiv');">CX has no email.<br><i class="fa fa-caret-down"></i></div>
+			<div class="column callflow_1" style="background-color:#ccccff;width:33%;" onclick="$('.callflow_3').addClass('hiddenDiv');$('.callflow_2').addClass('hiddenDiv');$('#callflow_email').removeClass('hiddenDiv');$('#callflow_email_sub').removeClass('hiddenDiv');$('.callflow_check').prop('checked',false);">CX provided email.<br><i class="fa fa-caret-down"></i></div>
+			<div class="column callflow_1" style="background-color:#ccffcc;width:33%;" onclick="$('.callflow_3').addClass('hiddenDiv');$('.callflow_check').prop('checked',false);$('.callflow_2').addClass('hiddenDiv');$('#callflow_casenumber').removeClass('hiddenDiv');">CX mentioned case number or concern.<br><i class="fa fa-caret-down"></i></div>
+		</div>
+		<div class="callflow_2 hiddenDiv" id="callflow_casenumber"  onclick="$('.callflow_3').addClass('hiddenDiv');$('.callflow_check').prop('checked',false);$('#callflow_email').removeClass('hiddenDiv');$('#callflow_email_sub').removeClass('hiddenDiv');">Acknowledge CX concern or check case number and transition to getting email address.<br><br>"Let me check the status of your system. May I have the email address associated to your Arlo account?"<br><i class="fa fa-caret-down" style="left:50%;position:relative;"></i></div>
+		
+		<div class="callflow_2 hiddenDiv" id="callflow_noemail"  onclick="$('.callflow_3').addClass('hiddenDiv');$('.callflow_check').prop('checked',false);$('#callflow_noemail').addClass('hiddenDiv');$('#callflow_verified').removeClass('hiddenDiv');">Attempt to ask for email for documentation once but do not force the CX. Get phone number for callback spiel instead.<br><i class="fa fa-caret-down" style="left:50%;position:relative;"></i></div>
+		
+		<div class="row callflow_2 hiddenDiv" id="callflow_email" style="display:flex">Check for email in CEP/DIAG Tool. Verify name, phone number, and mention callback spiel.<br>
+		</div>
+		<div class="row hiddenDiv callflow_2" id="callflow_email_sub" style="text-align:center;display:flex;">
+			<div class="column" style="text-align:center;background-color:#ffcccc;width:50%;" onclick="$('.callflow_3').addClass('hiddenDiv');$('.callflow_check').prop('checked',false);$('#callflow_unverified').removeClass('hiddenDiv');$('#callflow_verified').addClass('hiddenDiv');">No account<br><i class="fa fa-caret-down"></i></div>
+			<div class="column" style="text-align:center;background-color:#ccffcc;width:50%;" onclick="$('.callflow_3').addClass('hiddenDiv');$('#callflow_unverified').addClass('hiddenDiv');$('#callflow_verified').removeClass('hiddenDiv');$('.callflow_check').prop('checked',false);">Verified account<br><i class="fa fa-caret-down"></i></div>
+		</div>
+		<div class="callflow_2 hiddenDiv" id="callflow_unverified"  >If no account in CEP or DT, get SN and verify name/email address. Provide hints of the last 3 characters and the domain. If unable to verify, explain that this needs to be verified for security purposes and we may not be able to provide support.</div>
+		
+		<div class="hiddenDiv callflow_3" id="callflow_verified" >
+			CX verified account.<br><br> "<span id="callflow_cxname"></span>, how may I help you today?"<br><br>No need to paraphrase customer's concern. Paraphrase only if unclear.<br>
+			<span style="left:40%;position:relative;"><input type="checkbox" id="check_verified" class="callflow_check" onchange="if($('#check_verified').prop('checked')){$('#callflow_TS').removeClass('hiddenDiv');$('#callflow_verified').addClass('hiddenDiv');}else{$('#callflow_TS').addClass('hiddenDiv');$('#callflow_verified').removeClass('hiddenDiv');}"> Done</span>
+		</div>
+		
+		<div class="hiddenDiv callflow_3" id="callflow_TS" >Ask probing questions. Free flow troubleshooting. Refer to appropriate KBs and flowcharts<br><br>If after 20 mins. and no clear resolution, check resources, SME/L2 if case is a possible issue/escalation.<br>
+			<span style="left:40%;position:relative;"><input type="checkbox" id="check_TS" class="callflow_check" onchange="if($('#check_TS').prop('checked')){$('#callflow_otherconcerns').removeClass('hiddenDiv');$('#callflow_TS').addClass('hiddenDiv');}else{$('#callflow_otherconcerns').addClass('hiddenDiv');$('#callflow_TS').removeClass('hiddenDiv');}"> Done</span>
+		</div>
+		
+		<div class="hiddenDiv callflow_3" id="callflow_otherconcerns" >Have I answered all your questions?<br>
+			<span style="left:40%;position:relative;"><input type="checkbox" id="check_concerns" class="callflow_check" onchange="if($('#check_concerns').prop('checked')){$('#callflow_statesupport').removeClass('hiddenDiv');$('#callflow_otherconcerns').addClass('hiddenDiv');}else{$('#callflow_statesupport').addClass('hiddenDiv');$('#callflow_otherconcerns').removeClass('hiddenDiv');}"> Done</span>
+		</div>
+		
+		<div class="hiddenDiv callflow_3" id="callflow_statesupport" >"For other online options, you may visit our website at support.arlo.com, and community.arlo.com"<br>
+			<span style="left:40%;position:relative;"><input type="checkbox" id="check_support" class="callflow_check" onchange="if($('#check_support').prop('checked')){$('#callflow_statecasenumber').removeClass('hiddenDiv');$('#callflow_statesupport').addClass('hiddenDiv');}else{$('#callflow_statecasenumber').addClass('hiddenDiv');$('#callflow_statesupport').removeClass('hiddenDiv');}"> Done</span>
+		</div>
+		
+		<div class="hiddenDiv callflow_3" id="callflow_statecasenumber" >"For your reference, your case number is <span id="callflow_casenumber_spiel"></span>, which you will receive via email."<br>
+			<span style="left:40%;position:relative;"><input type="checkbox" id="check_casenumber" class="callflow_check" onchange="if($('#check_casenumber').prop('checked')){$('#callflow_statesurvey').removeClass('hiddenDiv');$('#callflow_statecasenumber').addClass('hiddenDiv');}else{$('#callflow_statesurvey').addClass('hiddenDiv');$('#callflow_statecasenumber').removeClass('hiddenDiv');}"> Done</span>
+		</div>
+		
+		<div class="hiddenDiv callflow_3" id="callflow_statesurvey" >"Once I close the case, you will receive a survey. Please rate the service and support I have provided you today."<br>
+			<span style="left:40%;position:relative;"><input type="checkbox" id="check_survey" class="callflow_check" onchange="if($('#check_survey').prop('checked')){$('#callflow_endcall').removeClass('hiddenDiv');$('#callflow_statesurvey').addClass('hiddenDiv');}else{$('#callflow_endcall').addClass('hiddenDiv');$('#callflow_statesurvey').removeClass('hiddenDiv');}"> Done</span>
+		</div>
+		
+		<div class="row hiddenDiv callflow_3" id="callflow_endcall" style="display:flex;">
+			<div class="column" style="background-color:#9fff9f;width:50%;">"Again, my name is <span class="callflow_expertname"></span>, thank you for choosing Arlo and have a great day!"</div>
+			<div class="column" style="background-color:#ff9f9f;width:50%;">If CX will not use Arlo any longer: <br><br>"Again, my name is <span class="callflow_expertname"></span>, thank you for calling Arlo and have a great day!</div>
+		</div>
+	</div>
+	<div id="chat" class="flow tab_div" style="display:none;">
+	
+	</div>
+	<div id="mytemp" class="flow tab_div" style="display:none;">
+	
+	</div>
+</div>

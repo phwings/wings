@@ -1,0 +1,66 @@
+<div id="loadTopscript" class="hiddenDiv">
+    var CSAThtml, NPShtml, FCRhtml;
+    var weekMonth1=((((prevMondayDate.getMonth()+1)+'').length<2)?'0':'')+(prevMondayDate.getMonth()+1);
+    var weekDay1=(((prevMondayDate.getDate()+'').length<2)?'0':'')+prevMondayDate.getDate();
+    var weekYear1=prevMondayDate.getFullYear();
+    var weekMonth2=((((sundayDate.getMonth()+1)+'').length<2)?'0':'')+(sundayDate.getMonth()+1);
+    var weekDay2=(((sundayDate.getDate()+'').length<2)?'0':'')+sundayDate.getDate();
+    var weekYear2=sundayDate.getFullYear();
+    getTopData(weekMonth1+'/'+weekDay1+'/'+weekYear1,weekMonth2+'/'+weekDay2+'/'+weekYear2,function(topData){
+        console.log(topData);
+        populateTopWETable(topData);
+        $('.stat_WE_label').html(weekMonth1+weekDay1+'-'+weekMonth2+weekDay2);
+    });
+    console.log((metricDate.getMonth()+1)+'/'+metricDate.getDate()+'/'+metricDate.getYear());
+    getTopData((metricDate.getMonth()+1)+'/01/'+metricDate.getFullYear(),(metricDate.getMonth()+1)+'/'+metricDate.getDate()+'/'+metricDate.getFullYear(),function(topData){
+        populateTopMonthTable(topData);
+    });
+</div>
+
+<h4>Top Performers</h4>
+
+<div class="row">
+    <div class="column" style="width:48%">
+        <h4>Week <span class="stat_WE_label"></span></h4>
+    </div>
+    <div class="column" style="width:48%;float:right">
+        <h4>Month to Date</h4>
+    </div>
+</div>
+<h5>CSAT</h5>
+<div class="row">
+    <div class="column" style="width:48%">
+        <table class="top_table" id="table_top_CSATWE" style="width:100%;border-collapse:collapse;font-size:10px;">
+        </table>
+    </div>
+    <div class="column" style="width:48%;float:right">
+        <table class="top_table" id="table_top_CSATMonth" style="width:100%;border-collapse:collapse;font-size:10px;">
+        </table>
+    </div>
+</div>
+<br>
+<h5>NPS</h5>
+<div class="row">
+    <div class="column" style="width:48%">
+        <table class="top_table" id="table_top_NPSWE" style="width:100%;border-collapse:collapse;font-size:10px;">
+        </table>
+    </div>
+    <div class="column" style="width:48%;float:right">
+        <table class="top_table" id="table_top_NPSMonth" style="width:100%;border-collapse:collapse;font-size:10px;">
+        </table>
+    </div>
+</div>
+<br>
+<h5>FCR</h5>
+<div class="row">
+    <div class="column" style="width:48%">
+        <table class="top_table" id="table_top_FCRWE" style="width:100%;border-collapse:collapse;font-size:10px;">
+        </table>
+    </div>
+    <div class="column" style="width:48%;float:right">
+        <table class="top_table" id="table_top_FCRMonth" style="width:100%;border-collapse:collapse;font-size:10px;">
+        </table>
+    </div>
+</div>
+<br><br>
+</div>

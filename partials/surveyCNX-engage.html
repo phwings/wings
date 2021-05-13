@@ -1,0 +1,320 @@
+<div class="hiddenDiv" id="surveyCNXEngageScript">
+    var unseensurveycnx_num=-1;
+    var unseensurveycnxDiv_array=[]
+    var dateNow = new Date(Date.now())
+    getDataRecord('/api/engage/get/'+userCES,function(surveycnx){
+        console.log(surveycnx);
+        var surveycnx_array = surveycnx.map(function (el) { return el.surveyresults_survey; });
+        console.log(surveycnx_array);
+        var nowDate= new Date();
+        var surveycnxDiv_array=$('.surveycnx_question');
+        surveycnxDiv_array.each(element => {
+            var expiry=new Date(surveycnxDiv_array.eq(element).data('expiry'));
+            if(!surveycnx_array.includes(1)){
+                console.log("unseen");
+                surveycnxDiv_array.eq(element).addClass('unseen');
+                $('#unseensurveycnx_list').append(surveycnxDiv_array.eq(element))
+            }
+        })
+        unseensurveycnxDiv_array=$('.surveycnx_question.unseen');
+        console.log(unseensurveycnxDiv_array);
+        if(unseensurveycnxDiv_array.length>0){
+            $('#modal_surveycnx_engage').css('display','block');
+            unseensurveycnxDiv_array.eq(0).removeClass('hiddenDiv');
+            unseensurveycnx_num=0;
+        }else{
+            //eval($('#noticeScript').text())
+        }
+    })
+
+    function submitEngage(){
+        var surveycnxComplete=true;
+        var q1ans,q2ans,q3ans='';
+        if(!surveycnxComplete){
+            $("#surveycnx_error").removeClass("hiddenDiv");
+        }else{
+///////////////////        
+            q1ans=$('#s1q1>li>input[name=rmaDaily]:checked').val()+'%##%';
+            console.log($('#s1q2>li>input'));
+            $('#s1q2>li>input').each(function(element){
+                if($('#s1q2>li>input')[element].checked)
+                    q1ans+=$('#s1q2>li>input')[element].value+'%#%';
+            })
+            q1ans+='%##%';
+            q1ans+=$('#s1q2>li>textarea').val()+'%##%';
+            $('#s1q3>li>input').each(function(element){
+                if($('#s1q3>li>input')[element].checked)
+                    q1ans+=$('#s1q3>li>input')[element].value+'%#%';
+            })
+            q1ans+='%##%';
+            q1ans+=$('#s1q3>li>textarea').val()+'%##%';
+///////////////////
+            q2ans=$('#s2q1>li>input[name=productDaily]:checked').val()+'%##%';
+            $('#s2q2>li>input').each(function(element){
+                if($('#s2q2>li>input')[element].checked)
+                    q2ans+=$('#s2q2>li>input')[element].value+'%#%';
+            })
+            q2ans+='%##%';
+            q2ans+=$('#s2q2>li>textarea').val()+'%##%';
+            $('#s2q3>li>input').each(function(element){
+                if($('#s2q3>li>input')[element].checked)
+                    q2ans+=$('#s2q3>li>input')[element].value+'%#%';
+            })
+            q2ans+='%##%';
+            q2ans+=$('#s2q3>li>textarea').val()+'%##%';
+///////////////////
+            $('#s3q1>li>input').each(function(element){
+                if($('#s3q1>li>input')[element].checked)
+                    q3ans+=$('#s3q1>li>input')[element].value+'%#%';
+            })
+            q3ans+='%##%';
+            q3ans+=$('#s3q1>li>textarea').val()+'%##%';
+            $('#s3q2>li>input').each(function(element){
+                if($('#s3q2>li>input')[element].checked)
+                    q3ans+=$('#s3q2>li>input')[element].value+'%#%';
+            })
+            q3ans+='%##%';
+            q3ans+=$('#s3q2>li>textarea').val()+'%##%';
+///////////////////
+
+
+            var answers={
+                q1:q1ans,
+                q2:q2ans,
+                q3:q3ans,
+            }
+            console.log(answers);
+            if(JSON.stringify(answers)=='{"q1":"undefined%##%%##%%##%%##%%##%","q2":"undefined%##%%##%%##%%##%%##%","q3":"%##%%##%%##%%##%"}'){
+                $('#modal_surveycnx_engage').addClass('hiddenDiv');
+            }else{
+                data={
+                    id:1,
+                    ces:userCES,
+                    //datetime:dateNow.toISOString().replace(/T/g," ").replace(/Z/g,""),
+                    datetime:dateNow.getFullYear()+"-"+(dateNow.getMonth()+1)+"-"+dateNow.getDate()+" "+dateNow.getHours()+":"+dateNow.getMinutes()+":"+dateNow.getSeconds(),
+                    answers:JSON.stringify(answers)
+                }
+                console.log(data);
+                $.ajax({
+                    type:"POST",
+                    url:"/api/engage/add" ,
+                    data:JSON.stringify(data),
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    //dataType:"json",
+                    success:function(data){
+                        $('#modal_surveycnx_engage').addClass('hiddenDiv');
+                    },
+                    error:function(error){
+                    }
+                }); 
+            }
+            
+        }
+    }
+</div>
+
+<div id="modal_surveycnx_engage" class="modal" style="z-index:200;overflow:scroll-y;background-color:rgba(0,0,0,0.8);border:0px">
+    <div class="modal-content" style="margin-left:10px;margin-top:10px;min-height:600px;width:90%;background-color:rgba(255,255,255,1);border:0px">
+        <div id="unseensurveycnx_list">
+        </div>
+    </div>
+</div>
+<div id="surveycnx_list" class="hiddenDiv" >
+    <div class="surveycnx_question" data-id="2" data-expiry="01/01/2060">
+        <div id="surveycnx_heading">
+            <h2><i>ENGAGE</i> Feedback Survey</h2>
+            <br>
+            The primary purpose of this survey is to gather feedback from you, our Expert, that will help us improve our current processes and level of technical support.
+            <br><br>
+            For this survey, we will be focusing on <b>RMA Initiation Process</b>, the <b>Video Doorbell Product</b>, and the <b>Diag Tool</b>.
+            <br><br>
+            Your recommendations are VERY IMPORTANT, as we will base future actions and recommendations to the client on these.
+            <br><br>
+            Your identity as a respondent will be held strictly confidential, and will only be used to check for adherence. Feel free to enter any concerns, as well as your ideas for improvement. Your ideas, when validated, shall be enrolled to ROOTS for innovation.
+            <br><br>
+            <span class="hiddenDiv" style="font-weight:bold;color:red">Note: All fields are required to be filled out.</span>
+        </div>
+        <button class="large_button" onclick="$('#modal_surveycnx_engage').addClass('hiddenDiv');">Answer this survey later</button>
+        <br><br>
+        <div class="survey_section">
+            <h5>Process: RMA Initiation</h5>
+            <ol type="1">
+                <li>On average, how often do you get RMA cases in a day?
+                    <ol type="a" id="s1q1">
+                        <li>
+                            <input type="radio" name="rmaDaily" value="1-2">1-2
+                        </li>
+                        <li>
+                            <input type="radio" name="rmaDaily" value="3-5">3-5
+                        </li>
+                        <li>
+                            <input type="radio" name="rmaDaily" value="6-10">6-10
+                        </li>
+                        <li>
+                            <input type="radio" name="rmaDaily" value="more than 10">more than 10
+                        </li>
+                    </ol>
+                </li>
+                <li>What difficulties do you encounter for RMA initiation? (multiple select)
+                    <ol type="a" id="s1q2">
+                        <li>
+                            <input type="checkbox" value="RMA not initiated promptly">RMA not initiated promptly
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Customers unable to process RMA on their end (e.g. did not receive email, other issues)">Customers unable to process RMA on their end (e.g. did not receive email, other issues)
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Other experts do not follow-up if RMA was initiated">Other experts do not follow-up if RMA was initiated
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Need follow-up hours outside phone time">Need follow-up hours outside phone time
+                        </li>
+                        <li>
+                            <input type="checkbox" value="RMA fraud screening">RMA fraud screening
+                        </li>
+                        <li>
+                            <input type="checkbox" value="RMA shipped to wrong address">RMA shipped to wrong address
+                        </li>
+                        <li>
+                            <input type="checkbox" value="RMA template has too many details">RMA template has too many details
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Pacifiying the customer when device is out of warranty">Pacifiying the customer when device is out of warranty
+                        </li>
+                        <li>
+                            Others/specifics (textbox)<br>
+                            <textarea></textarea>
+                        </li>
+                    </ol>
+                </li>
+                <li>What changes do you recommend for the RMA process? (multiple select)
+                    <ol type="a" id="s1q3">
+                        <li>
+                            <input type="checkbox" value="Allow L1 to initiate RMA">Allow L1 to initiate RMA
+                        </li>
+                        <li>
+                            <input type="checkbox" value="L2 to initiate RMA upon consult as long as all TS has been completed">L2 to initiate RMA upon consult as long as all TS has been completed
+                        </li>
+                        <li>
+                            <input type="checkbox" value="RMA initation and completion forwarded to dedicated RMA Team">RMA initation and completion forwarded to dedicated RMA Team
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Allow one-time courtesy replacement">Allow one-time courtesy replacement
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Off-phone time to follow-up cases">Off-phone time to follow-up cases
+                        </li>
+                        <li>
+                            Others/specifics (textbox)<br>
+                            <textarea></textarea>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        <div class="survey_section">
+            <h5>Product: Video Doorbell</h5>
+            <ol type="1">
+                <li>On average, how often do you get Video Doorbell cases in a day?
+                    <ol type="a" id="s2q1">
+                        <li>
+                            <input type="radio" name="productDaily" value="1-2">1-2
+                        </li>
+                        <li>
+                            <input type="radio" name="productDaily" value="3-5">3-5
+                        </li>
+                        <li>
+                            <input type="radio" name="productDaily" value="6-10">6-10
+                        </li>
+                        <li>
+                            <input type="radio" name="productDaily" value="more than 10">more than 10
+                        </li>
+                    </ol>
+                </li>
+                <li>What difficulties do you encounter when handling a video doorbell call? (multiple select)
+                    <ol type="a" id="s2q2">
+                        <li>
+                            <input type="checkbox" value="Installation - AP">Installation - AP
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Installation - Base Station / Smart Hub">Installation - Base Station / Smart Hub
+                        </li>
+                        <li>
+                            <input type="checkbox" value="No visibility on current issues are affecting video doorbell(list issues below if possible)">No visibility on current issues are affecting video doorbell(list issues below if possible)
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Do not know callhandlers,workarounds, and solutions to issues affecting video doorbell">Do not know callhandlers,workarounds, and solutions to issues affecting video doorbell
+                        </li>
+                        <li>
+                            Others/specifics (textbox)<br>
+                            <textarea></textarea>
+                        </li>
+                    </ol>
+                </li>
+                <li>What do you recommend for increasing the capability of experts in handling video doorbell cases? (multiple select)
+                    <ol type="a" id="s2q3">
+                        <li>
+                            <input type="checkbox" value="Link workarounds/call handlers to issue number in Salesforce">Link workarounds/call handlers to issue number in Salesforce
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Hands-on with the device">Hands-on with the device
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Access to account with the device for replication">Access to account with the device for replication
+                        </li>
+                        <li>
+                            Others/specifics (textbox)<br>
+                            <textarea></textarea>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        <div class="survey_section">
+            <h5>Tool: Diag Tool</h5>
+            <ol type="1">
+                <li>What difficulties do you encounter when using the Diag Tool? (multiple select)
+                    <ol type="a" id="s3q1">
+                        <li>
+                            <input type="checkbox" value="Information is not reliable (be specific below)">Information is not reliable (be specific below)
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Lacking information (be specific below)">Lacking information (be specific below)
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Slow loading">Slow loading
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Categorization/display of information needs improvement">Categorization/display of information needs improvement
+                        </li>
+                        <li>
+                            Others/specifics (textbox)<br>
+                            <textarea></textarea>
+                        </li>
+                    </ol>
+                </li>
+                <li>What improvements do you recommend to increase efficiency when using Diag Tool? (multiple select)
+                    <ol type="a" id="s3q2">
+                        <li>
+                            <input type="checkbox" value="Allow open access to Diag Tool since PingID is needed">Allow open access to Diag Tool since PingID is needed
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Make information consistent and accurate">Make information consistent and accurate
+                        </li>
+                        <li>
+                            <input type="checkbox" value="Categorize information per basestation/camera">Categorize information per basestation/camera
+                        </li>
+                        <li>
+                            Others/specifics (textbox)<br>
+                            <textarea></textarea>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        <div class="hiddenDiv" id="surveycnx_error" style="font-weight:bold;color:red">Please complete all fields.</div>
+        <button onclick="submitEngage()">Submit</button><br><br>
+    </div>
+</div>

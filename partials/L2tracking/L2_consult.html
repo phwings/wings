@@ -1,0 +1,282 @@
+<div class="hiddenDiv" id="loadL2consultscript">
+	$('#consult_duration').on('keyup',function(event) {
+		console.log("input");
+		
+		// When user select text in the document, also abort.
+		var selection = window.getSelection().toString();
+		if ( selection !== '' ) {
+			return;
+		}
+		
+		// When the arrow keys are pressed, abort.
+		if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+			return;
+		}
+
+		
+		
+		var $this = $(this);
+		var input = $this.val();
+		input = input.replace(/[a-zA-Z\W\s\._\-]+/g, '');
+		
+
+
+		var split = 2;
+		var chunk = [];
+	
+		for (var i = 0, len = 4; i < len; i += split) {
+			split = 2;
+			chunk.push( input.substr( i, split ) );
+		}
+
+		if(chunk[1] > 59){
+			chunk[1] = 59;
+		}
+	
+
+		$this.val(function() {
+			return chunk.join(":");
+		});
+		
+	
+	
+	} );
+	console.log(userlevel);
+	if(usertype=='TM'){
+	}
+	if(userlevel==1){
+		$('#consult_entry_collapse').addClass('hiddenDiv');
+		$('#consult_table_collapse').click();
+		
+		
+	}
+
+	$('.toggleconsultbutton').on('click',function(){
+		$(this).toggleClass('hiddenColumn');
+		if($(this).hasClass('hiddenColumn')){
+			console.log($(this).data('columnnum'));
+			$('#consult_table td:nth-child('+$(this).data("columnnum")+')').css('display','none');
+		}else{
+			$('#consult_table td:nth-child('+$(this).data("columnnum")+')').css('display','table-cell');
+		}
+		
+	})
+	updateConsultTable();
+	resetConsult();
+
+
+	var coll = document.getElementsByClassName("collapsibleConsult");
+	var i;
+	console.log(coll)
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+			content.style.display = "none";
+			} else {
+			content.style.display = "block";
+			}
+		});
+		
+	}
+
+</div>
+<br><br>
+<div type="button" class="collapsibleConsult" id="consult_entry_collapse"><h5><span class="consult_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>&nbsp;&nbsp;&nbsp;Consult Data Entry</h5></div>
+<div class="consult_div_input consult_div" id="L2_consult">
+	<div class="consult_edit hiddenDiv"><h5 style="background-color:orangered">Edit Mode</h5></div>
+	<div class="consult_add"><h5 style="background-color:royalblue">Add Mode</h5></div>
+	<input type="text" id="consult_id" hidden>
+	<div class="row consult">
+		<div class="column" style="width:auto;min-width:220px;">	
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Case Number:
+				</div>
+				<div class="column">
+					<input type="text" id="consult_casenumber" style="width:100%">
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Escalated to:
+				</div>
+				<div class="column">
+					<input id="L2_list_consult" class="L2_list consult" style="width:100%" readonly>
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Escalated by:
+				</div>
+				<div class="column">
+					<select id="L1_list_consult_source" class="L1_list consult" style="width:100%" onchange="getTM($('#L1_list_consult_source').val(),function(TMname,TMCES){$('#consult_TM').val('');$('#consult_TM').val(TMname);$('#consult_TM').attr('data-tm',TMCES)});">
+					</select>
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Reason of Consult:
+				</div>
+				<div class="column">
+					<select id="consult_invalidreason" style="width:100%">
+						
+					</select>
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Followed Call Handler:
+				</div>
+				<div class="column" >
+					<label style="font-size:10pt;"><input type="radio" name="consult_callhandler" value="Yes" style="vertical-align: bottom;margin-top:0px"> Yes</label>
+					<label style="font-size:10pt;"><input type="radio" name="consult_callhandler" value="No" style="vertical-align: bottom;margin-top:0px"> No </label>
+					<label style="font-size:10pt;"><input type="radio" name="consult_callhandler" id="consult_callhandler_na" value="NA" style="vertical-align: bottom;margin-top:0px" checked> Not Applicable</label>
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Duration:
+				</div>
+				<div class="column">
+					<input id="consult_duration" class="duration consult" style="width:100%" >
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					<b>Specific inquiry</b><b style="color:red"><br>(please note the<br>exact question<br>of the expert):</b>
+				</div>
+				<div class="column">
+					<textarea id="consult_durationreason" style="width:100%" rows="5"></textarea>
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Select Device:
+				</div>
+				<div class="column">
+					<select class="consult" id="consult_product" style="width:100%">
+					</select>
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Expert's Opportunity:
+				</div>
+				<div class="column">
+					<select id="consult_opportunity1" style="width:100%">
+						<option value="Technical">Technical</option>
+						<option value="Comms">Comms</option>
+						<option value="Others">Others</option>
+					</select><br>
+					<textarea id="consult_opportunity2" style="width:100%" rows="5"></textarea>
+					
+				</div>
+			</div>
+			<div class="row consult">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Team Manager:
+				</div>
+				<div class="column">
+					<input type="text" id="consult_TM" style="width:100%" readonly>
+				</div>
+			</div>
+			<div class="row consult hiddenDiv">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Coaching Feedback:
+				</div>
+				<div class="column">
+					<input type="text" id="consult_feedback" style="width:100%">
+				</div>
+			</div>
+			<div class="row consult hiddenDiv">
+				<div class="column" style="width:auto;min-width:220px;">	
+					Expert's Encountered Challenges<br>and Commitment:
+				</div>
+				<div class="column">
+					<input type="text" id="consult_commitment" style="width:100%">
+				</div>
+			</div>
+			<br>
+
+		</div>
+		<div class="column" style="width:auto;min-width:220px;">
+			Consult Notes<br>
+			<textarea id="consult_notes" style="width:100%" rows="20"></textarea>
+		</div>
+	</div>
+	<br>
+	<span class="consult_add">
+		<button id="save_consult_button" onclick="save_consult(
+			$('#L1_list_consult_source'),
+			JSON.parse(getCookie('userdetails')).users_CES,
+			$('#consult_casenumber'),
+			$('#consult_product'),
+			$('#consult_duration'),
+			$('#consult_durationreason'),
+			$('#consult_invalidreason'),
+			$('input[name=consult_callhandler]:checked'),
+			$('#consult_opportunity1'),
+			$('#consult_opportunity2'),
+			$('#consult_feedback'),
+			$('#consult_commitment'),
+			new Date().toLocaleString('en-US', {timeZone: 'Asia/Manila'}),
+			$('#consult_notes'));$('#save_consult_button').attr('disabled','true');">
+			Save
+		</button>
+	</span>
+	<span class="consult_edit hiddenDiv">
+		<button onclick="update_consult(
+			$('#consult_id').val(),
+			$('#L1_list_consult_source').val(),
+			JSON.parse(getCookie('userdetails')).users_CES,
+			$('#consult_casenumber').val(),
+			$('#consult_product').val(),
+			$('#consult_duration').val(),
+			$('#consult_durationreason').val(),
+			$('#consult_invalidreason').val(),
+			$('#consult_opportunity1').val(),
+			$('#consult_opportunity2').val(),
+			$('#consult_feedback').val(),
+			$('#consult_commitment').val(),
+			new Date().toLocaleString('en-US', {timeZone: 'Asia/Manila'}));">
+			Update
+		</button>
+	</span>
+	<br><br>
+	<div id="consult_status"></div>
+</div>
+
+<div type="button" class="collapsibleConsult" id="consult_table_collapse"><h5><span class="consult_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>&nbsp;&nbsp;&nbsp;Consults</h5></div>
+<div class="consult_div_table consult_div" id="consult_div_table">
+	<button id="saveasconsultxlsbutton" onclick="/*tableToExcel(consult_table, 'invald consult', 'export_data.xlsx')*/exportTableToExcel('consult_table','')">Save as XLS</button>&nbsp;&nbsp;&nbsp;<input style="width:300px" type="search" id="consult_filter" placeholder="Search" title="Type in anything" style="width:100%" oninput="filter('consult_table','consult_filter')"></input><br>
+
+	<button class="toggleconsultbutton" id="consult_date_toggle" data-columnnum="1" >Date</button>
+	<button class="toggleconsultbutton" id="consult_L2_toggle" data-columnnum="2">Reported By</button>
+	<button class="toggleconsultbutton" id="consult_L1_toggle" data-columnnum="3">Expert</button>
+	<button class="toggleconsultbutton" id="consult_casenumber_toggle" data-columnnum="4">Case Number</button>
+	<button class="toggleconsultbutton" id="consult_Product_toggle" data-columnnum="5">Product</button><br>
+	<button class="toggleconsultbutton" id="consult_Reason_toggle" data-columnnum="6">Reason</button>
+	<button class="toggleconsultbutton" id="consult_duration_toggle" data-columnnum="7">Duration</button>
+	<button class="toggleconsultbutton" id="consult_TM_toggle" data-columnnum="8">TM</button>
+	<button class="toggleconsultbutton" id="consult_opportunity_toggle" data-columnnum="9">Expert's Opportunity</button>
+	<button class="toggleconsultbutton" id="consult_TMfeedback_toggle" data-columnnum="10">TM Feedback</button>
+	<button class="toggleconsultbutton" id="consult_commit_toggle" data-columnnum="11">Expert's Commitment</button>
+	<!--<button id="generateconsultl2report" onclick="generateConsultReport($('#monthselector_l2reportconsult').val())">Generate Report for Month of:</button>
+	<select id="monthselector_l2reportconsult">
+		<option value="1">January</option>
+		<option value="2">February</option>
+		<option value="3">March</option>
+		<option value="4" selected>April</option>
+		<option value="5">May</option>
+		<option value="6">June</option>
+	</select>-->
+	<br>
+	<table id="consult_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+	</table>
+	
+		
+</div>
+
+

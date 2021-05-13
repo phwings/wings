@@ -24,7 +24,7 @@ module.exports = (req,res,next) => {
             }else{
                 //console.log("token ok");
                 try{
-                    
+                    console.log("token ok");
                     next();
                 }catch(err){
                     console.log("error");
@@ -43,10 +43,11 @@ module.exports = (req,res,next) => {
             //console.log('decodedRefreshToken');
             //console.log(decodedRefreshToken);
             if(err){
-                //console.log("refresh token error");
+                console.log("refresh token error");
                 //console.log(err)
                 try{
                     //
+                    console.log('error');
                     res.sendFile(__dirname + '/splash.html');
                     
                 }catch(err){

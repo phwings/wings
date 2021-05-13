@@ -1,0 +1,21 @@
+<div class="dropdown" id="troubleshoot">
+		<button class="dropbtn" onmouseout="hideMenu('troubleshootsub')" onmouseover="drop('troubleshootsub')">Troubleshooting <i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-content" id="troubleshootsub" onmouseover="drop('troubleshootsub')" onmouseout="hideMenu('troubleshootsub')">
+			<a href="#" onclick="loadExternal('/partials/troubleshooting/TS','');">Troubleshooting <b class="newAnimate" style="display:inline;color:red">Beta</b></a>
+			<a href="#" onclick="openSite('https://my.arlo.com/#/forgot-password');">Change password</a>
+			<a href="#" onclick="openKB('1133448');">Camera Offline</a>
+			<a href="#" onclick="openKB('994085');loadExternal('/partials/troubleshooting/noMotion','')">Motion Detection</a>
+			<a href="#" onclick="openKB('000039094');loadExternal('/partials/troubleshooting/wontSync','')">Not Syncing</a>
+			<a href="#" onclick="loadExternal('/partials/troubleshooting/rapidBattDrain','')">Rapid Battery Draining</a>
+			<a href="#" onclick="loadExternal('/partials/troubleshooting/pinkTint','')">Pink Tint</a>
+			<a href="#" onclick="loadExternal('/partials/troubleshooting/nightVision','')">Night Vision</a>
+			<a href="#" onclick="loadExternal('/partials/troubleshooting/battNotCharging','')">Battery Not Charging</a>
+			<a href="#" onclick="openKB('1179147');loadExternal('/partials/troubleshooting/imgQual','')">Image Quality Issues</a>
+			<a class="main_bullet" href="#">Push Notifications</a>
+				<a class="platform" href="#" onclick="openKB('000062235')">+Android</a>
+				<a class="platform" href="#" onclick="openKB('1099161')">+iOS</a>
+			<a href="#" onclick="openKB('994106')">Email Alerts</a>
+			<a href="#" onclick="openKB('1085093');loadExternal('/partials/troubleshooting/geofencing')">Geofencing</a>
+		</div>
+	</div>

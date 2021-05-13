@@ -1,0 +1,128 @@
+<div class="hiddenDiv" id="rmaFormScript">
+    getDataRecord('/api/devices',function(devices){
+		//console.log(experts.length);
+		//$("#escalation_product").html('');
+		devices.sort((a, b) => (a["device_name"] > b["device_name"]) ? 1 : -1)
+		$("#RMA_main_device").append(new Option('Select Device', -1, true, true));
+		$("#RMA_main_device option").addClass('selectheader');
+		$('.selectheader').prop('disabled','disabled');
+		devices.forEach(data => {
+			//console.log(data);
+			$("#RMA_main_device").append(new Option(data.device_name + "    (" + data.device_model + ")", data.device_model));
+        });
+        loadRMA();
+        console.log(googleScriptLoaded);
+        if(!googleScriptLoaded){
+            $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBtvTP2iB2UPrK27kMlIbPck6GiHNQgeOI&libraries=places&callback=initAutocomplete",function(){
+                initAutocomplete();
+                googleScriptLoaded=true;
+                $('input[type=radio][name=RMA_devicetype]').change(function() {
+                    localStorage.setItem('RMA_devicetype',this.value);
+                });
+            });
+        }else{
+            initAutocomplete();
+        }
+    },'standard_device');
+
+    
+    
+</div>
+
+<h4>RMA Form</h4>
+<button onclick="loadExternal('/partials/templates/standard','standardScript');"><< Back to Standard</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="clearRMA();loadRMA();">Clear RMA</button>
+<br><br>
+<div class="row" style="width:100%;font-family:monospace;">
+    <div class="column" style="width:50%;float:left;">
+        <div class="panel-group" style="width:95%;padding-left:5px;padding-right:5px;text-align:left;">
+            <div class="panel-group-label">Case Information</div>
+            
+            <div style="text-align:right;vertical-align:top;align-items:center;">
+                Case: <input type="text" id="RMA_casenum" oninput="saveRMA('RMA_casenum');" size="30" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="2"><br>
+                Email: <input type="text" id="RMA_email" oninput="saveRMA('RMA_email');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="2"><br>
+                Phone: <input type="text" id="RMA_phone" size="30" oninput="saveRMA('RMA_phone');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6"><br>
+                Time Zone: <input type="text" id="RMA_tz" size="30" oninput="saveRMA('RMA_tz');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6"><br>
+                POP Updated: <input type="checkbox" id="RMA_POP" value="Y" oninput="saveCheckRMA('RMA_POP');" tabindex="14" style="margin-right:60%;"><br>
+                DL Logs: <input type="checkbox" id="RMA_logs" value="Y" oninput="saveCheckRMA('RMA_logs');" tabindex="14" style="margin-right:60%;"><br>
+                <span style="display:inline-block; vertical-align:top;line-height:20px;">
+                    Address: 
+                </span>
+                
+                <textarea id="RMA_shippingaddress" placeholder="Enter your address" onFocus="geolocate()" oninput="saveRMA('RMA_shippingaddress');" type="text" style="width:65%;clear:both;height:34px;padding:0px;margin:0px;resize:none"></textarea>
+                
+            </div>
+        </div>
+        
+
+        <!--<button style="height:18px;vertical-align:top;" onClick="searchAddress($('#RMA_shippingaddress').val());">Verify</button><br>-->
+        <div id="txtAddress"></div>
+        <div id="txtTimezone"></div>
+    </div>
+    <div class="column" style="width:50%;text-align:right;">
+        <div class="panel-group" style="width:95%;padding-left:5px;padding-right:5px;text-align:left;">
+            <div class="panel-group-label">Device Information</div>
+            <div style="text-align:right;">
+                <div style="text-align:left!important;"><input type="radio" id="maindevice" name="RMA_devicetype" value="maindevice" checked="true" onclick="$('#accessory_div').addClass('hiddenDiv');$('#maindevice_div').removeClass('hiddenDiv')">Main Device</input><input type="radio" id="accessory" name="RMA_devicetype" value="accessory" onclick="$('#accessory_div').removeClass('hiddenDiv');$('#maindevice_div').addClass('hiddenDiv')">Accessory</input></div>
+                Main Device: <select class="standard" id="RMA_main_device" onchange="saveRMA('RMA_main_device');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"></select><br>
+                <div id="maindevice_div">
+                    
+                    SN: <input type="text" id="RMA_main_deviceSN" size="30" oninput="saveRMA('RMA_main_deviceSN');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6"><br>
+                    FW: <input type="text" id="RMA_main_deviceFW" size="30" oninput="saveRMA('RMA_main_deviceFW');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6"><br>
+                </div>
+                <div class="hiddenDiv" id="accessory_div">
+                    Accessory: <input type="text" id="RMA_accessoryreplacement" size="30" oninput="saveRMA('RMA_accessoryreplacement');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6"><br>
+                    Part Code: <input type="text" id="RMA_partcode" size="30" oninput="saveRMA('RMA_partcode');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6"><br>
+                    Quantity: <input type="number" id="RMA_quantity" size="30" oninput="saveRMA('RMA_quantity');" style="width:65%;height:18px;clear:both;padding:0px;margin:0px;" tabindex="6" value="1"><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="width:100%;font-family:monospace;">
+    <div class="column" style="width:50%;float:left;">
+        <div class="panel-group" style="width:95%;padding-left:5px;padding-right:5px;text-align:left;">
+            <div class="panel-group-label">Troubleshooting</div>
+            
+            <div style="text-align:left;vertical-align:top;align-items:center;">
+                Problem Description Details:<br>
+                <textarea class="areaInput" rows="3" id="RMA_prob" oninput="saveRMA('RMA_prob');" style="width:100%;resize:vertical;">
+                </textarea>
+                <br><br>
+                Platform Affected:<br>
+                <textarea class="areaInput" rows="1" id="RMA_platform" oninput="saveRMA('RMA_platform');" style="width:100%;resize:vertical;">
+                </textarea>
+                <br><br>
+                History of Problem:<br>
+                <textarea class="areaInput" rows="3"  id="RMA_history" oninput="saveRMA('RMA_history');" style="width:100%;resize:vertical;">
+                </textarea>
+                <br><br>
+                Detailed Troubleshooting Done:<br>
+                <textarea class="areaInput" rows="3"  id="RMA_TS" oninput="saveRMA('RMA_TS');" style="width:100%;resize:vertical;">
+                </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="column" style="width:50%;float:left;">
+        <div class="panel-group" style="width:95%;padding-left:5px;padding-right:5px;text-align:left;">
+            <div class="panel-group-label">Network Topology</div>
+            
+            <div style="text-align:right;vertical-align:top;align-items:center;">
+                ISP:<input type="text" id="RMA_ISP" oninput="saveRMA('RMA_ISP');" size="20" style="width:217px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+                Modem Brand/Model:<input type="text" id="RMA_modem" oninput="saveRMA('RMA_modem');" size="20" style="width:217px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+                Router Brand/Model:<input type="text" id="RMA_router" oninput="saveRMA('RMA_router');" size="20" style="width:217px;height:18px;clear:both;padding:0px;margin:0px;" tabindex="8"><br>
+                <div style="text-align:left!important">
+                    Wireless devices on network:
+                </div>
+                <textarea class="areaInput" rows="3" style="vertical-align:top;width:100%;resize:vertical;" id="RMA_wirelessnetwork" oninput="saveRMA('RMA_wirelessnetwork');">
+                </textarea><br>
+                <div style="text-align:left">
+                    Wireless devices used:
+                </div>
+                <textarea class="areaInput" rows="3" style="vertical-align:top;width:100%;resize:vertical;" id="RMA_wirelessdevices" oninput="saveRMA('RMA_wirelessdevices');">
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div><br>
+<button onclick="generateTextRMA();generateTextFeed();">Generate Text</button>
+<br><br><br>

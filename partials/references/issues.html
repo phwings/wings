@@ -1,0 +1,17 @@
+<script>
+
+</script>
+<h4>Issues List</h4>
+<br>
+<button onclick="$('#issue_filter').val('');$('#call_handler').html('');filter('issue_table','issue_filter');$('#call_handler').val('');">Reset</button><br><br>
+<div style="border:1px solid black;width:90%">
+<b>Callhandler/Details:</b>
+<div id="call_handler"></div>
+<br>
+</div>
+<br>
+<input type="search" id="issue_filter" placeholder="Search" title="Type in anything" style="width:20%" oninput="filter('issue_table','issue_filter')">
+<br><br>
+<table class="tg" id="issue_table" style="width:90%">
+</table>
+<br><br>

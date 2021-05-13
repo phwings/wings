@@ -1,0 +1,47 @@
+<html>
+<head>
+
+    <title>Survey Results</title>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/misc.js"></script>
+    <script>
+     
+        $(document).ready(function(){
+            var tableHTML="";
+            getDataRecord("/api/surveys/getresults/1",function(surveyresults){
+                tableHTML="<tr><th>Date/Time</th><th>Account</th><th>CES</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th><th>Q7</th><th>Q8</th><th>Q9</th><th>Q10</th></tr>"
+                surveyresults.forEach(function(surveyresult){
+                    console.log(surveyresult.surveyresults_answers.replace(/\'\'/g,"\""));
+                    var answers=JSON.parse(surveyresult.surveyresults_answers.replace(/\'\'/g,"\""));
+                    //console.log(answers);
+                    tableHTML+="<tr><td>"+surveyresult.surveyresults_datetime.replace(/T/g," ").replace(/Z/g,"").split(".")[0]+"</td><td>"+surveyresult.account+"</td><td>"+surveyresult.surveyresults_CES+"</td>";
+                    for(i=1;i<11;i++){
+                        tableHTML+="<td>"+answers["q"+i]+"</td>"
+                    }
+                    tableHTML+="</tr>";
+                })
+                //console.log(tableHTML);
+                $("#survey_table").html(tableHTML);
+            })
+            
+        })
+    </script>
+    <style>
+        pre span{
+            max-width:100%;
+            white-space: normal;
+        }
+        #survey_table>tr>td, #survey_table>tr>th{
+            border:1px solid black;border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="survey_table_div">
+        <table id='survey_table' style="border:1px solid black;border-collapse: collapse;">
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+<div class="hiddenDiv" id="loadparserdiv">
+	if(userLOB=="L1 IOPEX"){
+		$('#systemtab').addClass('hiddenDiv');
+		$('#modetab').addClass('hiddenDiv');
+		$('#entitlementtab').addClass('hiddenDiv');
+	}
+</div>
+<h4 style="font-family:Verdana;">Base Station Log Reader v2.01b</h4>
+	<br>
+	<input class="hiddenDiv" id="inputTarFileToLoad" type="file" onchange="$('.hiddenClass').css('display','none');$('#arlobird').css('display','block');inputTarFileToLoad_Change(event);"/>
+	<span style="border:1px solid black;border-radius:5px;padding:10px;font-size: 12px;">
+		<label for="inputTarFileToLoad" style>Select Logs</label>
+	</span>&nbsp;&nbsp;
+	<span id="log_file"></span>
+	<br><br />
+	<div id="arlobird" style="text-align:center;width:100%;color:#009846;font-family:Verdana;"><img width="100px" src="/assets/img/arlobird.gif"><br><b>Please wait, fetching details...</b></div>
+	<div><span class="lastLog hiddenClass"><b>Last Log Entry Date/Time : </b></span> <span class="hiddenClass" id="lastLogDate"> </span></div>
+	<div class="BS_details hiddenClass">
+	<h5>Base Station Details</h5>
+	<!--<select id="VMBtype">
+		<option value="3010">VMB3010</option>
+		<option value="3500">VMB3500</option>
+		<option value="4000">VMB4000</option>
+		<option value="4500">VMB4500</option>
+	</select>-->
+	<div class="row">
+		<div class="column">
+			<table class="table_parser">
+				<tr>
+					<th style="text-align:right">Type : </th><td style="text-align:left"><span id="VMBtypename"></span></td>
+				</tr>
+				<tr>
+					<th style="text-align:right">Serial Number : </th><td style="text-align:left"><span id="VMBserial"></span></td>
+				</tr>
+				<tr>
+					<th style="text-align:right">FW Version : </th><td style="text-align:left"><span id="VMBfw"></span></td>
+				</tr>
+				<tr>
+					<th style="text-align:right">Channel : </th><td style="text-align:left"><span id="VMBchannel"></span></td>
+				</tr>
+			</table>
+		</div>
+		<div class="column" style="width:65%">
+			<table class="table_legend" style="border-collapse: collapse;">
+				<tr>
+					<th style="width:60px">RSSI value</th>
+					<th>Quality</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>-30 dBm</td>
+					<td>Amazing</td>
+					<td>Max achievable signal strength. The client can only be a few feet from the AP to achieve this. Not typical or desirable in the real world.</td>
+				</tr>
+				<tr>
+					<td>-67 dBm</td>
+					<td>Very Good</td>
+					<td>Minimum signal strength for applications that require very reliable, timely delivery of data packets.</td>
+				</tr>
+				<tr>
+					<td>-70 dBm</td>
+					<td>Okay</td>
+					<td>Minimum signal strength for reliable packet delivery.</td>
+				</tr>
+				<tr>
+					<td>-80 dBm</td>
+					<td>Not Good</td>
+					<td>Minimum signal strength for basic connectivity. Packet delivery may be unreliable.</td>
+				</tr>
+				<tr>
+					<td>-90 dBm</td>
+					<td>Unusable</td>
+					<td>Approaching or drowning in the noise floor. Any functionality is highly unlikely.</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<br>
+	</div>
+	<div class="hiddenClass">
+		<div class="tab_bar">
+			<button class="tab_button" id="wifitab" onclick="openTab('parser','wifi')">Wifi Scan</button>
+			<button class="tab_button" id="searchtab" onclick="openTab('parser','search')">Search Logs</button>
+			<button class="tab_button" id="searEventtab" onclick="openTab('parser','searchEvent')">Search Events </button>
+			<button class="tab_button" id="systemtab" onclick="openTab('parser','system')">System</button>
+			<button class="tab_button" id="modetab" onclick="openTab('parser','mode')">Modes</button>
+			<button class="tab_button" id="entitlementtab" onclick="openTab('parser','entitlement')">Entitlement</button>
+		</div>
+		<div id="wifi" class="parser tab_div">
+			<div class="other_devices_graph hiddenClass" style="width:100%">
+				<h5>RSSI Visualization</h5>
+				<canvas id="rssi_chart" width="100%" style="background-color:white;max-width:100%!important;max-height:600px!important;min-height:100px!important;"></canvas>
+			</div>
+			<div class="other_devices hiddenClass" style="width:100%">
+				<h5>Wifi Devices Detected</h5>
+				<div id="wifi_SSID"></div>
+				<div id="vdb_details"></div>
+			</div>
+		</div>
+
+		<div id="searchEvent" class="parser tab_div" style="display:none">
+			<h5>Search Events</h5>
+			<div style="font-family: monospace;">
+				Device :
+				<select id="parser_devices">
+				</select>
+				Event :
+				<select id="parser_events">
+					<option value="AutomationMgr" >AutomationMgr</option>
+					<option value="activeModes" >activeModes</option>
+					<option value="BackendAutomationApi (no device)" >BackendAutomationApi (no device)</option>
+					<option value="BackendAutomationApi (with device)" >BackendAutomationApi (with device)</option>
+					<option value="BaseStationConnectionEvent" >BaseStationConnectionEvent</option>
+					<option value="CAM_STATS1" >CAM_STATS1</option>
+					<option value="CAM_STATS2" >CAM_STATS2</option>
+					<option value="CAM_STATS3" >CAM_STATS3</option>
+					<option value="CameraConnectionWakeupThread" >CameraConnectionWakeupThread</option>
+					<option value="CameraSignalStrength" selected>CameraSignalStrength</option>
+					<option value="GatewayRecoveryThread.cpp" >GatewayRecoveryThread.cpp</option>
+					<option value="sessionInfo" >sessionInfo</option>
+					<option value="startUserStream" >startUserStream</option>
+					<option value="pirMotionAlert" >pirMotionAlert</option>
+					<option value="UPLOAD BANDWIDTH SATURATION" >UPLOAD BANDWIDTH SATURATION</option>
+					<option value="VideoIngressThread" >VideoIngressThread</option>
+					<option value="startWPSListener" >startWPSListener</option>
+				</select>
+				Include lines :
+				<select id="parser_lines">
+					<option value="0" selected>0</option>
+					<option value="1" >1</option>
+					<option value="2" >2</option>
+					<option value="3" >3</option>
+					<option value="4" >4</option>
+					<option value="5" >5</option>
+					<option value="6" >6</option>
+					<option value="7" >7</option>
+					<option value="8" >8</option>
+					<option value="9" >9</option>
+					<option value="10" >10</option>
+
+				</select>
+				<button onclick="$('#searchEventResults').val(searchEvent($('#parser_devices').val(),$('#parser_events').val(),$('#parser_lines').val()));">Search</button><br>
+				<textarea id="searchEventResults" wrap="soft" rows="30" style="white-space: nowrap;overflow:auto;resize:vertical; width:100%"></textarea>
+			</div>
+			
+		</div>
+
+		<div id="search" class="parser tab_div" style="display:none">
+			<h5>Search Logs</h5>
+			<div style="font-family: monospace;">Search string must be greater than two characters.</div>
+			<div class="search_string" style="font-family: monospace;">
+				Search string:<input id="searchString" type="text"></input><button onclick="$('#searchResults').val(searchString($('#searchString').val()));">Search</button><br>
+				Results:<br>
+				<textarea id="searchResults" wrap="soft" rows="30" style="white-space: nowrap;overflow:auto;resize:vertical; width:100%"></textarea>
+			</div>
+		</div>
+		
+		<div id="system" class="parser tab_div" style="display:none">
+			<h5>System Configuration</h5>
+			<div style="font-family: monospace;">
+				<span id="bsconfig-json"></span><br>
+			</div>
+		</div>
+		
+		<div id="mode" class="parser tab_div" style="display:none">
+			<h5>Mode Configuration</h5>
+			<div style="font-family: monospace;">
+				<span id="mode-json"></span><br>
+			</div>
+		</div>
+
+		<div id="entitlement" class="parser tab_div" style="display:none">
+			<h5>Entitlement Configuration</h5>
+			<div style="font-family: monospace;">
+				<span id="entitlement-json"></span>
+			</div>
+		</div>
+	</div>
+	
+<br><br>

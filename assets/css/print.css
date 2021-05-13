@@ -1,0 +1,79 @@
+body {
+  background: rgb(204,204,204); 
+  padding:2.54cm;
+  font-family:Arial, Helvetica, sans-serif
+}
+page {
+  background: white;
+  display: block;
+  padding: 2.54cm;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+page[size="A4"] {  
+  width: 21cm;
+  height: 29.7cm; 
+}
+page[size="A4"][layout="landscape"] {
+  width: 29.7cm;
+  height: 21cm;  
+}
+page[size="A3"] {
+  width: 29.7cm;
+  height: 42cm;
+}
+page[size="A3"][layout="landscape"] {
+  width: 42cm;
+  height: 29.7cm;  
+}
+page[size="A5"] {
+  width: 14.8cm;
+  height: 21cm;
+}
+page[size="A5"][layout="landscape"] {
+  width: 21cm;
+  height: 14.8cm;  
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+table>tbody>tr>td{
+  border:1px solid black;
+}
+
+tbody{
+  border: 2px solid black;
+}
+
+#sah_pdf_table #logo{
+  text-align: center;
+}
+#sah_pdf_table #formname{
+  padding:2px;
+  font-size:14pt;
+  font-weight: bolder;
+  text-align: center;
+}
+#sah_pdf_table #revision{
+  font-size:12pt;
+  font-weight:bold;
+  text-align: center;
+}
+#sah_pdf_table #pagenum{
+  font-size:12pt;
+  font-weight:bold;
+  text-align: center;
+}
+
+#sah_questionnaire_table{
+
+}
+@media print {
+  body, page {
+    padding:0;
+    margin: 0;
+    box-shadow: 0;
+  }
+}

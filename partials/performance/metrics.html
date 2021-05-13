@@ -1,0 +1,83 @@
+<div id="loadMetricsscript" class="hiddenDiv">
+    getExpertName('expert_name');
+    getTeamName('team_name');
+    $( "#datepicker1" ).datepicker();
+    $( "#datepicker2" ).datepicker();
+    getCsatAllExpertTable();
+    getMetricDate(showMetricDate);
+</div>
+<h4>Expert and Team Metrics</h4>
+<h5 id="metricDateDiv">
+</h5>
+<input class="statSelector" type="radio" name="metric_filter" value="allexperts" onclick="{
+   $('.metric_table').html('').addClass('hiddenDiv');
+   $('.metric_selector').addClass('hiddenDiv');
+   $('#table_metrics_deficit').addClass('hiddenDiv');
+   getCsatAllExpertTable();
+}" checked disabled> All Experts<br>
+<input class="statSelector" type="radio" name="metric_filter" id="expertradio" value="expert" onclick="{
+    $('.metric_table').html('').addClass('hiddenDiv');
+    $('#team_name_div').addClass('hiddenDiv');
+    $('#expert_name_div').removeClass('hiddenDiv');
+    $('#table_metrics_deficit').addClass('hiddenDiv');
+    getCsatTable($('#expert_name').val());
+}" disabled> Expert<br>
+<input class="statSelector" type="radio" name="metric_filter" value="allteams" onclick="{
+    $('.metric_table').html('').addClass('hiddenDiv');
+    $('.metric_selector').addClass('hiddenDiv');
+    $('#table_metrics_deficit').addClass('hiddenDiv');
+    getCsatAllTeamTable();
+}" disabled> All Teams<br>
+<input class="statSelector" type="radio" name="metric_filter" id="teamradio" value="team" onclick="{
+    $('.metric_table').html('').addClass('hiddenDiv');
+    $('#expert_name_div').addClass('hiddenDiv');
+    $('#team_name_div').removeClass('hiddenDiv');
+    $('#table_metrics_deficit').addClass('hiddenDiv');
+    getCsatTeamTable($('#team_name').val());
+}" disabled> Team<br>
+
+<div id="team_name_div" class="metric_selector hiddenDiv">
+Select Team:
+<select id="team_name" onchange="getCsatTeamTable($('#team_name').val())">
+<option value="-1" selected disabled>Select team name</option>
+</select>
+</div>
+<div id="expert_name_div" class="metric_selector hiddenDiv">
+Select Expert:
+<select id="expert_name" onchange="getCsatTable($('#expert_name').val())">
+<option value="-1" selected disabled>Select expert name</option>
+</select>
+</div>
+<div class="hiddenDiv">
+Select Start Date:<input id="datepicker1" alt="Select Start Date"/><br>
+Select End Date:<input id="datepicker2" />
+</div>
+<div>
+<br>
+<div class="hiddenDiv" id="arlobirdloading" style="text-align:center;width:100%;color:#009846;font-family:Verdana;"><img width="100px" src="/assets/img/arlobird.gif"><br><b>Please wait, loading metrics...</b></div>
+<table class="metric_table hiddenDiv" id="table_metrics_summary" style="border-collapse:collapse;font-size:10px;">
+</table>
+<br>
+<table class="hiddenDiv" id="table_metrics_deficit" style="border-collapse:collapse;font-size:10px;">
+    <tr>
+        <th colspan=3 style="text-align:center;padding:1px;">Deficit</th>
+    </tr>
+    <tr>
+        <th style="width:70px">CSAT<br>target: 85%</th>
+        <th style="width:70px">NPS<br>target:  45%</th>
+        <th style="width:70px">FCR<br>target:  70%</th>
+    </tr>
+    <tr style="text-align:center">
+        <td id="CSAT_deficit"></td>
+        <td id="NPS_deficit"></td>
+        <td id="FCR_deficit"></td>
+    </tr>
+</table>
+<br>
+<table class="metric_table hiddenDiv" id="table_metrics_expert_summary" style="border-collapse:collapse;font-size:10px;">
+</table>
+<br>
+<table class="metric_table hiddenDiv" id="table_metrics" style="border-collapse:collapse;font-size:10px;">
+</table>
+<br><br>
+</div>

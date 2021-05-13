@@ -1,0 +1,78 @@
+<div class="hiddenDiv" id="loadref-taggingScript">
+    getDataRecord('/api/tagging',function(tagging){
+        
+        taggingCodes=tagging.slice();
+        console.log(taggingCodes);
+        getDataRecord('/api/devices',function(devices){
+            //console.log(experts.length);
+            //$("#escalation_product").html('');
+            $("#tagging_device").empty();
+            $("#tagging_device").append(new Option('Select device', 0, true, true));
+            $("#tagging_device option").addClass('selectheader');
+            $("#tagging_device option").attr('disabled','disabled');
+            devices.sort((a, b) => (a["device_name"] > b["device_name"]) ? 1 : -1)
+            devices.forEach(data => {
+                //console.log(data);
+                $("#tagging_device").append(new Option(data.device_name + "    (" + data.device_model + ")", data.device_model));
+            });
+            $("#tagging_device").prop("disabled",false);
+        },'tagging_device');
+
+	},'');
+
+    
+
+    
+</div>
+<br>
+<h4>CEP Tagging Sandbox</h4>
+<br>
+<div class="row">
+    <div class="column" style="width:80%">
+        Asset:
+        <select class="tagging" id="tagging_device" onchange="taggingChange('device','subtype');" disabled>
+            <option class="selectheader" value="" disabled selected>Loading devices</option>
+        </select>
+        <br><br>
+        <!--Keywords: <span class="tagging_keywords_div" id="tagging_keywords" contenteditable="false" id="test" oninput="searchTagging();" disabled>Select asset first</span>-->
+        <br>
+        Keywords: <input id="tagging_keywords" oninput="searchTagging();" value="Select asset first" disabled/>
+        <input type="radio" name="searchType" value="whole" id="tagging_keywords_whole" onclick="searchTagging()" checked/>Search whole string
+        <input type="radio" name="searchType" value="part" id="tagging_keywords_part" onclick="searchTagging()"/>Search individual words
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="column coltagging">
+        Case Subtype:<br>
+        <select class="tagging" id="tagging_subtype" onchange="taggingChange('subtype','problem');">
+            <option class="selectheader" value="" disabled selected>--None--</option>
+        </select>
+    </div>
+    <div class="column coltagging">
+        Problem:<br>
+        <select class="tagging" id="tagging_problem" onchange="taggingChange('problem','symptom');">
+            <option class="selectheader" value="" disabled selected>--None--</option>
+        </select>
+    </div>
+    <div class="column coltagging">
+        Symptom:<br>
+        <select class="tagging" id="tagging_symptom" onchange="taggingChange('symptom','root');">
+            <option class="selectheader" value="" disabled selected>--None--</option>
+        </select>
+    </div>
+    <div class="column coltagging">
+        Root Cause:<br>
+        <select class="tagging" id="tagging_root">
+            <option class="selectheader" value="" disabled selected>--None--</option>
+        </select>
+    </div>
+</div>
+<br><br>
+<table id="tagging_suggestions">
+</table>
+<br><br>
+<br><br>
+
+
+	

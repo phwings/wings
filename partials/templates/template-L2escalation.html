@@ -1,0 +1,484 @@
+<div class="hiddenDiv" id="loadtemp-l2escalationscript">
+
+</div>
+
+<div id="l2escalationdiv">
+<h4 class="l2escalation">L2 Escalation Template</h4>
+
+<div>
+    <h5>Master Escalation Template</h5>
+    <button onclick="generateL2Text();">Generate Template</button>
+    <table id="l2escalation_table" style="border-collapse:collapse;padding:0px">
+        <tr>
+            <td>Arlo account Email</td>
+            <td><input type="text" id="l2esca_email"></td>
+        </tr>
+        <tr>
+            <td>Affected device</td>
+            <td><input type="text" id="l2esca_device"></td>
+        </tr>
+        <tr>
+            <td>Device Type/Firmware version (BS/Camera)</td>
+            <td><input type="text" id="l2esca_type"></td>
+        </tr>
+        <tr>
+            <td>iOS/Android/Web - model/version/OS </td>
+            <td><input type="text" id="l2esca_access"></td>
+        </tr>
+        <tr>
+            <td>Minimum upload download speed</td>
+            <td><input type="text" id="l2esca_dlul"></td>
+        </tr>
+        <tr>
+            <td>3rd Party device details (apps/routers/etc..) </td>
+            <td><textarea type="text" id="l2esca_3rdparty" rows="2"></textarea></td>
+        </tr>
+        <tr>
+            <td>Network Topology Example</td>
+            <td><textarea type="text" id="l2esca_network" rows="2"></textarea></td>
+        </tr>
+        <tr>
+            <td>Issue Description</td>
+            <td><textarea type="text" id="l2esca_issuedesc" rows="2"></textarea></td>
+        </tr>
+        <tr>
+            <td>Steps to reproduce the issue </td>
+            <td><textarea type="text" id="l2esca_steps" rows="2"></textarea></td>
+        </tr>
+        <tr>
+            <td>History of the problem</td>
+            <td><textarea type="text" id="l2esca_history" rows="2"></textarea></td>
+        </tr>
+        <tr>
+            <td>All logs/screenshot/library recording</td>
+            <td><input type="text" id="l2esca_logs"></td>
+        </tr>
+        <tr>
+            <td>RMA History</td>
+            <td><input type="text" id="l2esca_rma"></td>
+        </tr>
+        <tr>
+            <td>Other</td>
+            <td><input type="text" id="l2esca_other"><br>
+            <select id="l2issue_select" onchange="$('.l2subtemplates').addClass('hiddenDiv');$('#'+ $(this).val()).removeClass('hiddenDiv')">
+                <option value="" disabled selected>Select Issue</option>
+                <option value="battissues">Battery Issues</option>
+                <option value="mdissues">Motion Detection Issues</option>
+                <option value="substransissues">Subscription Issues (Transactional)</option>
+                <option value="subsfunctissues">Subscription Issues (Functional)</option>
+                <option value="bsissues">Base Station and SmartHub Issues</option>
+                <option value="partnerissues">Partner Integration Issues</option>
+                <option value="iqissues">Image Quality Issues</option>
+                <option value="pnissues">Push Notification Issues</option>
+                <option value="recordingissues">No Recording in the Library Issues</option>
+                <option value="camoffissues">Camera Sync and Camera Offline Issues</option>
+            </select>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+
+<div id="l2subtemplates_div">
+    <div class="l2subtemplates hiddenDiv" id="camoffissues">
+        <h5>Camera Sync and Camera Offline Issues</h5>
+        <ol>
+            <li>Make sure to check if BS/SH is online</li>
+            <li>Camera LED Status</li>
+            <li>How far camera from BS/SH</li>
+            <li>Power cycle camera (Remove battery and reinsert or replace/ check battery polarity) – Y/N</li>
+            <li>Where camera is placed, location of camera and Position (Immediate surroundings, nearby devices)</li>
+            <li>Describe if there are walls, windows, obstacles between camera and base station</li>
+            <li>What is the status of camera in Arlo account (app/web) under camera settings</li>
+            <li>What is the status of camera in CS Diagtool</li>
+            <li>Screenshot of error message showing in Arlo account</li>
+            <li>Approx. time of the issue in PST/CEST</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="recordingissues">
+        <h5>No Recording in Library</h5>
+        <ol>
+            <li>Check and make sure customer has rule scheduled and camera is armed for recording</li>
+            <li>What is the internet speed (Wi-Fi/ LTE)?</li>
+            <li>What Plan does the customer use?
+                <br>Note: if customer is on Basic plan, he will not get any recording for Ultra, Pro3 and Video Doorbell as it requires to purchase the paid plan
+            </li>
+            <li>Check and see if customer uses local storage and he sees recording in there</li>
+            <li>Does the issue occur on admin or friend account?</li>
+            <li>Check and see if the manual recording immediately uploaded to the library?</li>
+            <li>Make sure customer doesn’t have any filter set in library</li>
+            <li>Make sure and check no known issues or check, https://status.arlo.com/</li>
+            <li>Make sure and check other clients (Web/Android/iOS)</li>
+            <li>Screenshots of library</li>
+        </ol>
+        <h5>Recording disappeared/missing from Library</h5>
+        <ol>
+            <li>Check and make sure it is working as expected as per customer’s subscription plan</li>
+            <li>What plan does the customer use?</li>
+            <li>Make sure and check no known issues or check, https://status.arlo.com/</li>
+            <li>Make sure customer doesn’t have any filter set in library</li>
+            <li>Make sure and confirm if customer previously saw the recording in the library</li>
+            <li>Make sure if other people don’t have access to the same Arlo account</li>
+            <li>Make sure friends account with admin rights has not deleted the video from Library</li>
+            <li>Make sure and check other clients (Web/Android/iOS)</li>
+            <li>Screenshots of library</li>
+            <li>Collect the timestamp of the missed/delayed recording</li>
+        </ol>
+        <h5>Delay receiving recording in Library</h5>
+        <ol>
+            <li>What is the internet speed (Wi-Fi/ LTE)?</li>
+            <li>Make sure and check no known issues or check, https://status.arlo.com/</li>
+            <li>Make sure and check other clients (Web/Android/iOS)</li>
+            <li>Screenshots of library</li>
+            <li>Collect the timestamp of the missed/delayed recording</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="pnissues">
+        <h5>Push Notification Issues</h5>
+        <ol>
+            <li>Check if PN are enable in camera modes and armed</li>
+            <li>Check phone settings to see if PN is enabled for Arlo app</li>
+            <li>Check phone power setting mode and see if its disable</li>
+            <li>Check if phone has internet connection (Cellular or Wi-Fi)</li>
+            <li>Log out of the Arlo app and log back in (Do not just minimize the app, but explicitly log out and back in)</li>
+            <li>Attempt to trigger motion and monitor for a push notification
+                <br>(Note: if user receive a push notification at this point, you do not need to proceed to the next step)
+            </li>
+            <li>Toggle push notification off and then back on and repeat the steps 1-4</li>
+            <li>If still doesn’t work, then escalate the case.</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="iqissues">
+        <h5>Image Quality Issues</h5>
+        <ol>
+            <li>Mention where is the Image quality issue, during Live streaming or library recording or local storage</li>
+            <li>Get the sample Image or video recording that shows issue</li>
+            <li>Check local storage video quality under SmartHub – Storage settings – Best Local Recording is enable if user has subscribed for 4k/2k</li>
+            <li>What is the distance between device and BS/SH/router</li>
+            <li>Obstacles between device and BS/SH/router</li>
+            <li>Position of the device (Photo of device positioning will help)</li>
+            <li>Detail network topology; example customer has Sonos, or any other 3rd party devices in the network</li>
+            <li>Check camera/device settings
+                <ol type="a">
+                    <li>Check brightness</li>
+                    <li>Check power management/Video Quality options</li>
+                    <li>Check HDR if enable (Ultra and Pro3)</li>
+                    <li>Check low light setting (Ultra and Pro3)</li>
+                    <li>Check 4K option if applicable</li>
+                    <li>Check video mode</li>
+                </ol>
+            </li>
+            <li>Time Stamp of video recording</li>
+            <li>Get device hardware version under settings - Device settings – Device Info – Hardware</li>
+            <li>Get client(iOS/Android/Web) details</li>
+            <li>Get OS device type</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="partnerissues">
+        <h5>Partner Integration Issues</h5>
+        <ol>
+            <li>Confirm the issue and what are the steps to Reproduce</li>
+            <li>Confirm if the issue can be reproduced on the Arlo App (Live Stream)</li>
+            <li>Rule out authentication issue for Alexa and Google home integration (link and unlink account)
+                <ol type="a">
+                    <li>For Google home check out this KB, <a href="https://www.androidcentral.com/how-link-and-unlink-smart-device-services-google-homeapp">https://www.androidcentral.com/how-link-and-unlink-smart-device-services-google-homeapp</a></li>
+                    <li>For Alexa check out this KB, <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=201749270">https://www.amazon.com/gp/help/customer/display.html?nodeId=201749270</a></li>
+                    <li>For Homekit, check out this KB, <a href="https://kb.arlo.com/000062279/How-do-I-connect-my-Arlo-camera-to-Apple-HomeKit">https://kb.arlo.com/000062279/How-do-I-connect-my-Arlo-camera-to-Apple-HomeKit</a></li>
+                </ol>
+            </li>
+            <li>Latency - request times out: 
+                <ol type="a">
+                    <li>Alexa, google and Homekit time out possible cause</li>
+                    <li>Rule out ISP connectivity issues at the time</a></li>
+                    <li>Add a screenshot of speedtest.net</a></li>
+                </ol>
+            </li>
+            <li>Check configuration
+                <ol type="a">
+                    <li>For Alexa, Ensure Alexa is configured correctly, and the camera name can be recognized: <a href="https://kb.arlo.com/000044726/How-can-I-use-Amazon-devices-with-my-Arlo-cameras">https://kb.arlo.com/000044726/How-can-I-use-Amazon-devices-with-my-Arlo-cameras</a></li>
+                    <li>For Google Home, Add the Arlo device to a Room when live streaming from Google assistant: <a href="https://kb.arlo.com/000055108/How-do-I-connect-my-Arlo-cameras-to-the-GoogleAssistant-app">https://kb.arlo.com/000055108/How-do-I-connect-my-Arlo-cameras-to-the-GoogleAssistant-app</a></li>
+                    <li>For Homekit, follow below KB, <a href="https://kb.arlo.com/000062279/How-do-I-connect-my-Arlo-camera-to-Apple-HomeKit">https://kb.arlo.com/000062279/How-do-I-connect-my-Arlo-camera-to-Apple-HomeKit</a></li>
+                </ol>
+            </li>
+            <li>If issue with Arlo Video/Audio Doorbell announcements ensure to check the configuration is done correctly
+                <ol type="a">
+                    <li> Issue with Alexa, follow below KB, <a href="https://kb.arlo.com/000062192/How-can-I-use-my-Arlo-Doorbell-with-Amazon-Alexa">https://kb.arlo.com/000062192/How-can-I-use-my-Arlo-Doorbell-with-Amazon-Alexa</a></li>
+                </ol>
+            </li>
+            <li>Check configuration
+                <ol type="a">
+                    <li>If issue is related to Motion Announcements please check configuration is done correctly: <a href="https://kb.arlo.com/000062277/How-do-I-trigger-an-Amazon-Alexa-device-when-motion-isdetected-on-my-Arlo-camera">https://kb.arlo.com/000062277/How-do-I-trigger-an-Amazon-Alexa-device-when-motion-isdetected-on-my-Arlo-camera</a></li>
+                </ol>
+            </li>
+            If issue still persist collect below information,
+            <ol>
+                <li>Check and make sure Arlo app is connected to 3rd party app by login into 3rd party app.</li>
+                <li>To isolate the issue, make sure issue doesn’t exist with Arlo app (iOS/Android/Web)</li>
+                <li>Check with L3 to see if there is any known outage</li>
+                <li>Check to see if customer already contacted 3rd party support and if issue persist, collect steps to reproduce the issue</li>
+                <li>Check 3rd party app is updated and collect the current app version customer is on</li>
+            </ol>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="bsissues">
+        <h5>Base Station and SmartHub Issues</h5>
+        <ol>
+            <li>Network Topology: Modem – Router –Switch – Extenders -- devices attached to switch – Arlo Device
+                <br>If extender, how far is extender from router
+            </li>
+            <li>BS/SH LED Status</li>
+            <li>Where BS/SH is placed, Location of base station (Immediate surroundings, nearby devices)</li>
+            <li>Power cycle/Restart the BS/SH – Y/N</li>
+            <li>What is the status of BS/SH in Arlo account (app/web) under mode</li>
+            <li>What is the status of BS/SH in CS Diagtool</li>
+            <li>Screenshot of error message showing in Arlo account</li>
+            <li>Approx. time of the issue in PST/CEST</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="subsfunctissues">
+        <h5>Arlo Smart Features: People/Vehicle/Animal, Rich notification, Package Detection </h5>
+        <ol>
+            <li>Check the Push Notification Template first and if issue still persist follow this guide
+                <ol type="a">
+                    <li><a href="https://kb.arlo.com/1099161/Why-am-I-not-receiving-Arlo-notifications-on-myiOS-device">https://kb.arlo.com/1099161/Why-am-I-not-receiving-Arlo-notifications-on-myiOS-device</a></li>
+                    <li><a href="https://kb.arlo.com/000062235/Why-am-I-not-receiving-Arlo-notifications-onmy-Android-device">https://kb.arlo.com/000062235/Why-am-I-not-receiving-Arlo-notifications-onmy-Android-device</a></li>
+                </ol>
+            </li>
+            <li>Check and make sure customer have Arlo Smart Subscription attached to the account
+                <ol type="a">
+                    <li>May ask for screenshot of subscription</li>
+                    <li>Check CS diagtool for Subscription confirmation</li>
+                </ol>
+            </li>
+            <li>Check and make sure, in Arlo account, under settings -> Smart Notifications, camera is under activate cameras</li>
+            <li>Check and make sure Motion Alerts under Smart Notification are ON for People, Vehicle, Animal and Package</li>
+            <li>Try and check camera position</li>
+            <li>Check Mode settings to make sure camera is set to Armed or Schedule or Custom mode.</li>
+            <li>Ensure below is enabled and Email or PN are enabled
+                <ol type="a">
+                    <li>Motion is Detected</li>
+                </ol>
+            </li>
+        </ol>
+        <h5>Cloud Activity zone</h5>
+        <ol>
+            <li>Check and make sure customer have Arlo Smart Subscription attached to the account
+                <ol type="a">
+                    <li>May ask for screenshot of subscription</li>
+                    <li>Check CS diagtool for Subscription confirmation</li>
+                </ol>
+            </li>
+            <li>Check and make sure Auto Zoom & Tracking if off under Video Settings</li>
+            <li>Make sure customer set Video mode first (Super Wide, Wide, Full) and then create activity zone</li>
+            <li>Try and check camera position</li>
+            <li>Check how many activity zone customers has, 
+                <ol type="a">
+                    <li>Pro3 and Ultra has 5 activity zone limits</li>
+                </ol>
+            </li>
+            <li>Get the screenshot of the activity zone and sample recording</li>
+        </ol>
+        <h5>Alarm Detection</h5>
+        <ol>
+            <li>Follow Alarm Detection call handler first and if issue still persist follow this template <a href="https://arlo.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtb0QifSwic3RhdGUiOnsid3MiOiIvbGlnaHRuaW5nL3IvTmV0Z2Vhcl9fa2F2L2thMTB6MDAwMDAwWGVlaUFBQy92aWV3In19">Alarm Detection Call Handler</a></li>
+            <li>Check and make sure customer have Arlo Smart Subscription attached to the account
+                <ol type="a">
+                    <li>May ask for screenshot of subscription</li>
+                    <li>Check CS diagtool for Subscription confirmation</li>
+                </ol>
+            </li>
+            <li>Check and make sure, in Arlo account, under settings -> Smart Notifications, camera is under activate cameras</li>
+            <li>Check and make sure Audio Alerts under Smart Notification are ON for Smoke/CO Alarm</li>
+            <li>Check Mode settings to make sure camera is set to Armed, Disarmed and Schedule.</li>
+            <li>Ensure below is enabled and Email or PN are enabled
+                <ol type="a">
+                    <li>Audio is Detected</li>
+                </ol>
+            </li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+            <li>HAR Logs</li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="substransissues">
+        <h5>Subscription Issue (Transactional):</h5>
+        If customer unable to purchase, upgrade, downgrade or cancel plans,
+        <ol>
+            <li>Check with L3 team for any known issue or outage we may have</li>
+            <li>Check the steps customer trying</li>
+            <li>Ask customer to try different client (Android or Web)</li>
+            <li>Collect the screenshot of the error message
+                <ol type="a">
+                    <li>e.g. "The request's content is invalid", “Error: 14016. Please try again now”, “Error: we are sorry we are unable to change the plan", etc.)</li>
+                </ol>
+            </li>
+            <li>Check the Diagtool for subscription status</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>HAR Logs</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="mdissues">
+        <h5>Motion Detection Issues</h5>
+        <ol>
+            <li>Indicate which camera/devices are affected (Collect the serial number of affected device)</li>
+            <li>Is motion detection enabled and armed within the Arlo application? (Attached screenshot from CS Diagtool for Default mode config)</li>
+            <li>Screenshot of custom mode and schedules from arlo account</li>
+            <li>Are cameras pointed out of a window or through glass (especially troublesome for wire-free cameras/PIR devices)?</li>
+            <li>Gather information on camera location (distance from BS/SH, obstacles, indoors/outdoors)</li>
+            <li>Gather information on camera mounting (height, angle, indoors/outdoors, etc.) If possible, get the picture of camera mount</li>
+            <li>Indicate if the issue only happens at a specific time of the day.</li>
+            <li>Capture a screenshot of what the camera sees (camera view) when the issue is occurring. (Indicate where the motion is expected)</li>
+            <li>Get Sample recording from library</li>
+            <li>Screenshot of the activity zone</li>
+            <li>For Intermittent motion detection issue check the RSSI from logs and provide your feedback in the case notes </li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+    <div class="l2subtemplates hiddenDiv" id="battissues">
+        <h5>Battery doesn’t charge</h5>
+        <ol>
+            <li>Make sure customer uses correct power adapter and cable that came with the box (Pro/Pro2: Quick charger 9V, Ultra: Regular charger 5V)</li>
+            <li>For Battery doesn’t charge, ask customer to use different power outlet</li>
+            <li>Ask customer to try and swap batteries with working camera</li>
+            <li>Check the camera inside if it has physical damage (check flex cable inside camera)</li>
+            <li>Check camera connectors (Charging port) for debris and corrosion</li>
+            <li>Check the USB end connected to power adapter plugged in correctly</li>
+            <li>Check battery polarity and remove – reinsert battery</li>
+            <li>What type and what brand battery customer using (Applies to Gen3 camera only)</li>
+            <li>If issue still occurs, create RMA based on the step 3. (If issue with battery create Battery RMA, if
+        issue with camera create Camera RMA)</li>
+            <li>Include all the above troubleshooting in case notes and escalate</li>
+        </ol>
+        <h5>Battery Drain</h5>
+        <ol>
+            <li>Swap camera and battery and see if issue fixes to rule out issue with battery or camera</li>
+            <li>Try changing camera location with working camera which doesn’t have issue</li>
+            <li>Check battery dashboard/ StatMiner
+                <ol type="a">
+                    <li>Check manual streaming</li>
+                    <li>Check triggered streaming</li>
+                    <li>Check RSSI</li>
+                    <li>Check total amount of streaming</li>
+                    <li>Check how noisy environment (Wi-Fi Scan results)</li>
+                </ol>
+            </li>
+            <li>Check camera settings
+                <ol type="a">
+                    <li>Check sensitivity level</li>
+                    <li>Check length of recording</li>
+                    <li>Check power management settings is set to best battery life</li>
+                    <li>Check spotlight, color, behavior, brightness, night vision is affecting battery life</li>
+                </ol>
+            </li>
+            <li>Check how far camera from BS/SH</li>
+            <li>Check any obstacles between camera and BS/SH</li>
+            <li>Check home environment and network topology and other smart devices are on 2.4 affecting</li>
+            <li>List of wireless devices customers has (Any new devices added to home, like printer, etc.)</li>
+            <li>When did issue started, any specific time frame, after new firmware update, etc.</li>
+            <li>Check how often customer live streaming</li>
+        </ol>
+        <h5>Battery DoA (Dead on Arrival)</h5>
+        <ol>
+            <li>Make sure customer uses correct power adapter and cable that came with the box to charge battery (Pro/Pro2: Quick charger 9V, Ultra: Regular charger 5V)</li>
+            <li>Ask customer to use different power outlet</li>
+            <li>Swap camera and battery and see if issue fixes to rule out issue with battery or camera</li>
+            <li>Issue RMA for battery/Camera and escalate the case to L3 with details</li>
+        </ol>
+        <h5>Collect Logs</h5>
+        <ol>
+            <li>BS logs from CS Diagtool (For BS/SH offline, collect the logs once devices are back online and attach to the case)</li>
+            <li>Client logs from app
+                <ol type="a">
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMFhjeEQifSwic3RhdGUiOnt9fQ%3D%3D">iOS: How to collect Arlo iOS app logs (INTERNAL)</a></li>
+                    <li><a href="https://arlo.lightning.force.com/one/one.app?source=alohaHeader#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly9hcmxvLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC9OR19QcmV2aWV3UEtCQXJ0aWNsZT9wb3B1cD10cnVlJnB1YnN0YXR1cz1vJnByZXZpZXc9dHJ1ZSZpZD1rQTEwejAwMDAwMGJtcHUifSwic3RhdGUiOnt9fQ%3D%3D">Android: How to collect Arlo Android app logs (INTERNAL)</a></li>
+                </ol>
+            </li>
+        </ol> 
+    </div>
+
+</div>
+<br><br>

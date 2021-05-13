@@ -1,0 +1,181 @@
+<html>
+<head>
+
+    <title>Survey Results</title>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/misc.js"></script>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    
+    <link rel="stylesheet" href="/assets/css/chat.css">
+    <link rel="stylesheet" href="/assets/css/dropdown.css">
+    <link rel="stylesheet" href="/assets/css/index.css">
+    <script>
+        var html,multsel;
+        getDataRecord('/api/engage/getresults/1',function(surveycnx){
+            console.log(surveycnx);
+            surveycnx.forEach(function (survey){
+                var answers=JSON.parse(survey.surveyresults_answers);
+                console.log(answers);
+                q1ans=answers.q1.split('%##%');
+                q2ans=answers.q2.split('%##%');
+                q3ans=answers.q3.split('%##%');
+                console.log(q1ans);
+                console.log(q2ans);
+
+
+                html="<tr>";
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+q1ans[0]+"</td>"
+                html+="</tr>";
+                $('#s1q1>tbody').append(html)
+
+                html="<tr>";
+                multsel=q1ans[1].split("%#%");
+                multsel.splice(multsel.length-1,1);
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+(multsel[0]==undefined?"":multsel[0])+"</td><td rowspan="+(multsel.length==0?1:multsel.length)+">"+q1ans[2]+"</td></tr>"
+                multsel.splice(0,1);
+                multsel.forEach(function(value){
+                    html+="<tr><td>"+survey.type+"</td><td>"+value+"</td></tr>"
+                })
+                $('#s1q2>tbody').append(html)
+
+                html="<tr>";
+                multsel=q1ans[3].split("%#%");
+                multsel.splice(multsel.length-1,1);
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+(multsel[0]==undefined?"":multsel[0])+"</td><td rowspan="+(multsel.length==0?1:multsel.length)+">"+q1ans[4]+"</td></tr>"
+                multsel.splice(0,1);
+                multsel.forEach(function(value){
+                    html+="<tr><td>"+survey.type+"</td><td>"+value+"</td></tr>"
+                })
+                $('#s1q3>tbody').append(html)
+
+
+                html="<tr>";
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+q2ans[0]+"</td>"
+                html+="</tr>";
+                $('#s2q1>tbody').append(html)
+
+                html="<tr>";
+                multsel=q2ans[1].split("%#%");
+                multsel.splice(multsel.length-1,1);
+                html+="<td>"+survey.type+"</td>"
+                console.log(multsel.length)
+                html+="<td>"+(multsel[0]==undefined?"":multsel[0])+"</td><td rowspan="+(multsel.length==0?1:multsel.length)+">"+q2ans[2]+"</td></tr>"
+                multsel.splice(0,1);
+                multsel.forEach(function(value){
+                    html+="<tr><td>"+survey.type+"</td><td>"+value+"</td></tr>"
+                })
+                $('#s2q2>tbody').append(html)
+
+                html="<tr>";
+                multsel=q2ans[3].split("%#%");
+                multsel.splice(multsel.length-1,1);
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+(multsel[0]==undefined?"":multsel[0])+"</td><td rowspan="+(multsel.length==0?1:multsel.length)+">"+q2ans[4]+"</td></tr>"
+                multsel.splice(0,1);
+                multsel.forEach(function(value){
+                    html+="<tr><td>"+survey.type+"</td><td>"+value+"</td></tr>"
+                })
+                $('#s2q3>tbody').append(html)
+
+
+                html="<tr>";
+                multsel=q3ans[0].split("%#%");
+                multsel.splice(multsel.length-1,1);
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+(multsel[0]==undefined?"":multsel[0])+"</td><td rowspan="+(multsel.length==0?1:multsel.length)+">"+q3ans[1]+"</td></tr>"
+                multsel.splice(0,1);
+                multsel.forEach(function(value){
+                    html+="<tr><td>"+survey.type+"</td><td>"+value+"</td></tr>"
+                })
+                $('#s3q1>tbody').append(html)
+
+                html="<tr>";
+                multsel=q3ans[2].split("%#%");
+                multsel.splice(multsel.length-1,1);
+                console.log(multsel);
+                html+="<td>"+survey.type+"</td>"
+                html+="<td>"+(multsel[0]==undefined?"":multsel[0])+"</td><td rowspan="+(multsel.length==0?1:multsel.length)+">"+q3ans[3]+"</td></tr>"
+                multsel.splice(0,1);
+                multsel.forEach(function(value){
+                    html+="<tr><td>"+survey.type+"</td><td>"+value+"</td></tr>"
+                })
+                $('#s3q2>tbody').append(html);
+            });
+        })
+    </script>
+    <style>
+        table{
+            width:852px;
+            border-collapse: collapse;
+            margin-bottom:20px;
+        }
+        
+    </style>
+</head>
+    
+<body>
+    <h5>Results</h5>
+    <table id="s1q1">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">On average, how often do you get RMA cases in a day?</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s1q2">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">What difficulties do you encounter for RMA initiation? (multiple select)</th><th width="200px">Specifics</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s1q3">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">What changes do you recommend for the RMA process? (multiple select)</th><th width="200px">Specifics</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s2q1">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">On average, how often do you get Video Doorbell cases in a day?</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s2q2">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">What difficulties do you encounter when handling a video doorbell call? (multiple select)</th><th width="200px">Specifics</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s2q3">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">What do you recommend for increasing the capability of experts in handling video doorbell cases? (multiple select)</th><th width="200px">Specifics</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s3q1">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">What difficulties do you encounter when using the Diag Tool? (multiple select)</th><th width="200px">Specifics</th>
+            </tr>
+        </theader>
+    </table>
+    <table id="s3q2">
+        <theader>
+            <tr>
+                <th width="150px">LOB</th><th width="500px">What improvements do you recommend to increase efficiency when using Diag Tool? (multiple select)</th><th width="200px">Specifics</th>
+            </tr>
+        </theader>
+    </table>
+    
+</body>
+
+</html>

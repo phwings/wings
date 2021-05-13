@@ -1,0 +1,58 @@
+
+<!-- ui -->
+<h4 style="font-family:Verdana;">Base Station Log Reader v2.01b</h4>
+
+	<input id="inputTarFileToLoad" type="file" onchange="$('.hiddenClass').css('display','none');$('#arlobird').css('display','block');inputTarFileToLoad_Change(event);"/>
+	<br><br />
+	<div id="arlobird" style="text-align:center;width:100%;color:#009846;font-family:Verdana;"><img width="100px" src="/assets/img/arlobird.gif"><br><b>Please wait, fetching details...</b></div>
+	<div><span class="lastLog hiddenClass"><b>Last Log Entry Date/Time : </b></span> <span class="hiddenClass" id="lastLogDate"> </span></div>
+	<div class="BS_details hiddenClass">
+	<h5>Base Station Details</h5>
+	<!--<select id="VMBtype">
+		<option value="3010">VMB3010</option>
+		<option value="3500">VMB3500</option>
+		<option value="4000">VMB4000</option>
+		<option value="4500">VMB4500</option>
+	</select>-->
+	<table class="table_parser">
+		<tr>
+			<th style="text-align:right">Type : </th><td style="text-align:left"><span id="VMBtypename"></span></td>
+		</tr>
+		<tr>
+			<th style="text-align:right">Serial Number : </th><td style="text-align:left"><span id="VMBserial"></span></td>
+		</tr>
+		<tr>
+			<th style="text-align:right">FW Version : </th><td style="text-align:left"><span id="VMBfw"></span></td>
+		</tr>
+		<tr>
+			<th style="text-align:right">Channel : </th><td style="text-align:left"><span id="VMBchannel"></span></td>
+		</tr>
+	</table>
+	</div>
+	
+	<h5 class="hiddenClass">Search Logs</h5>
+<div class="hiddenClass" style="font-family: monospace;">Search string must be greater than two characters.</div>
+<div class="search_string hiddenClass" style="font-family: monospace;">
+	Search string:<input id="searchString" type="text"></input><button onclick="$('#searchResults').val(searchString($('#searchString').val()));">Search</button><br>
+	Results:<br>
+	<textarea id="searchResults" wrap="soft" rows="10" style="white-space: nowrap;overflow:auto;resize:vertical; width:100%"></textarea>
+</div>
+<div class="row">
+<div class="other_devices hiddenClass column" style="width:45%">
+	<h5>Wifi Device Detected</h5>
+	<div id="wifi_SSID"></div>
+	<div id="vdb_details"></div>
+</div>
+<div class="column hiddenClass" style="width:53%;float:right">
+	<h5>System Configuration</h5>
+	<div style="font-family: monospace;">
+	Base Station Configuration:
+	<span id="bsconfig-json"></span><br>
+	Mode Configuration:
+	<span id="mode-json"></span><br>
+	Entitlement Configuration:
+	<span id="entitlement-json"></span>
+	</div>
+</div>
+</div>
+<br><br>

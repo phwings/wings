@@ -111,6 +111,19 @@
 			<button onclick="saveComment($('#submit_comment').val());$('#submit_comment').val('');document.getElementById('modal_comment').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_comment').val('');">Clear</button>
 		</div>
 	</div>
+
+	<div id="modal_loyalty" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="$('#modal_loyalty').css('display','none');">&times;</span>
+			<p>Case number: <input id="loyalty_cn" type="text"></p>
+			<p>Email Address: <input id="loyalty_email" type="text"></p>
+			<p>Notes:</p>
+			<textarea id="loyalty_notes" cols="100" rows="10" style="width:100%"></textarea><br><br>
+			<p>Loyalty Promod Code: <input id="loyalty_code" type="text"></p>
+			<span>Email address alread provided with </span><span id="loyalty_prev"></span><span>. Do you want to provide another?</span>
+			<button onclick="saveComment($('#submit_comment').val());$('#submit_comment').val('');document.getElementById('modal_comment').style.display = 'none';">Submit</button>&nbsp;&nbsp;&nbsp;<button onclick="$('#submit_comment').val('');">Clear</button>
+		</div>
+	</div>
 	
 	<div id="modal_question" class="modal">
 		<div class="modal-content">

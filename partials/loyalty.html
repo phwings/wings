@@ -1,0 +1,175 @@
+<div class="hiddenDiv" id="loadloyaltyscript">
+	var d = new Date();
+	$("#loyalty_date1").datepicker({minDate:new Date(2020,10,01), maxDate:maxDate});
+	$("#loyalty_date2").datepicker({minDate:new Date(2020,10,01), maxDate:maxDate});
+
+	$("#loyalty_date1").datepicker("setDate", new Date(d.getFullYear(),d.getMonth(),1));
+	$("#loyalty_date2").datepicker("setDate", Date.now());
+	$("#loyalty_date1").datepicker("option", "dateFormat", "yy-mm-dd");
+	$("#loyalty_date2").datepicker("option", "dateFormat", "yy-mm-dd");
+	updateLoyaltyReport();
+
+	$.ajax({
+		url : '/api/loyalty/codesleft',
+		type:'GET',
+		success: function (data) {
+			$('#OOW').html(data.data.OOW);
+			$('#IW').html(data.data.IW);	
+		}
+	});
+
+
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+	//console.log(coll)
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			this.firstElementChild.firstElementChild.classList.toggle("down");
+			content.classList.toggle("hiddenDiv");
+		});
+	}
+</div>
+
+<h5>Loyalty Code Report</h5>
+<div class="loyalty_div_table loyalty_div" id="loyalty_div_table">
+	<div class="row">
+		<div class="column" style="width:180px">
+			Start Date: <br><input type="text" id="loyalty_date1" onchange="$('#loyalty_date2').datepicker('option','minDate',new Date($('#loyalty_date1').val()));if(($('#loyalty_date2').val()!='')&&($('#loyalty_date1').val()!='')){updateLoyaltyReport()}">
+		</div>
+		<div class="column" style="width:180px">
+			End Date: <br><input type="text" id="loyalty_date2" onchange="$('#loyalty_date1').datepicker('option','maxDate',new Date($('#loyalty_date2').val()));if(($('#loyalty_date2').val()!='')&&($('#loyalty_date1').val()!='')){updateLoyaltyReport()}">
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="column" style="width:45%">
+			<h5>Usage</h5>
+			<table id="loyalty_center_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+				<thead>
+					<tr>
+						<td></td>
+						<th>Out of Warranty</td>
+						<th>In Warranty</td>
+					</tr>
+				</thead>
+				<tbody style="text-align: right;font-family: 'Courier New', Courier, monospace;">
+					<tr>
+						<th>CNX</th>
+						<td id="CNX_OOW"></td>
+						<td id="CNX_IW"></td>
+					</tr>
+					<tr>
+						<th>IOPEX</th>
+						<td id="IOPEX_OOW"></td>
+						<td id="IOPEX_IW"></td>
+					</tr>
+					<tr>
+						<th>CCT</th>
+						<td id="CCT_OOW"></td>
+						<td id="CCT_IW"></td>
+					</tr>
+					<tr>
+						<th>Total</th>
+						<td id="TOTAL_OOW"></td>
+						<td id="TOTAL_IW"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="column" style="width:10%">
+			&nbsp;
+		</div>
+		<div class="column" style="width:45%">
+			<h5>Unused Promo Code</h5>
+			<table id="loyalty_warranty_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+				<thead>
+					<tr>
+						<td></td>
+						<th>Codes Left</th>
+					</tr>
+				</thead>
+				<tbody style="text-align: right;font-family: 'Courier New', Courier, monospace;">
+					<tr>
+						<th>Out of Warranty</th>
+						<td id="OOW"></td>
+					</tr>
+					<tr>
+						<th>In Warranty</th>
+						<td id="IW"></td>
+					</tr>
+		
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br><br>
+
+	<div type="button" class="collapsible" id="loyalty_detail_collapse">
+		<h5>
+			<span class="loyalty_details_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+			&nbsp;&nbsp;&nbsp;Details
+		</h5>
+	</div>
+	<div class="loyalty_div_details loyalty_div hiddenDiv" id="loyalty_details">
+		<button id="saveasloyaltydetailsxlsbutton" onclick="exportTableToExcel('loyalty_center_detail_table','')">Save as XLS</button>&nbsp;&nbsp;&nbsp;<input style="width:300px" type="search" id="loyalty_detail_filter" placeholder="Search" title="Type in anything" style="width:100%" oninput="filter('loyalty_center_detail_table','loyalty_detail_filter')"></input><br>
+		<table id="loyalty_center_detail_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+			<thead>
+				<tr style="text-align:center">
+					<th>Date</th>
+					<th>Center</th>
+					<th>Expert</th>
+					<th>Warranty</th>
+					<th>Code</th>
+					<th>Case Number</th>
+					<th>Asset</th>
+					<th>Serial</th>
+					<th>Symptom</th>
+					<th>Email</th>
+					<th>Note</th>
+				</tr>
+			</thead>
+			<tbody id="loyalty_center_detail_body" style="text-align: right;font-family: 'Courier New', Courier, monospace;">
+			
+			</tbody>
+		</table>
+	</div>
+	<br><br>
+	<div type="button" class="collapsible" id="loyalty_duplicate_collapse">
+		<h5>
+			<span class="loyalty_duplicates_hide" style="border: solid white;	border-width: 0 3px 3px 0; display: inline-block; padding: 3px;transform: rotate(45deg); -webkit-transform: rotate(45deg);"></span>
+			&nbsp;&nbsp;&nbsp;Duplicates
+		</h5>
+	</div>
+	<div class="loyalty_div_duplicates loyalty_div hiddenDiv" id="loyalty_duplicates">
+		<button id="saveasloyaltyduplicatesxlsbutton" onclick="exportTableToExcel('loyalty_center_duplicates_table','')">Save as XLS</button>&nbsp;&nbsp;&nbsp;<input style="width:300px" type="search" id="loyalty_duplicate_filter" placeholder="Search" title="Type in anything" style="width:100%" oninput="filter('loyalty_center_duplicates_table','loyalty_duplicate_filter')"></input><br>
+		<table id="loyalty_center_duplicates_table" style="border-collapse:collapse;font-size:12px;vertical-align: top;">
+			<thead>
+				<tr style="text-align:center">
+					<th>Email</th>
+					<th>Code</th>
+					<th>Date</th>
+					<th>Center</th>
+					<th>Expert</th>
+					<th>Warranty</th>
+					<th>Case Number</th>
+					<th>Asset</th>
+					<th>Serial</th>
+					<th>Symptom</th>
+					<th>Note</th>
+				</tr>
+			</thead>
+			<tbody id="loyalty_center_duplicate_body" style="text-align: right;font-family: 'Courier New', Courier, monospace;">
+				
+			</tbody>
+		</table>
+	</div>
+	
+<br><br>
+	
+	
+		
+</div>
+
+

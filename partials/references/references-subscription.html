@@ -1,0 +1,151 @@
+<div class="hiddenDiv" id="loadref-subscriptionscript">$('#faq_subscription').load('/partials/references/FAQ-subscription.html');</div>
+
+<h4>New Service Plan Information</h4>
+<br>
+<h5>Important Notes</h5>
+<p>Premium Video Recording will no longer be available. Continuous Video Recording plans are still available.</p>
+<p>If customer has 5 legacy cameras under basic account and wanted to add more cameras, customer will be required to purchase a multi – camera plan and then single – camera plan for each add on cameras.</p>
+<p>If customer has 5 legacy cameras under basic account  and wanted to add Arlo video doorbell Arlo Pro 3, customer does not need to purchase Multi-camera plan. Customer can add the AVD or Pro 3 using the free plan or purchase a single–camera plan once free plan expires.</p>
+
+<h5>Best Deal Calculator</h5>
+Select Country: <select id="ref-subscription_country">
+	<!--<option value='USD' disabled selected>Select Country</option>-->
+	<option value='USD'>USA</option>
+	<option value='CAD'>Canada</option>
+	<option value='EUR'>Europe</option>
+	<option value='GBP'>UK</option>
+	<option value='AUD'>Australia</option>
+	<option value='DKK'>Denmark</option>
+	<option value='SEK'>Sweden</option>
+	<option value='CHF'>Swiss</option>
+	<option value='CZK'>Czech</option>
+	<option value='PLN'>Poland</option>
+	<option value='NZD'>New Zealand</option>
+	<option value='NOK'>Norway</option>
+	<option value='HUF'>Hungary</option>
+	<option value='HKD'>Hong Kong</option>
+	<option value='JPY'>Japan</option>
+	<option value='ZAR'>South Africa</option>
+	<option value='SGD'>Singapore</option>
+</select>
+<br><br>
+<input type="radio" name="plan" value="premier" checked>Premier &nbsp;<input type="radio" name="plan" value="elite">Elite<br><br>
+Number of Cameras: <input id="ref-subscription_price_calc" size="3" type="text" value='0'/>
+<button onclick="priceCalc($('#ref-subscription_price_calc').val(),$('input[name=plan]:checked').val(),'ref-subscription_price',$('#ref-subscription_country').val())">Calculate</button>
+<br><br>
+<div id="ref-subscription_price" style="width:400px;text-align:right;"></div>
+
+
+<h5>Plan Comparison</h5>
+<table style="border-collapse:collapse!important;" class="table_ref_subscription">
+	<tr class="TS_row">
+		<th></th>
+		<th>No Subscription</th>
+		<th>Arlo Smart Premier</th>
+		<th>Arlo Smart Elite</th>
+	</tr>
+	<tr>
+		<td>Price</td>
+		<td>No Cost</td>
+		<td><b>$2.99/mo</b> - 1 cam<br><b>$9.99/mo</b> - 5 cams</td>
+		<td><b>$4.99/mo</b> - 1 cam<br><b>$14.99/mo</b> - 5 cams</td>
+	</tr>
+	<tr>
+		<td>Notifications</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td>Rich, Interactive</td>
+		<td>Rich, Interactive</td>
+	</tr>
+	<tr>
+		<td>Live Viewing</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>2-Way Audio</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>Local Storage</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>Cloud Storage</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"><br>Up to <b>2K resolution</b><br>30 day video history</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"><br>Up to <b>4K resolution</b><br>30 day video history</td>
+	</tr>
+	<tr>
+		<td>Activity Zones</td>
+		<td>Select models when connected to AC power</td>
+		<td>All cameras, even on battery power</td>
+		<td>All cameras, even on battery power</td>
+	</tr>
+	<tr>
+		<td>Face Recognition</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>Person Detection</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>Animal Detection</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>Vehicle Detection</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>Package Detection</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"> (1 camera per account)</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"> (1 camera per account)</td>
+	</tr>
+	<tr>
+		<td>Smoke Alarm Detection</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>CO Alarm Detection</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+	<tr>
+		<td>e911</td>
+		<td><img src="/assets/img/no-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"> (Multi-cam plan US only)</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"> (Multi-cam plan US only</td>
+	</tr>
+	<tr>
+		<td>Partner Integration</td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+		<td><img src="/assets/img/yes-icon.png" style="max-height:15px;max-width:auto;object-fit:contain"></td>
+	</tr>
+</table>
+
+<h5>Frequently Asked Questions</h5>
+<div id="faq_subscription"></div>
+<br><br>
+<br><br>
+
+
+	

@@ -1,0 +1,12 @@
+<div class="dropdown" id="performance">
+    <button class="dropbtn" onmouseout="hideMenu('performancesub')" onmouseover="drop('performancesub')">Performance <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content" id="performancesub" onmouseover="drop('performancesub')" onmouseout="hideMenu('performancesub')">
+        <a href="#" onclick="loadExternal('/partials/performance/metrics','loadMetricsscript');">Metrics</a>
+        <a href="#" onclick="loadExternal('/partials/performance/top','loadTopscript');">Top Performers</a>
+        <a href="#" onclick="loadExternal('/partials/performance/commendations','loadCommendationsscript');">Commendations</a>
+        <a href="#" onclick="loadExternal('/partials/performance/qa','loadQAscript');">QA Scores</a>
+        <a href="#" onclick="openSite('https://arloqa.iopex.com/',0)">QA Portal</a>
+        <a href="#" onclick="loadExternal('/partials/performance/vl','loadVLscript');">VL Schedule</a>
+    </div>
+</div>

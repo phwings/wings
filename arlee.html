@@ -40,7 +40,7 @@
             if(ces=='ntrstm'){
                 localStorage.setItem('valid','false');
             }
-            var test=localStorage.getItem('valid');
+            var test='true';//localStorage.getItem('valid');
             if(test=='true'){
                 $.get('/api/users/CES/'+ces+'/&',function(userdata){
                     

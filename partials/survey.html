@@ -1,0 +1,241 @@
+<div class="hiddenDiv" id="surveyScript">
+    var unseensurvey_num=-1;
+    var unseensurveyDiv_array=[]
+    var dateNow = new Date(Date.now())
+    getDataRecord('/api/survey/get/'+userCES,function(survey){
+        console.log(survey);
+        var survey_array = survey.map(function (el) { return el.surveyresults_survey; });
+        console.log(survey_array);
+        var nowDate= new Date();
+        var surveyDiv_array=$('.survey_question');
+        surveyDiv_array.each(element => {
+            var expiry=new Date(surveyDiv_array.eq(element).data('expiry'));
+            console.log(surveyDiv_array.eq(element).data('id'));
+            //if(!survey_array.includes(surveyDiv_array.eq(element).data('id'))){
+            if(!survey_array.includes(1)){
+                surveyDiv_array.eq(element).addClass('unseen');
+                $('#unseensurvey_list').append(surveyDiv_array.eq(element))
+            }
+        })
+        unseensurveyDiv_array=$('.survey_question.unseen');
+        console.log(unseensurveyDiv_array);
+        if(unseensurveyDiv_array.length>0){
+            $('#modal_survey').css('display','block');
+            unseensurveyDiv_array.eq(0).removeClass('hiddenDiv');
+            unseensurvey_num=0;
+        }else{
+            //eval($('#noticeScript').text())
+        }
+    })
+
+    function getNextSurvey(){
+        var surveyComplete=true;
+
+        if($("input[name='q1']:checked").val()==undefined){
+            $("input[name='q1']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q1']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("input[name='q2']:checked").val()==undefined){
+            $("input[name='q2']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q2']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("#q3").val()==""){
+            $("#q3").parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("#q3").parent().css("background-color","#ffffff");
+        }
+
+        if($("input[name='q4']:checked").val()==undefined){
+            $("input[name='q4']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q4']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("input[name='q5']:checked").val()==undefined){
+            $("input[name='q5']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q5']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("#q6").val()==""){
+            $("#q6").parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("#q6").parent().css("background-color","#ffffff");
+        }
+
+        if($("input[name='q7']:checked").val()==undefined){
+            $("input[name='q7']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q7']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("input[name='q8']:checked").val()==undefined){
+            $("input[name='q8']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q8']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("input[name='q9']:checked").val()==undefined){
+            $("input[name='q9']").parent().parent().parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("input[name='q9']").parent().parent().parent().css("background-color","#ffffff");
+        }
+
+        if($("#q10").val()==""){
+            $("#q10").parent().css("background-color","#ff9494");
+            surveyComplete=false;
+        }else{
+            $("#q10").parent().css("background-color","#ffffff");
+        }
+
+        if(!surveyComplete){
+            $("#survey_error").removeClass("hiddenDiv");
+        }else{
+            var answers={
+                q1:$("input[name='q1']:checked").val(),
+                q2:$("input[name='q2']:checked").val(),
+                q3:$("#q3").val(),
+                q4:$("input[name='q4']:checked").val(),
+                q5:$("input[name='q5']:checked").val(),
+                q6:$("#q6").val(),
+                q7:$("input[name='q7']:checked").val(),
+                q8:$("input[name='q8']:checked").val(),
+                q9:$("input[name='q9']:checked").val(),
+                q10:$("#q10").val()
+            }
+            data={
+                id:unseensurveyDiv_array.eq(unseensurvey_num).data('id'),
+                ces:userCES,
+                //datetime:dateNow.toISOString().replace(/T/g," ").replace(/Z/g,""),
+                datetime:dateNow.getFullYear()+"-"+(dateNow.getMonth()+1)+"-"+dateNow.getDate()+" "+dateNow.getHours()+":"+dateNow.getMinutes()+":"+dateNow.getSeconds(),
+                answers:JSON.stringify(answers)
+            }
+            console.log(data);
+            $.ajax({
+                type:"POST",
+                url:"/api/surveys/add" ,
+                data:JSON.stringify(data),
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                //dataType:"json",
+                success:function(data){
+                    unseensurveyDiv_array.eq(unseensurvey_num).addClass('hiddenDiv');
+                    unseensurvey_num++;
+                    if(unseensurvey_num < unseensurveyDiv_array.length-1){
+                        unseensurveyDiv_array.eq(unseensurvey_num).removeClass('hiddenDiv')
+                    } else {
+                        $('#modal_survey').addClass('hiddenDiv');
+                        console.log($('#noticeScript').text());
+                        //eval($('#noticeScript').text())
+                        //console.log('hide')
+                    }
+                    //console.log(unseensurvey_num);
+                    //console.log(unseensurveyDiv_array.length);
+                },
+                error:function(error){
+                }
+            }); 
+        }
+    }
+</div>
+
+<div id="modal_survey" class="modal" style="z-index:200;overflow:scroll-y;background-color:rgba(0,0,0,0.8);border:0px">
+    <div class="modal-content" style="margin-left:10px;margin-top:10px;min-height:600px;width:90%;background-color:rgba(255,255,255,1);border:0px">
+        <div id="unseensurvey_list">
+        </div>
+    </div>
+</div>
+<div id="survey_list" class="hiddenDiv" >
+    <div class="survey_question" data-id="1" data-expiry="01/01/2060">
+        <div id="survey_heading">
+            <h2>Geofencing Survey</h2>
+            <br>
+            Main purpose of this survey is to gather feedback to help us improve and assist you in guiding our customers when it comes to Geofencing feature. The data collected will be strictly confidential and will not impact your performance so please answer honestly. Thank you!
+            <br><br>
+            <span style="font-weight:bold;color:red">Note: All fields are required to be filled out.</span>
+        </div>
+        <ol type="1">
+            <li>Are you familiar with Geofencing feature?
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q1" name="q1" value="Yes">Yes</li>
+                    <li><input class="radio_survey" type="radio" id="q1" name="q1" value="No">No</li>
+                    <li><input class="radio_survey" type="radio" id="q1" name="q1" value="Somewhat familiar">Somewhat familiar</li>
+                    <li><input class="radio_survey" type="radio" id="q1" name="q1" value="Not familiar at all">Not familiar at all</li>
+                </ol>
+            </li>
+            <li>How frequent are you receiving a Geofencing call in a week?
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q2" name="q2" value="1-2">1-2</li>
+                    <li><input class="radio_survey" type="radio" id="q2" name="q2" value="3-4">3-4</li>
+                    <li><input class="radio_survey" type="radio" id="q2" name="q2" value="5 or more">5 or more</li>
+                    <li><input class="radio_survey" type="radio" id="q2" name="q2" value="I have not received a single Geofencing call/case">I have not received a single Geofencing call/case</li>
+                </ol>
+            </li>
+            <li>What kind of Geofencing issue/inquiry have you received?<br>
+                <textarea id="q3"></textarea>
+            </li>
+            <li>Rate your Geofencing knowledge.
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q4" name="q4" value="Excellent">Excellent</li>
+                    <li><input class="radio_survey" type="radio" id="q4" name="q4" value="Good">Good</li>
+                    <li><input class="radio_survey" type="radio" id="q4" name="q4" value="Fair">Fair</li>
+                    <li><input class="radio_survey" type="radio" id="q4" name="q4" value="Poor">Poor</li>
+                </ol>
+            </li>
+            <li>Geofencing KB articles are adequate to troubleshoot and resolve a case.
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q5" name="q5" value="Agree">Agree</li>
+                    <li><input class="radio_survey" type="radio" id="q5" name="q5" value="Somewhat agree">Somewhat agree</li>
+                    <li><input class="radio_survey" type="radio" id="q5" name="q5" value="Undecided">Undecided</li>
+                    <li><input class="radio_survey" type="radio" id="q5" name="q5" value="Somewhat disagree">Somewhat disagree</li>
+                    <li><input class="radio_survey" type="radio" id="q5" name="q5" value="Disagree">Disagree</li>
+                </ol>
+            </li>
+            <li>List down some known Geofencing issues you are aware of.<br>
+                <textarea id="q6"></textarea>
+            </li>
+            <li>How likely are you to resolve a Geofencing case/inquiry?
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q7" name="q7" value="Always">Always</li>
+                    <li><input class="radio_survey" type="radio" id="q7" name="q7" value="Very often">Very often</li>
+                    <li><input class="radio_survey" type="radio" id="q7" name="q7" value="Sometimes">Sometimes</li>
+                    <li><input class="radio_survey" type="radio" id="q7" name="q7" value="Rarely">Rarely</li>
+                    <li><input class="radio_survey" type="radio" id="q7" name="q7" value="Never">Never</li>
+                </ol>
+            </li>
+            <li>Do you need additional Geofencing training?
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q8" name="q8" value="Yes">Yes</li>
+                    <li><input class="radio_survey" type="radio" id="q8" name="q8" value="No">No</li>
+                </ol>
+            </li>
+            <li>What is the level of difficulty in handling a Geofencing issue/inquiry?
+                <ol type="a">
+                    <li><input class="radio_survey" type="radio" id="q9" name="q9" value="Very Easy">Very Easy</li>
+                    <li><input class="radio_survey" type="radio" id="q9" name="q9" value="Easy">Easy</li>
+                    <li><input class="radio_survey" type="radio" id="q9" name="q9" value="Difficult">Difficult</li>
+                    <li><input class="radio_survey" type="radio" id="q9" name="q9" value="Very Difficult">Very Difficult</li>
+                </ol>
+            </li>
+            <li>Tell us your challenges in handling Geofencing cases and let us know how can we help you improve your technical knowledge.<br>
+                <textarea id="q10"></textarea>
+            </li>
+        </ol>
+        <div class="hiddenDiv" id="survey_error" style="font-weight:bold;color:red">Please complete all fields.</div>
+        <button onclick="getNextSurvey()">Submit</button><br><br>
+    </div>
+</div>

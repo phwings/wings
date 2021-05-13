@@ -1,0 +1,100 @@
+<br><br>
+<h4 class="applogs">Getting App Logs</h4>
+<select id="applogs-select" onchange="var applogsselector=$('#applogs-select').val();$('#applogs-div').html($('#'+applogsselector).html());
+$('#'+applogsselector+'-image').click()">
+    <option value="0" selected disabled>Select Device</option>
+    <option value="ios-logged">iOS - Able to log in</option>
+    <option value="ios-notlogged">iOS - Unable to log in</option>
+    <option value="android">Android</option>
+</select>
+<br><br>
+<div class="row">
+    <div id="applogs-image" class="column" style="width:40%;">
+
+    </div>
+    <div class="column" id="applogs-div" style="width:50%;">
+
+    </div>
+</div>
+<h5>Tips (for reference only):</h5>
+<ul>
+    <li>
+        Logs will help troubleshoot:
+        <ul>
+            <li>Arlo app cosmetic issues</li>
+            <li>Arlo app crash issues</li>
+            <li>Device offline issues</li>
+            <li>Geofencing</li>
+            <li>Image/video quality issues</li>
+            <li>Issues related to Modes</li>
+            <li>CVR</li>
+            <li>Streaming</li>
+            <li>Delay on Notifications</li>
+        </ul>
+    </li>
+    <li>
+        Logs are currently encrypted and cannot be decrypted by anyone else other than Engineering because of security issues.
+        <ul>
+            <li>Logs can be decoded only through the Arlo Proprietary tool.</li>
+        </ul>
+    </li>
+    <li>
+        Logs do not contain customer passwords or library contents.
+        <ul>
+            <li>Logs contain OS, model, phone version, serial number, user ID, firmware version, etc.</li>
+        </ul>
+    </li>
+    <li>
+        Log title contains details that make it easy for Support to see what version of the app is used and when problem happened:
+        <ul>
+            <li>App version (x.x.x)</li>
+            <li>App build (x)</li>
+            <li>Date (M/DD/YY) and time</li>
+        </ul>
+    </li>
+    <li>
+        Logs get overwritten (because of file size) in 2 hrs, 4 hrs, 1 day, based on the activity in the app.
+        <ul>
+            <li>It is best to ask the customer to reproduce the issue and immediately send logs to the support team.</li>
+        </ul>
+    </li>
+</ul>
+<br><br>
+
+<div class="hiddenDiv" id="ios-logged">
+    <p>
+        <ol>
+            <li><a href="#" onclick="loadPic('app/ios/ios-logged-01','#applogs-image');" id="ios-logged-image">Log into the Arlo iOS app and triple tap the Arlo icon at the top of the screen.</a></li>
+            <li><a href="#" onclick="loadPic('app/ios/app-ios-02','#applogs-image');">Tap Email logs in the pop-up displayed at the bottom of the screen.</a></li>
+            <li><a href="#" onclick="loadPic('app/ios/app-ios-03','#applogs-image');">Have the customer email the logs to themself.</a><br>
+            Once the email is received, ask the customer to attach the logs to their support ticket.</li>
+        </ol>
+        
+    </p>
+</div>
+
+<div class="hiddenDiv" id="ios-notlogged">
+    <p>
+        <ol>
+            <li><a href="#" onclick="loadPic('app/ios/ios-notlogged-01','#applogs-image');" id="ios-notlogged-image">On the login screen, tap the Arlo bird icon four times.</a></li>
+            <li><a href="#" onclick="loadPic('app/ios/app-ios-05','#applogs-image');">Tap Email logs in the pop-up displayed at the bottom of the screen.</a></li>
+            <li><a href="#" onclick="loadPic('app/ios/app-ios-03','#applogs-image');">Have the customer email the logs to themself.</a><br>
+            Once the email is received, ask the customer to attach the logs to their support ticket.</li>
+        </ol>
+        
+    </p>
+</div>
+
+<div class="hiddenDiv" id="android">
+    <p>
+        <ol>
+            <li><a href="#" onclick="loadPic('app/android/android-01','#applogs-image');" id="android-image">Log into the Arlo Android app and tap Settings.</a></li>
+            <li><a href="#" onclick="loadPic('app/android/app-android-02','#applogs-image');">Tap About.</a></li>
+            <li><a href="#" onclick="loadPic('app/android/app-android-03','#applogs-image');">Tap Version four times.</a></li>
+            <li><a href="#" onclick="loadPic('app/android/app-android-04','#applogs-image');">Log in as User then go to the CVR timeline. Try to play back the timeline.</a></li></a></li>
+            <li><a href="#" onclick="loadPic('app/android/app-android-05','#applogs-image');">When the email is received, attach the logs to the case.</a></li>
+        </ol>
+        
+        
+    </p>
+</div>

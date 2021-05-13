@@ -1,0 +1,60 @@
+<div class="hiddenDiv" id="eosScript">
+    getEOS();
+    outFunc();
+</div>
+<h4>End of Shift Report</h4>
+<br>
+
+<div class="row" style="width:100%">
+    <input id="EOS_index" type="text" style="width:100%" hidden>
+    <div class="column" style="width:15%">
+        <pre>Case Number</pre>
+        <input id="EOS_casenum" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:10%">
+        <pre>Status</pre>
+        <select id="EOS_status" style="width:100%">
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+        </select>
+    </div>
+    <div class="column" style="width:30%">
+        <pre>Remarks</pre>
+        <input id="EOS_remarks" type="text" style="width:100%">
+    </div>
+    <div class="column" style="width:10%">
+        <pre>For RMA?</pre>
+        <select id="EOS_RMA" style="width:100%;text-align-last:center;">
+            <option value="N">N</option>
+            <option value="Y">Y</option>
+        </select>
+    </div>
+    <div class="column" style="width:15%">
+        <pre>Good Call?</pre>
+        <select id="EOS_callpulse" style="width:100%;text-align-last:center;">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+        </select>
+    </div>
+
+</div>
+
+<br>
+
+<button onclick="loadExternal('/partials/templates/standard','standardScript');" ><< Standard</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="addEOSEntry" onclick="saveEOS($('#EOS_casenum').val(),$('#EOS_status').val(),$('#EOS_remarks').val(),$('#EOS_RMA').val(),$('#EOS_callpulse').val());getEOS();">Add Case</button>
+<button id="updateEOSEntry" class="hiddenDiv" onclick="updateEOS($('#EOS_index').val(),$('#EOS_casenum').val(),$('#EOS_status').val(),$('#EOS_remarks').val(),$('#EOS_RMA').val(),$('#EOS_callpulse').val());getEOS();" style="border: 2px solid #ad4500;">Update Entry</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="resetEOS();">Reset</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br>
+<div class="tooltip">
+    <button onclick="selectElementContents( document.getElementById('EOS_table') );" onmouseout="outFunc();">
+        <span class="tooltiptext" id="myTooltip"></span>
+        Copy Report
+    </button>
+</div>
+<br><br><br>
+<div id="displayEOS" width="70%">
+
+</div>

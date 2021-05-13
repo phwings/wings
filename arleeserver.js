@@ -1,7 +1,7 @@
 "use strict";
 //const server = "localhost";
-const server = "localhost";
-const HTTP_PORT = 4231;
+const server = "10.54.108.37";
+const HTTP_PORT = 50080;
 const  express  =  require('express');
 const  bodyParser  =  require('body-parser');
 const  app  =  express();
@@ -33,7 +33,7 @@ http.listen(HTTP_PORT, function(){
 
 app.use(bodyParser.json());
 
-app.get('/',function(req,res){
+app.get('/arlee',function(req,res){
     res.sendFile(__dirname + '/arlee.html');
 });
 app.use('/assets',express.static(__dirname + '/assets'));

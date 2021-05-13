@@ -1,7 +1,7 @@
 "use strict";
-const server = "localhost";
+const server = "icsph.com";
 //const server = "localhost:4030";
-const HTTP_PORT = 3002;
+const HTTP_PORT = 50081;
 const  express  =  require('express');
 const  bodyParser  =  require('body-parser');
 const  app  =  express();
@@ -40,7 +40,7 @@ var fs = require('fs')
 
 //const tokenList = {}
 
-var db = require("./database.js")
+var db = require("./database-mysql.js")
 
 const http = require('http').createServer(app);
 
@@ -61,7 +61,7 @@ app.get('/upload',function(req,res){
 app.get("/api/callhandler/:issue_number", (req, res, next) => {
     var sql = "select * from issue where issue_number = ?"
     var params = [req.params.issue_number]
-    db.get(sql, params, (err, row) => {
+    db.query(sql, params, (err, row) => {
         if (err) {
         res.status(400).json({"error":err.message});
         return;
@@ -247,7 +247,7 @@ function saveMetrics(data,file){
 	var params =[data.metricMonth,data.metricWE,data.metricDate,data.metricChannel,data.metricCES,data.metricPhone_ID,data.metricAgent_Name,data.metricLOB,data.metricTeam,data.metricSurvey_Call_Center,data.metricCase_Start_Channel,data.metricCase_Number,data.metricResponse_Completiondate,data.metricSurvey_Agent,data.metricGeneral_Comments,data.metricNPS_Detractor_Comments,data.metricCES_General_Comments,data.metricQ1,data.metricQ2,data.metricQ3,data.metricQ4,data.metricQ5,data.metricQ6,data.metricQ7,data.metricQ8,data.metricQ9,data.metricQ10,data.metricQ11,data.metricQ12,data.metricQ13,data.metricQ14,data.metricQ15,data.metricQ16,data.metricQ17,data.metricDaily,data.metricCombi,data.metricTenure,data.metricCount,data.metricDET]
 
 	try{
-		db.run(sql, params, function (err, result) {
+		db.query(sql, params, function (err, result) {
 			if (err){
 				data=data.metricCase_Number + "," + data.metricCES + "," + file + "\n";
 				//console.log("error:"+ err);
@@ -281,7 +281,7 @@ function checkQA(agentCES,WE,callback){
 	var params =[agentCES,WE]
 
 	try{
-		db.all(sql, params, (err, rows) => {
+		db.query(sql, params, (err, rows) => {
 			if (err) {
 			  	res.status(400).json({"error":err.message});
 			  	if(callback){
@@ -321,7 +321,7 @@ function checkHandling(agentid,date,callback){
 	var params =[agentid,date]
 
 	try{
-		db.all(sql, params, (err, rows) => {
+		db.query(sql, params, (err, rows) => {
 			if (err) {
 			  	res.status(400).json({"error":err.message});
 			  	if(callback){
@@ -361,7 +361,7 @@ function checkUtilization(ces,date,callback){
 	var params =[ces,date]
 
 	try{
-		db.all(sql, params, (err, rows) => {
+		db.query(sql, params, (err, rows) => {
 			if (err) {
 			  	res.status(400).json({"error":err.message});
 			  	if(callback){
@@ -401,7 +401,7 @@ function checkDashboard(ces,date,callback){
 	var params =[ces,date]
 
 	try{
-		db.all(sql, params, (err, rows) => {
+		db.query(sql, params, (err, rows) => {
 			if (err) {
 			  	res.status(400).json({"error":err.message});
 			  	if(callback){
@@ -439,7 +439,7 @@ function saveQA(data,callback){
 	var params =[data.qa_CES,data.qa_score,data.qa_WE]
 
 	try{
-		db.run(sql, params, function (err, result) {
+		db.query(sql, params, function (err, result) {
 			if (err){
 				console.log("error:"+ err);
 				//return err;
@@ -466,7 +466,7 @@ function saveHandling(data,callback){
 	var params =[data.handlingDate,data.handlingCES,data.handlingAgentID,data.handlingAvailableTime,data.handlingHandled,data.handlingHandleTime,data.handlingHoldTime,data.handlingInbound]
 
 	try{
-		db.run(sql, params, function (err, result) {
+		db.query(sql, params, function (err, result) {
 			if (err){
 				console.log("error:"+ err);
 				//return err;
@@ -493,7 +493,7 @@ function saveUtilization(data){
 	var params =[data.utilizationDate,data.utilizationCES,data.utilizationlogged,data.utilizationavailtime,data.utilizationbreak,data.utilizationprodrate,data.utilizationutilrate,data.utilizationutilhours,data.utilizationprodhours,data.utilizationinbound,data.utilizationoutbound,data.utilizationinboundtime,data.utilizationoutboundtime,data.utilizationlab,data.utilizationchat,data.utilizationwebots,data.utilizationcasereview]
 
 	try{
-		db.run(sql, params, function (err, result) {
+		db.query(sql, params, function (err, result) {
 			if (err){
 				console.log("error:"+ err);
 				//return err;
@@ -519,7 +519,7 @@ function saveDashboard(data){
 	var params =[data.dboard_id,data.dboard_date,data.dboard_CES,data.dboard_unavail_T,data.dboard_inbound_pending,data.dboard_15break,data.dboard_casereview,data.dboard_60break,data.dboard_pbreak,data.dboard_unavail,data.dboard_chat,data.dboard_web_ots,data.dboard_logged_in,data.dboard_lab,data.dboard_training,data.dboard_meeting,data.dboard_outbound,data.dboard_technical,data.dboard_coaching,data.dboard_outbound_pending,data.dboard_admin,data.dboard_acw_manual,data.dboard_consult_pending,data.dboard_acw_auto,data.dboard_transfer_pending,data.dboard_login_time,data.dboard_avail,data.dboard_utilized_hours,data.dboard_inbound_handled,data.dboard_inbound_handle_time,data.dboard_inbound_hold_time,data.dboard_outbound_handled,data.dboard_outbound_handle_time,data.dboard_outbound_hold_time,data.dboard_outbound_calls,data.dboard_expected,data.dboard_present,data.dboard_absent,data.dboard_sched_leave,data.dboard_unsched_leave,data.dboard_tardiness,data.dboard_chat_offered,data.dboard_chat_handled,data.dboard_chat_handle_time,data.dboard_case_notes,data.dboard_chat2,data.dboard_customer_comment_reply,data.dboard_inbound_call,data.dboard_outbound_call,data.dboard_presales_case_notes,data.dboard_presales_inbound_call,data.dboard_presales_customer_comment_reply,data.dboard_presales_chat,data.dboard_presales_outbound_call,data.dboard_case_reviews,data.dboard_cases_closed]
 
 	try{
-		db.run(sql, params, function (err, result) {
+		db.query(sql, params, function (err, result) {
 			if (err){
 				console.log("error:"+ err);
 				//return err;

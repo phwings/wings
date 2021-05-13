@@ -1,0 +1,16 @@
+<h4>RMA Delivery Tracking</h4>
+<br>
+<input type="text" id="tracking" size="30" style="width:120px" tabindex="2"> Shipping Tracking Number<br>
+<br>
+
+<button style="width:120px" onclick="openSite('https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=' + $('#tracking').val() + '&cntry_code=us&locale=en_US')">
+Fedex</button> US and Canada
+<br><br>
+
+<button style="width:120px" onclick="openSite('https://track.dhlparcel.co.uk/?con=' + $('#tracking').val() + '&nav=1')">
+DHL</button> UK Mail
+<br><br>
+
+<button style="width:120px" onclick="openSite('https://auspost.com.au/mypost/track/#/details/' + $('#tracking').val())">
+AusPost</button> Australia
+<br>

@@ -1,0 +1,371 @@
+<div class="hiddenDiv" id="loadtemp-l2escalationscript">$('#faq_ratls').load('FAQ-RATLS.html');$('#ts_ratls').load('TS-RATLS.html');</div>
+
+<div id="l2escalationdiv">
+<h4 class="l2escalation">L2 Escalation Template</h4>
+
+<div class="panel-group">
+    <div class="panel-group-label">Case Information</div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Case Number:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-case" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Customer's email address:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-email" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Field Trial participant?
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="radio" name="l2escalation-fieldtrial" id="l2escalation-fieldtrial-no" value="No" checked /> No
+            <input type="radio" name="l2escalation-fieldtrial" id="l2escalation-fieldtrial-yes" value="Yes"/> Yes
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Attachments:
+        </div>
+        <div class="column l2escalationdata" >
+            <textarea type="text" id="l2escalation-attachments" rows="5" ></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group">
+    <div class="panel-group-label">Device Information</div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            BS/SH SN:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-bssn" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            BS/SH FW:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-bsfw" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Affected Device SN:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-camsn" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Affected Device FW:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-camfw" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Affected Device Type:
+        </div>
+        <div class="column l2escalationdata" >
+            <select id="l2escalation-devicetype">
+                <option>Base Station</option>
+                <option>Smart Hub</option>
+                <option>Camera</option>
+                <option>Accessory</option>
+            </select>
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Affected Device Model:
+        </div>
+        <div class="column l2escalationdata" >
+            <select id="l2escalation-deviceModel">
+                <option>VMC4030</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="panel-group">
+    <div class="panel-group-label">Access Device Information</div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Access Device Model:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-accessdevice-model" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            App Logs Attached?
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="radio" onclick="$('#l2escalation-app-details').removeClass('hiddenDiv');" name="l2escalation-app-details" id="l2escalation-applogs-no" value="No" checked /> No
+            <input type="radio" onclick="$('#l2escalation-app-details').addClass('hiddenDiv');" name="l2escalation-app-details" id="l2escalation-applogs-yes" value="Yes"/> Yes
+        </div>
+    </div>
+    <div class="" id="l2escalation-app-details">
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Access Device Version:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-accessdevice-version" />
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                App Type:
+            </div>
+            <div class="column l2escalationdata" >
+                <select id="l2escalation-accessdevice">
+                    <option>Android</option>
+                    <option>iOS</option>
+                    <option>Web</option>
+                </select>
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                App Version:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-app-version" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-group">
+    <div class="panel-group-label">Issue Information</div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Can reproduce/replicate problem?
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="radio" onclick="$('#l2escalation-noreplication').removeClass('hiddenDiv');$('#l2escalation-replication').addClass('hiddenDiv');" name="l2escalation-replicate" id="l2escalation-replicate-no" value="No" checked /> No
+            <input type="radio" onclick="$('#l2escalation-noreplication').addClass('hiddenDiv');$('#l2escalation-replication').removeClass('hiddenDiv');" name="l2escalation-replicate" id="l2escalation-replicate-yes" value="Yes"/> Yes
+        </div>
+    </div>
+    <div class="" id="l2escalation-noreplication">
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Why?
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-noreplication-reason" />
+            </div>
+        </div>
+    </div class="hiddenDiv">
+    <div class="hiddenDiv" id="l2escalation-replication">
+
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Overview of the Issue:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-replication-overview" />
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Miscellaneous Details:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-replication-miscdetails" />
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Steps to Reproduce:
+            </div>
+            <div class="column l2escalationdata" >
+                <textarea type="text" id="l2escalation-replication-steps" rows="5"></textarea>
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Expected Result:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-replication-expected" />
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Actual Result:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-replication-actual" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-group">
+    <div class="panel-group-label">Historical Information</div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            History of the problem:
+        </div>
+        <div class="column l2escalationdata" >
+            <textarea type="text" id="l2escalation-replication-history" rows="5"></textarea>
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Already RMA-ed?
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="radio" onclick="$('#l2escalation-RMA').addClass('hiddenDiv');" name="l2escalation-withRMA" id="l2escalation-RMA-no" value="No" checked /> No
+            <input type="radio" onclick="$('#l2escalation-RMA').removeClass('hiddenDiv');" name="l2escalation-withRMA" id="l2escalation-RMA-yes" value="Yes"/> Yes
+        </div>
+    </div>
+    <div class="hiddenDiv" id="l2escalation-RMA">
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                How many times?
+            </div>
+            <div class="column l2escalationdata" >
+                <select id="l2escalation-RMA-num">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+        Detailed Troubleshooting Done:
+        </div>
+        <div class="column l2escalationdata" >
+            <textarea type="text" id="l2escalation-ts" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group">
+    <div class="panel-group-label">Network Information</div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Internet Connection Type:
+        </div>
+        <div class="column l2escalationdata" >
+            <select id="l2escalation-RMA-num">
+                <option>DSL</option>
+                <option>Cable</option>
+                <option>T1</option>
+                <option>Customer does not know</option>
+            </select>
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            ISP:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-isp" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Download speed:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-dl" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Upload speed:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-ul" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Modem Brand:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-modembrand" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Modem Model:
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="text" id="l2escalation-modemmodel" />
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Has Router?
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="radio" onclick="$('#l2escalation-withrouter').addClass('hiddenDiv');" name="l2escalation-router" id="l2escalation-router-no" value="No" checked /> No
+            <input type="radio" onclick="$('#l2escalation-withrouter').removeClass('hiddenDiv');" name="l2escalation-router" id="l2escalation-router-yes" value="Yes"/> Yes
+        </div>
+    </div>
+    <div class="hiddenDiv" id="l2escalation-withrouter">
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Router Brand:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-routerbrand" />
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Router Model:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-routermodel" />
+            </div>
+        </div>
+    </div>
+    <div class="row l2escalation-row">
+        <div class="column l2escalationlabel" >
+            Has Extender?
+        </div>
+        <div class="column l2escalationdata" >
+            <input type="radio" onclick="$('#l2escalation-withextender').addClass('hiddenDiv');" name="l2escalation-extender" id="l2escalation-extender-no" value="No" checked  /> No
+            <input type="radio" onclick="$('#l2escalation-withextender').removeClass('hiddenDiv');" name="l2escalation-extender" id="l2escalation-extender-yes" value="Yes"/> Yes
+        </div>
+    </div>
+    <div class="hiddenDiv" id="l2escalation-withextender">
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Extender Brand:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-extenderbrand" />
+            </div>
+        </div>
+        <div class="row l2escalation-row">
+            <div class="column l2escalationlabel" >
+                Extender Model:
+            </div>
+            <div class="column l2escalationdata" >
+                <input type="text" id="l2escalation-extendermodel" />
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+
+<br><br>

@@ -1,0 +1,24 @@
+
+<button onclick="clearRequests();">Clear Lists</button>
+<h5>Current Requests</h5>
+<input type="text" style="width:222px;" id="requestFilter" onkeyup="filter('auxRequests','requestFilter')" placeholder="Search for names..">
+<table id="auxRequests" style="border-collapse:collapse;background-color:white">
+    <thead><th onclick="sortTable('auxRequests',0)">Name</th><th onclick="sortTable('auxRequests',1)">Aux Type</th><th  onclick="sortTable('auxRequests',2)">Time</th><th>Message</th><th>Action</th></thead>
+</table>
+<br><br>
+<div>
+    <h5>Actioned Requests</h5>
+    <input type="text" style="width:222px;" id="actionFilter" onkeyup="filter('auxRequestList','actionFilter')" placeholder="Search for names..">
+    <table id="auxRequestList" style="border-collapse:collapse;background-color:white">
+        <thead><th onclick="sortTable('auxRequestList',0)">Name</th><th onclick="sortTable('auxRequestList',1)">Aux Type</th><th onclick="sortTable('auxRequestList',2)">Time</th><th>Message</th><th>Reply</th><th onclick="sortTable('auxRequestList',5)">Action</th></thead>
+    </table>
+</div>
+<br><br>
+<audio controls id="auxRequestAudio" class=hiddenDiv> 
+    <!-- One or more source files, each referencing the same audio but in a different file format. The browser will choose the first file which it is able to play. --> 
+        <source src="/assets/audio/speech.mp3"> 
+        You will see this text if native audio playback is not supported. 
+    <!-- You could use this fall-back feature to insert a JavaScript-based audio player. --> 
+</audio>
+
+    

@@ -1,0 +1,16 @@
+<div class="hiddenDiv" id="loadVDBTSscript">
+	$('#TS-selector').val('/partials/troubleshooting/TS-videodoorbell');
+	displayOption('TS','loadTSscript');</div>
+
+<h4>Troubleshooting</h4><br>
+<select id="TS-selector" oninput="displayOption('TS','loadTSscript');$('#TS_filter').val('')">
+	<option value="0" class="selectheader" selected disabled>Select Device/Feature to View</option>
+	<option value="/partials/troubleshooting/TS-baby">Baby</option>
+	<option value="/partials/troubleshooting/TS-RATLS">RATLS</option>
+	<option value="/partials/troubleshooting/TS-videodoorbell">Video Doorbell</option>
+</select>
+<br><br>
+<input type="search" id="TS_filter" placeholder="Search" title="Type in anything" style="width:20%" oninput="filter('TS_table','TS_filter')">
+<div id="TS-content">
+</div>
+<br><br>

@@ -241,11 +241,14 @@ span.psw {
 </style>
 <script src="/assets/js/jquery-3.4.1.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/misc.js"></script>
+<script src="/assets/js/stats.js"></script>
 </head>
 <body>
     <div style="text-align:center">
-    <a href="#" onclick="launchDisplay()"><img src="/assets/img/arlobird.gif" width="100px"></a><br>
-    <img src="/assets/img/arlowings_text_black.png" width="300px">
+    <a href="#" onclick="launchDisplay()">
+    <img src="/assets/img/arlobird.gif" width="100px"></a><br>
+    <img src="/assets/img/wings_text_black.png" width="300px">
     
     <br><br><br>
 
@@ -547,7 +550,7 @@ onclick="$('#modal_helpdesk').css('display','block')">
                 },
                 //dataType:"json",
                 success:function(data){
-                    //console.log(data);
+                    console.log(data);
                     localStorage.setItem('expertName',data.expertName);
                     window.open('/','_self',false);
                 },
@@ -618,12 +621,15 @@ onclick="$('#modal_helpdesk').css('display','block')">
 
     function launchDisplay(){
         $('#modal_stats').css('display','block');
-
+        console.log(weekMonth1);
+        console.log(weekMonth2);
 		getTopData(weekMonth1+'/'+weekDay1+'/'+weekYear1,weekMonth2+'/'+weekDay2+'/'+weekYear2,function(topData){
 			//console.log(topData);
-			populateTopWETable(topData);
+            populateTopWETable(topData);
+            console.log(weekMonth1);
+            console.log(weekMonth2);
+            console.log(metricDate);
             $('.stat_WE_label').html(weekMonth1+weekDay1+'-'+weekMonth2+weekDay2);
-            console.log(metricDate.getDate());
             $('.stat_MTD_label').html(((((metricDate.getMonth()+1)+'').length<2)?'0':'')+''+(metricDate.getMonth()+1)+((((metricDate.getDate())+'').length<2)?'0':'')+''+(metricDate.getDate()));
 		});
 		//console.log((metricDate.getMonth()+1)+'/'+metricDate.getDate()+'/'+metricDate.getFullYear());
@@ -638,8 +644,10 @@ onclick="$('#modal_helpdesk').css('display','block')">
 
     function displayLoop(classname,timeout){
         getMetricDate(function(){
+            console.log(weekMonth1);
+            console.log(weekMonth2);
             sundayDate.setDate(metricDate.getDate()-metricDate.getDay());
-            prevMondayDate=new Date();
+            prevMondayDate=new Date(metricDate);
             prevMondayDate.setDate(sundayDate.getDate()-6);
             weekMonth1=((((prevMondayDate.getMonth()+1)+'').length<2)?'0':'')+(prevMondayDate.getMonth()+1);
             weekDay1=(((prevMondayDate.getDate()+'').length<2)?'0':'')+prevMondayDate.getDate();
@@ -647,7 +655,8 @@ onclick="$('#modal_helpdesk').css('display','block')">
             weekMonth2=((((sundayDate.getMonth()+1)+'').length<2)?'0':'')+(sundayDate.getMonth()+1);
             weekDay2=(((sundayDate.getDate()+'').length<2)?'0':'')+sundayDate.getDate();
             weekYear2=sundayDate.getFullYear();
-        
+            console.log(weekMonth1);
+            console.log(weekMonth2);
             //console.log($('.'+classname).length);
             $('.'+classname).each(function(index){
                 if(loopCounter==$('.'+classname).length){

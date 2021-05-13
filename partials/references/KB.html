@@ -1,0 +1,14 @@
+<div class="hiddenDiv" id="loadVDBKBscript">
+	$('#KB-selector').val('/partials/references/KB-videodoorbell');
+	displayOption('KB');</div>
+
+<h4>Knowledgebase Articles</h4><br>
+<select id="KB-selector" oninput="displayOption('KB');$('#KB_filter').val('')">
+	<option value="0" class="selectheader" selected disabled>Select Device to View</option>
+	<option value="/partials/references/KB-videodoorbell">Video Doorbell</option>
+	<option value="/partials/references/KB-baby">Baby</option>
+</select>
+<br><br>
+<input type="search" id="KB_filter" placeholder="Search" title="Type in anything" style="width:20%" oninput="filter('KB_table','KB_filter')">
+<div id="KB-content">
+</div>
